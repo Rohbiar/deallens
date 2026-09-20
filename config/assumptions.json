@@ -1,0 +1,32 @@
+{
+  "version": "synthetic-v1",
+  "designation": "assumption",
+  "bio_techne": {
+    "notional": 4000000000, "currency": "USD", "tenor_years": 7,
+    "issue_date": "2027-03-15", "debt_fixed_rate": true,
+    "benchmark_rate": 0.0425, "swap_rate": 0.0440, "issuer_credit_spread": 0.01,
+    "dv01_per_100mm": 65000, "credit_dv01_equals_benchmark": true,
+    "base_probability": 0.85, "delay_probability": 0.10, "failure_probability": 0.05,
+    "option_premium_bp_notional": 30, "contingent_fee_bp_notional": 20,
+    "roll_cost_bp_per_90_days": 1, "option_renewal_bp_per_90_days": 5,
+    "bond_spread_reference": "benchmark", "fx_funding_share": 0,
+    "origin": "Core notional, tenor, date, rates, DV01 and outcome probabilities supplied by assignment. Credit DV01 equality, premiums and delay costs added as synthetic sensitivities; not tradable quotes."
+  },
+  "validation_template": {
+    "notional": 1000000000, "currency": "from_supported_consideration",
+    "tenor_years": 7, "issue_date": "2027-03-15", "debt_fixed_rate": true,
+    "benchmark_rate": 0.035, "swap_rate": 0.037, "issuer_credit_spread": 0.015,
+    "dv01_per_100mm": 65000, "credit_dv01_equals_benchmark": true,
+    "base_probability": 0.85, "delay_probability": 0.10, "failure_probability": 0.05,
+    "option_premium_bp_notional": 30, "contingent_fee_bp_notional": 20,
+    "roll_cost_bp_per_90_days": 1, "option_renewal_bp_per_90_days": 5,
+    "bond_spread_reference": "benchmark", "fx_funding_share": 0,
+    "origin": "Every numerical financing/market parameter is synthetic. A 1bn local-currency, seven-year fixed-rate refinancing slice allows comparable risk sensitivities; it is not disclosed debt issuance or the full bridge. Dates and probabilities are scenario inputs, not forecasts."
+  },
+  "cross_currency_template": {
+    "usd_per_eur": 1.10, "fx_shock_fraction": 0.10, "fx_funding_share": 0.25,
+    "bridge_draw_fraction": 0.50, "euribor": 0.025, "bridge_margin": 0.0125,
+    "bridge_stepup_bp_per_90_days": 25,
+    "origin": "Synthetic 25% USD-funded share of EUR refinancing slice, FX spot/shock, 50% bridge utilization, EURIBOR, margin and step-up size. Disclosed rating grids and fees must be separately reviewed; these assumptions are not extracted pricing."
+  }
+}
