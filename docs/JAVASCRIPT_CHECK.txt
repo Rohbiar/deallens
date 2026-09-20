@@ -1,1 +1,1 @@
-Embedded UI JavaScript parses successfully. Browser execution and visual layout were not verified because the Chromium download timed out.
+PASS: embedded UI JavaScript parses; not a browser execution test.

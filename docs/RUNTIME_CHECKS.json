@@ -3,27 +3,32 @@
     {
       "route": "/",
       "status": 200,
-      "bytes": 10945
+      "bytes": 11991
     },
     {
       "route": "/api/manifest",
       "status": 200,
-      "bytes": 3032
+      "bytes": 3425
+    },
+    {
+      "route": "/api/review-packet",
+      "status": 200,
+      "bytes": 1362962
     },
     {
       "route": "/api/bio_techne",
       "status": 200,
-      "bytes": 2155443
+      "bytes": 2176955
     },
     {
       "route": "/api/organon",
       "status": 200,
-      "bytes": 2417829
+      "bytes": 2439259
     },
     {
       "route": "/api/uber_delivery_hero",
       "status": 200,
-      "bytes": 2754757
+      "bytes": 2776720
     },
     {
       "route": "/source/bio_techne",

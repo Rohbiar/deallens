@@ -41,4 +41,4 @@ The 16 selected source fixtures pass. They were curated by the same agent throug
 
 ## Architecture improvements
 
-Use clause/definition graphs and cross-page retrieval before extending regex coverage further. Connect a schema-constrained model adapter with exact-evidence validation and a reviewer workflow. Build a separate labeled validation corpus containing negative and conflicting examples, freeze extraction rules, and evaluate complete fields with precision, recall and abstention. Preserve the current deterministic rule suite as a transparent baseline and regression gate.
+Use clause/definition graphs before extending regex coverage further. The optional bounded model path includes neighboring-page retrieval, schema validation and exact-citation checks, and a versioned reviewer workflow is implemented. Neither live-model quality nor actual human review has been demonstrated. Build a separate labeled validation corpus containing negative and conflicting examples, freeze extraction rules, and evaluate complete fields with precision, recall and abstention. Preserve the current deterministic rule suite as a transparent baseline and regression gate.
