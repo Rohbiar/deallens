@@ -63,7 +63,8 @@ def extension_dates(records):
             for m in re.finditer(pattern,text,re.I):
                 iso=date_iso(m.group(1))
                 if iso:anchors.setdefault(iso,r["locator"])
-    return [{"date":d,"locator":anchors[d],"review_status":"unreviewed","designation":"candidate_evidence"} for d in sorted(anchors)]
+    return [{"date":d,"locator":anchors[d],"review_status":"unreviewed","designation":"assumption",
+             "note":"Hypothetical closing scenario at an expressly stated extension date; does not assert that extension conditions have been satisfied."} for d in sorted(anchors)]
 
 def run_analytics(doc,records,comparisons,config):
     supported_money=[r for r in records if r["field_name"]=="consideration_per_share" and r["status"]=="supported"]

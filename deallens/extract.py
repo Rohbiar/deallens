@@ -11,7 +11,9 @@ from .ingest import normalize
 
 DATE = r'(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}|\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}'
 MONEY = r'(?:\$|€|EUR\s*|USD\s*)(\d[\d,]*(?:\.\d+)?)\s*(million|billion)?'
-SCALARS = {"consideration_per_share", "agreement_date", "outside_or_long_stop_date", "bridge_amount"}
+SCALARS = {"consideration_per_share", "agreement_date", "outside_or_long_stop_date", "bridge_amount",
+           "transaction_type", "consideration_type", "financing_condition", "financing_maturity",
+           "target_termination_fee", "parent_termination_fee", "approval_or_tender_threshold", "committed_financing_minimum"}
 
 def date_iso(raw):
     for fmt in ("%B %d, %Y", "%B %d %Y", "%d %B %Y"):
@@ -33,7 +35,16 @@ def section_at(text, position):
     return headings[-1].group().strip() if headings else "Page text (section unresolved)"
 
 def evidence_record(doc, page, field, start, end, run_id, value=None, currency=None, raw_value=None):
+    qualifier="exact"
+    if currency and raw_value:
+        pos=page["text"].find(raw_value,start,end)
+        if pos>=0:
+            before=page["text"][max(0,pos-30):pos]
+            if re.search(r'at least\s*$|no less than\s*$',before,re.I):qualifier="at_least"
+            elif re.search(r'at most\s*$|no more than\s*$',before,re.I):qualifier="at_most"
+            start=max(0,min(start,pos-35))
     return {"field_name":field,"normalized_value":value,"currency":currency,
+            "value_qualifier":qualifier if currency else None,
             "raw_value":raw_value,"document_id":doc["document_id"],
             "document_sha256":doc["sha256"],"document_layer":page["document_layer"],
             "page":page["page"],"section":section_at(page["text"], start),
@@ -50,6 +61,7 @@ def scalar_matches(field, text):
     """Yield exact evidence spans and values; never use document identity."""
     if field == "consideration_per_share":
         patterns = [r'(?:right to receive|cash consideration per.{0,65}?of|Offer Price shall (?:be|amount to))\s*('+MONEY+r')',
+                    r'[“\"](?:Per Share )?Merger Consideration[”\"]\s+means\s*('+MONEY+r')',
                     r'('+MONEY+r')\s+(?:in cash|per.{0,35}Share).{0,90}?(?:Merger Consideration|Offer Price)',
                     r'(?:Offer Price|offer price).{0,35}?('+MONEY+r')\s+per']
         for pattern in patterns:
@@ -76,6 +88,47 @@ def scalar_matches(field, text):
         for m in re.finditer(pattern,text,re.I):
             raw=re.search(MONEY,m.group(),re.I).group().strip(); parsed=money(raw)
             if parsed: yield m.start(),m.end(),parsed[0],parsed[1],raw
+    elif field == "committed_financing_minimum":
+        for m in re.finditer(r'committed financing.{0,200}?amounting to no less than\s*('+MONEY+r')',text,re.I):
+            raw=re.search(MONEY,m.group(),re.I).group().strip();parsed=money(raw)
+            if parsed:yield m.start(),m.end(),parsed[0],parsed[1],raw
+    elif field == "transaction_type":
+        for pattern,value in [(r'voluntary public takeover offer','public_takeover_offer'),
+                              (r'(?:Merger Sub|merger subsidiary).{0,100}(?:will|shall) (?:be )?merge[d]? with and into','merger')]:
+            for m in re.finditer(pattern,text,re.I):yield m.start(),m.end(),value,None,m.group()
+    elif field == "consideration_type":
+        for m in re.finditer(r'cash consideration per.{0,60}Share|right to receive\s*'+MONEY+r'\s+in cash',text,re.I):
+            yield m.start(),m.end(),'cash',None,m.group()
+    elif field == "financing_condition":
+        patterns=[r'not a condition to the Closing.{0,250}obtain financing',
+                  r'obligations hereunder are not subject to any conditions.{0,180}obtain financing']
+        for pattern in patterns:
+            for m in re.finditer(pattern,text,re.I):yield m.start(),min(len(text),m.end()+90),False,None,m.group()
+    elif field == "financing_maturity":
+        pattern=r'(?:mature on the date that is|Maturity Date[”\"]? means.{0,70}?)\s*(\d+) days after the (Closing Date)'
+        for m in re.finditer(pattern,text,re.I):
+            yield m.start(),m.end(),{"offset":int(m.group(1)),"unit":"calendar_days","anchor":m.group(2)},None,m.group()
+    elif field in {"target_termination_fee","parent_termination_fee"}:
+        role = 'Company' if field=='target_termination_fee' else '(?:Parent|Bidder)'
+        label = 'Company Termination Fee' if field=='target_termination_fee' else 'Parent Termination Fee'
+        patterns=[rf'{role}\s+(?:will be |is )?required to pay.{{0,85}}?termination fee (?:equal to|of)\s*('+MONEY+r')',
+                  '('+MONEY+rf')\s*\(the [“\"]{label}[”\"]\)',
+                  rf'[“\"]{label}[”\"]\s+means.{{0,35}}?('+MONEY+r')',
+                  rf'{label}\s+shall amount to\s*('+MONEY+r')']
+        if field=='parent_termination_fee':patterns.append(r'Regulatory Reverse Fee shall amount to\s*('+MONEY+r')')
+        for pattern in patterns:
+            for m in re.finditer(pattern,text,re.I):
+                amounts=list(re.finditer(MONEY,m.group(),re.I))
+                if len(amounts)==1:
+                    raw=amounts[0].group().strip();parsed=money(raw)
+                    if parsed:yield m.start(),m.end(),parsed[0],parsed[1],raw
+    elif field == 'approval_or_tender_threshold':
+        # Preserve the denominator in exact source language; do not equate voting power with share count.
+        patterns=[r'majority of the voting power of all of the Shares outstanding and entitled to vote',
+                  r'majority of the outstanding Shares entitled to vote',
+                  r'at least 50% of the number of.{0,220}?plus one share, excluding treasury shares']
+        for pattern in patterns:
+            for m in re.finditer(pattern,text,re.I):yield m.start(),m.end(),m.group(),None,m.group()
 
 def extract(doc, run_id, threshold=0.9):
     if not 0 <= threshold <= 1: raise ValueError("Invalid confidence threshold")
@@ -99,7 +152,7 @@ def extract(doc, run_id, threshold=0.9):
                     candidates.append((score,record))
             unique={}
             for r in scalar:
-                unique.setdefault((str(r["normalized_value"]),r["currency"]),[]).append(r)
+                unique.setdefault((str(r["normalized_value"]),r["currency"],r.get("value_qualifier")),[]).append(r)
             if len(unique)>1:
                 for r in scalar:
                     r["candidate_value"]=r["normalized_value"];r["normalized_value"]=None
@@ -147,7 +200,7 @@ def comparison(records):
         av=[r for r in a if r["status"]=="supported"];bv=[r for r in b if r["status"]=="supported"]
         if any(r["status"]=="conflict" for r in a+b):status="conflict"
         elif av and bv:
-            x={(str(r["normalized_value"]),r["currency"]) for r in av};y={(str(r["normalized_value"]),r["currency"]) for r in bv}
+            x={(str(r["normalized_value"]),r["currency"],r.get("value_qualifier")) for r in av};y={(str(r["normalized_value"]),r["currency"],r.get("value_qualifier")) for r in bv}
             if x!=y:status="conflict"
             elif {r["raw_value"] for r in av}=={r["raw_value"] for r in bv}:status="match"
             else:status="normalized match"
@@ -155,6 +208,7 @@ def comparison(records):
         elif bv and not any(r.get("evidence") for r in a):status="agreement only"
         else:status="unresolved"
         output.append({"field_name":field,"classification":status,"summary":a,"agreement":b,
+                       "comparison_note":"Different amounts, currencies or exact/minimum/maximum qualifiers require review; a flagged difference is not itself a legal conclusion of contradiction.",
                        "source_hierarchy":"Relevant executed agreement > filing summary > other exhibit; any detected conflict blocks canonical value.",
                        "canonical_value":None if status in {"conflict","unresolved"} else (bv or av)[0]["normalized_value"]})
     return output

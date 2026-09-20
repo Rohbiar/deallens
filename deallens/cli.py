@@ -13,6 +13,7 @@ from .analytics import run_analytics
 from .qa import answer
 from .catalog import FIELDS,QUESTIONS
 from .storage import save
+from .risk import risk_map
 
 def write_json(path,obj):
     path.write_text(json.dumps(obj,indent=2,ensure_ascii=False)+"\n")
@@ -39,16 +40,17 @@ def run(root,ids=None,threshold=0.9):
         comparisons=comparison(records)
         b={"document":doc,"extractions":records,"comparisons":comparisons,"timeline":timeline(doc,records),
            "analytics":run_analytics(doc,records,comparisons,assumptions)}
+        b["risk_map"]=risk_map(records)
         b["qa"]={k:answer(k,records,comparisons) for k in QUESTIONS}
         b["exceptions"]=[r for r in records if r["review_status"]!="verified"]
         b["metrics"]={"elapsed_seconds":round(time.perf_counter()-start,3),"page_count":doc["page_count"],
                        "catalog_fields":len(FIELDS),"machine_supported_fields":len({r["field_name"] for r in records if r["status"]=="supported"}),
-                       "candidate_only_fields":len({r["field_name"] for r in records if r["status"]=="requires_review"}),
+                       "candidate_only_fields":len({r["field_name"] for r in records if r["status"]=="requires_review"}-{r["field_name"] for r in records if r["status"]=="supported"}),
                        "records":len(records),"evidence_exact_match_count":sum(bool(r.get('evidence')) for r in records),
                        "human_verified_records":0,"semantic_accuracy":None,
                        "accuracy_note":"Citation substring validation is not extraction accuracy. No exhaustive human gold set."}
         bundles.append(b);out=folder/source["document_id"];out.mkdir()
-        for k in ["extractions","comparisons","timeline","analytics","qa","exceptions","metrics"]:write_json(out/(k+".json"),b[k])
+        for k in ["extractions","comparisons","timeline","risk_map","analytics","qa","exceptions","metrics"]:write_json(out/(k+".json"),b[k])
         write_json(out/"document.json",doc)
         with (out/"scenarios.csv").open("w",newline="") as f:
             rows=b["analytics"].get("rows",[])

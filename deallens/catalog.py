@@ -28,6 +28,7 @@ FIELDS = {
     "termination_rights": r'right.{0,20}terminate|may be terminated|Termination by',
     "funding_sources": r'committed debt financing|existing cash balances|funds.{0,80}available|Debt Financing',
     "bridge_amount": r'bridge loan commitments|aggregate.{0,90}(?:Commitments|commitments)|Bridge Facility',
+    "committed_financing_minimum": r'committed financing.{0,200}no less than|financing.{0,100}at least',
     "financing_maturity": r'364 days|Maturity Date|mature on',
     "interest_basis": r'EURIBOR|Term SOFR|bear interest|Applicable Rate',
     "financing_fees_and_stepups": r'duration fees?|commitment fee|funding fee|step.up',
@@ -53,7 +54,7 @@ QUESTIONS = {
     "awards": ["vested_options", "unvested_options", "rsus", "psus", "restricted_stock", "employee_stock_purchase_plan", "award_cohort_differences"],
     "regulatory": ["regulatory_approvals"],
     "financing_condition": ["financing_condition"],
-    "financing": ["funding_sources", "bridge_amount", "financing_maturity", "interest_basis", "financing_fees_and_stepups", "refinancing_requirements", "financing_conditions"],
+    "financing": ["funding_sources", "bridge_amount", "committed_financing_minimum", "financing_maturity", "interest_basis", "financing_fees_and_stepups", "refinancing_requirements", "financing_conditions"],
     "remedies": ["remedy_limitations"],
     "deal_contingent_hedge": ["approval_or_tender_threshold", "outside_or_long_stop_date", "extension_dates_and_conditions", "remedy_limitations", "fee_triggers_and_tails", "financing_condition"],
 }

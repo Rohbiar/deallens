@@ -29,6 +29,8 @@ def ingest(path: Path, source: dict) -> dict:
     if not data.startswith(b"%PDF"):
         raise ValueError("Source is not a PDF")
     checksum = sha256(data)
+    if source.get("expected_sha256") and source["expected_sha256"] != checksum:
+        raise ValueError("Source checksum differs from pinned source manifest")
     pages, warnings, seen = [], [], {}
     layer, exhibit = "8-k-summary", None
     with fitz.open(stream=data, filetype="pdf") as pdf:
@@ -67,6 +69,9 @@ def ingest(path: Path, source: dict) -> dict:
     # Filing date is not the date of earliest event or agreement/signature date.
     filing = source.get("filing_date")
     warnings.append({"type":"completeness_unverified", "action":"No independent expected page inventory supplied; internal page continuity is not proof of completeness."})
+    if source.get("expected_page_count") is not None and source["expected_page_count"]!=len(pages):
+        raise ValueError("Missing or extra pages relative to expected source inventory")
+    warnings.append({"type":"source_freshness_unverified", "action":"Snapshot of supplied filing only; later amendments, deal status and market inputs have not been checked."})
     if filing is None:
         warnings.append({"type":"filing_date_not_verified", "action":"Obtain filing index metadata; do not substitute event or signing date."})
     if not any(p["document_layer"]=="transaction-agreement" for p in pages):
