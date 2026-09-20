@@ -45,3 +45,11 @@ Approval/correction covers the entire field within that source layer: inspect al
 Applying a valid packet verifies the base run and PDF hashes, creates a new immutable run and regenerates comparison, QA, timeline, risk and analytics using the saved assumptions. The original run is preserved. Rejected/superseded records are excluded from downstream calculations and answers. Stale packets are rejected; export again after a successful review. `ask --strict` requires verified evidence, while still blocking conflicts and missing support.
 
 Reviewer attribution is a local self-attestation, not authenticated identity or a signed approval. Test fixtures use fictional reviewers and temporary synthetic PDFs; they do not verify any shipped transaction record. Enterprise authentication, dual approval and tamper-resistant storage remain production work.
+
+## Evaluation commands and current result
+
+After any run, execute `python tests/evaluate_sources.py` and `PYTHONPATH=. python tests/evaluate_model.py`. The latter writes `docs/MODEL_EVALUATION.json`, separating retrieval excerpt hits, provider audit outcomes, reported usage, candidate matches and human verification. Matching a selected scalar fixture cannot validate complex awards, fees or all exceptions. Current baseline: 16/16 fixture excerpts retrieved, zero provider responses, zero human approvals; complete semantic precision and recall remain null.
+
+The 2026-09-20 continuation found no `OPENAI_API_KEY` in the task environment. The user plans to configure credentials and name a model. A shell export in another terminal may not propagate to the running app; run the bounded command in the configured shell if needed and then return its run ID for evaluation. Never paste the key into chat. No substitute model has been selected.
+
+The transport follows the [official Structured Outputs guide](https://developers.openai.com/api/docs/guides/structured-outputs). The continuation added safe handling of malformed response envelopes, non-finite nested proposal values and preceding context retrieval. Provider output remains unverified even when its schema and citations pass.

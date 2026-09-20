@@ -1,0 +1,19 @@
+test_iso_currency_consideration_retrieved (test_continuation.ContinuationControls.test_iso_currency_consideration_retrieved) ... FAIL
+test_malformed_citation_rejected (test_continuation.ContinuationControls.test_malformed_citation_rejected) ... ok
+test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) ... ok
+test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) ... ok
+test_nonfinite_nested_model_value_rejected (test_continuation.ContinuationControls.test_nonfinite_nested_model_value_rejected) ... ok
+test_retrieval_includes_preceding_page_context (test_continuation.ContinuationControls.test_retrieval_includes_preceding_page_context) ... ok
+
+======================================================================
+FAIL: test_iso_currency_consideration_retrieved (test_continuation.ContinuationControls.test_iso_currency_consideration_retrieved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 17, in test_iso_currency_consideration_retrieved
+    self.assertTrue(select_chunks(doc, 'consideration_per_share', 'transaction-agreement'))
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=1)

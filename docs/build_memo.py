@@ -7,9 +7,11 @@ from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+import reportlab
 
-pdfmetrics.registerFont(TTFont('DejaVu','/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'))
-pdfmetrics.registerFont(TTFont('DejaVuBold','/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'))
+font_root = Path(reportlab.__file__).resolve().parent/'fonts'
+pdfmetrics.registerFont(TTFont('DejaVu',str(font_root/'Vera.ttf')))
+pdfmetrics.registerFont(TTFont('DejaVuBold',str(font_root/'VeraBd.ttf')))
 pdfmetrics.registerFontFamily('DejaVu',normal='DejaVu',bold='DejaVuBold')
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -56,8 +58,8 @@ p('Organon uses a synthetic USD 1bn fixed-rate refinancing slice because the bas
 story.append(PageBreak())
 p('Validation and next steps','MemoTitle')
 h('Verification evidence')
-p('The project passes 48 unit/control tests and 16 selected source fixtures. Tests cover financial identities, evidence integrity, qualifiers, unsupported QA, bounded fake-provider requests, stale reviews and synthetic end-to-end review regeneration. Rejected/superseded records are excluded downstream. Fixtures were curated by the same agent; no full-document semantic accuracy percentage or live-model performance is claimed.')
-p('Initial failures exposed an ancillary-agreement date contaminating the signing date and an outside-date proviso missed by the parser. Both resulted in common rule changes and regression tests. The agent log records these corrections, implementation decisions and genuine Git stages. No human decisions or live-model test results are fabricated.')
+p('The project passes 54 unit/control tests and 16 selected source fixtures. Tests cover financial identities, evidence integrity, qualifiers, unsupported QA, malformed model output, non-finite inputs, stale reviews and synthetic review regeneration. Browser checks confirmed supported and strict-mode answers and the Uber price-qualifier conflict. Agent-curated fixtures are not independent human ground truth; full-document semantic accuracy and live-model performance remain unmeasured.')
+p('Tests exposed ancillary-date contamination, a missed outside-date proviso, missing preceding retrieval context and failure to retrieve ISO-currency consideration. Shared rules and regression tests address these failures. Bounded retrieval now reaches all 16 selected scalar fixture excerpts; this does not measure complete clause recall. No human decisions or live-model results are fabricated.')
 h('Required before submission')
 p('Run and evaluate the implemented model integration with approved credentials, then complete actual review decisions. Reconcile party roles, fee triggers and tails, award cohorts, remedy qualifications, cross-references and acceptance mechanics. Resolve narrative summary/agreement comparisons and independently validate every material answer. Uber\'s regulatory deadline and long-stop structure must be modeled separately from US-style extension scenarios, which remain blocked.')
 p('Expand the gold set with independent review and separate precision, recall and abstention. Preserve exact/minimum/maximum qualifiers and distinguish facility commitments from financing floors. A fail-closed prototype is preferable to unsupported completeness, but abstention alone does not meet the case\'s extraction objectives.')

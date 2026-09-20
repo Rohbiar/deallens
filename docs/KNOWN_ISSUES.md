@@ -3,7 +3,7 @@
 ## Submission blockers
 
 1. Full semantic extraction and validation are unfinished. The current baseline supports 8–11 distinct field types per document; many of the 42 catalog fields remain candidates or not found. Do not describe this as complete extraction.
-2. The bounded, schema-constrained provider integration is implemented and fake-transport tested, but no live model extraction has been evaluated. Retrieval recall, semantic accuracy and dollar costs remain unmeasured; token usage is logged when returned.
+2. The bounded, schema-constrained provider integration is implemented and fake-transport tested, but no live model extraction has been evaluated. Complete-clause retrieval recall, semantic accuracy and dollar costs remain unmeasured; token usage is logged when returned. The selected-fixture retrieval check reaches 16/16 scalar excerpts; this is not full-contract recall.
 3. Human review remains outstanding. A versioned CLI approve/correct/reject workflow exists, but reviewer identity is only locally self-attested. No shipped record is human-verified; the browser interface remains read-only.
 4. Source-specific award cohorts, all fee triggers/tails, remedy limitations, cross-references, acceptance mechanics and lending conditions require complete clause-level reconciliation. Candidate windows can cut across page boundaries; read adjacent original pages.
 5. Agreement-versus-summary narrative matches are unresolved, and summary-only fees may not be normalized from the agreement. Absence is not “not applicable” or a zero termination fee.
@@ -18,7 +18,7 @@
 - Source and assumption hashes are recorded, but installed dependency pins and execution environments need stronger reproducibility controls for production.
 - Candidate retrieval uses a fixed maximum per field/layer. It is a navigation aid, not an exhaustive contract parser. No ranked retrieval recall has been established.
 - Only a small manually inspected fixture set is evaluated. Citation validity and field coverage are distinct from semantic accuracy. No production accuracy percentage is available.
-- UI HTTP routes and embedded JavaScript syntax pass checks, but full browser execution and visual layout were not verified because the required browser download timed out.
+- HTTP routes and selected browser flows pass. On 2026-09-20 the Codex browser displayed the dashboard, supported Bio-Techne answer, strict-mode abstention and Uber qualifier conflict. This is limited agent browser inspection, not exhaustive accessibility, responsiveness or human acceptance testing.
 
 ## Financial limitations
 

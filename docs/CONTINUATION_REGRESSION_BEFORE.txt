@@ -1,0 +1,104 @@
+test_malformed_citation_rejected (test_continuation.ContinuationControls.test_malformed_citation_rejected) ... ERROR
+test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) ... 
+  test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) (body=[]) ... ERROR
+  test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) (body={'status': 'completed', 'output': [None]}) ... ERROR
+  test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) (body={'status': 'completed', 'output': None}) ... ERROR
+test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) ... 
+  test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) (key='notional') ... FAIL
+  test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) (key='base_probability') ... FAIL
+  test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) (key='option_premium_bp_notional') ... FAIL
+test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) ... FAIL
+test_nonfinite_nested_model_value_rejected (test_continuation.ContinuationControls.test_nonfinite_nested_model_value_rejected) ... ok
+test_retrieval_includes_preceding_page_context (test_continuation.ContinuationControls.test_retrieval_includes_preceding_page_context) ... FAIL
+
+======================================================================
+ERROR: test_malformed_citation_rejected (test_continuation.ContinuationControls.test_malformed_citation_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 32, in test_malformed_citation_rejected
+    validate_proposals({'proposals':[proposal]}, req, doc, 'test', .9)
+  File "/Users/rohitnambiar/Documents/deallens/deallens/semantic.py", line 89, in validate_proposals
+    c=chunk_map.get(citation.get("chunk_id"));quote=citation.get("evidence")
+                    ^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) (body=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 39, in test_malformed_provider_envelopes_fail_safely
+    provider({'model':'synthetic','system':'test','chunks':[]})
+  File "/Users/rohitnambiar/Documents/deallens/deallens/provider.py", line 74, in __call__
+    self.last_metadata = {"response_id": data.get("id"), "model": data.get("model"), "usage": data.get("usage"), "attempts": attempt + 1}
+                                         ^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) (body={'status': 'completed', 'output': [None]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 39, in test_malformed_provider_envelopes_fail_safely
+    provider({'model':'synthetic','system':'test','chunks':[]})
+  File "/Users/rohitnambiar/Documents/deallens/deallens/provider.py", line 77, in __call__
+    parts = [part for item in data.get("output", []) for part in item.get("content", [])]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/rohitnambiar/Documents/deallens/deallens/provider.py", line 77, in <listcomp>
+    parts = [part for item in data.get("output", []) for part in item.get("content", [])]
+                                                                 ^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) (body={'status': 'completed', 'output': None})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 39, in test_malformed_provider_envelopes_fail_safely
+    provider({'model':'synthetic','system':'test','chunks':[]})
+  File "/Users/rohitnambiar/Documents/deallens/deallens/provider.py", line 77, in __call__
+    parts = [part for item in data.get("output", []) for part in item.get("content", [])]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not iterable
+
+======================================================================
+FAIL: test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) (key='notional')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 47, in test_nonfinite_financial_inputs_rejected
+    with self.subTest(key=key), self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) (key='base_probability')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 47, in test_nonfinite_financial_inputs_rejected
+    with self.subTest(key=key), self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) (key='option_premium_bp_notional')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 47, in test_nonfinite_financial_inputs_rejected
+    with self.subTest(key=key), self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 49, in test_nonfinite_financial_inputs_rejected
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_retrieval_includes_preceding_page_context (test_continuation.ContinuationControls.test_retrieval_includes_preceding_page_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/rohitnambiar/Documents/deallens/tests/test_continuation.py", line 20, in test_retrieval_includes_preceding_page_context
+    self.assertIn('previous', [c['chunk_id'] for c in select_chunks(doc, 'rsus', 'transaction-agreement')])
+AssertionError: 'previous' not found in ['hit']
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+FAILED (failures=5, errors=4)

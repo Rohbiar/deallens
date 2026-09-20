@@ -1,0 +1,244 @@
+Source: DealLens_Core_Case_Study_Editable.docx
+SHA-256: 118c65a1922bc529fba655c0c6d87a426644b6c5a567caa15f5a84825fb73b99
+Extraction: paragraph order from word/document.xml, 2026-09-20; agent-read requirements.
+
+CORE CASE STUDY
+DealLens
+AI-Assisted Transaction and Hedging Intelligence
+Associate - Derivatives Analytics & AI Solutions Engineer
+Assessment formatTake-home case study | 48-hour submission window | Expected working time: approximately 8-12 hours
+
+Candidate-facing assignment
+
+1. Business Context
+The Derivatives Risk Solutions team needs a reusable application that converts public transaction agreements into structured, evidence-linked transaction intelligence and uses that information to support preliminary hedging and financing analysis.
+You will first develop the model using the Bio-Techne / Merck KGaA transaction. You will then apply the completed model, without transaction-specific hard-coding, to the Organon / Sun Pharma and Uber / Delivery Hero transactions.
+Core objectiveDemonstrate that you can connect transaction-document analysis, derivatives and financing judgment, controlled AI extraction, software engineering, and coding-agent workflows in one auditable front-office prototype.
+
+2. What This Case Study Evaluates
+Ability to translate contractual provisions into transaction, financing, and hedging implications.
+Ability to build modular Python and SQL-based analytics rather than a one-off demonstration.
+Ability to design evidence-linked extraction and grounded question answering over complex agreements.
+Ability to distinguish source facts, synthetic assumptions, calculations, and analytical conclusions.
+Ability to use coding agents efficiently while retaining technical ownership and human control over material judgments.
+Ability to validate critical outputs against primary sources and fail closed when evidence is missing or conflicting.
+Ability to generalize across transaction types, legal terminology, currencies, and financing structures.
+Ability to document controls, lineage, and testing considerations.
+3. Source Documents
+Use only public information contained in or directly supported by the source documents. Any additional market or financing inputs must be explicitly labeled as synthetic assumptions.
+Development case: Bio-Techne / Merck KGaA
+US-style cash merger. Use this document to design, implement, and test the initial model.
+Source: https://investors.bio-techne.com/all-sec-filings/content/0001999371-26-013527/0001999371-26-013527.pdf
+Validation case 1: Organon / Sun Pharma
+US-style cash merger with committed debt financing and differentiated treatment of equity awards by grant date.
+Source: https://d18rn0p25nwr6d.cloudfront.net/CIK-0001821825/c7307cd7-fbd0-40af-acc9-3a591887131d.pdf
+Validation case 2: Uber / Delivery Hero
+Cross-border German voluntary public takeover offer, with tender mechanics, EUR consideration, regulatory conditions, and disclosed bridge financing.
+Source: https://d18rn0p25nwr6d.cloudfront.net/CIK-0001543151/b4fca6cb-0d5e-4b0c-93e8-f58c357d3b48.pdf
+Important classification requirementDo not assume that every source is a conventional US merger agreement. Your model should identify and preserve differences among a merger, a public takeover offer, and other transaction structures.
+
+4. Required Workstreams
+Workstream 1 - Document Ingestion and Classification
+Build a controlled ingestion layer that:
+Ingests each PDF and records the source URL, document identity, checksum, filing date, and ingestion timestamp.
+Distinguishes the filing summary from the underlying agreement exhibit and other exhibits.
+Classifies the transaction structure and applicable document type.
+Preserves stable source locators for all extracted evidence.
+Detects duplicate, missing, or unreadable pages.
+Identifies whether the document is machine-readable or requires OCR.
+Workstream 2 - Structured Transaction Extraction
+Extract each field where available and preserve the original terminology used in the source.
+Transaction identity
+Target
+Parent, bidder, or acquirer
+Merger subsidiary or acquisition vehicle
+Guarantors or covered parties
+Agreement date
+Transaction type
+Consideration type, amount, and currency
+Timing
+Expected closing timing
+Outside or long-stop date
+Extension dates and conditions
+Offer or acceptance period
+Relevant cure periods
+Conditions
+Shareholder approval or tender threshold
+Antitrust, foreign-investment, and other regulatory approvals
+No-injunction condition
+Material-adverse-effect condition
+Burdensome-condition, substantial-detriment, or comparable limitation
+Financing condition, or the absence of one
+Termination and fiduciary provisions
+Target or company termination fee
+Parent or bidder termination fee
+Fee triggers and fee tails
+Superior or competing proposal provisions
+Change in board recommendation
+Matching rights and termination rights
+Financing
+Funding sources and committed financing
+Bridge amount and currency
+Maturity and interest basis
+Fees, duration fees, and step-ups
+Refinancing requirements
+Financing conditions
+Equity treatment
+Common shares
+Vested and unvested options
+RSUs and PSUs
+Restricted stock
+Employee stock purchase plan
+Differences based on grant date, vesting status, or performance status
+Required field-level output
+{  "field_name": "consideration_per_share",  "normalized_value": 73.00,  "currency": "USD",  "raw_value": "$73.00",  "document_id": "bio_techne_2026_merger",  "document_layer": "8-k-summary",  "page": 3,  "section": "Merger Consideration",  "evidence": "Short supporting source excerpt",  "extraction_method": "deterministic | llm | manual | hybrid",  "confidence": 0.99,  "review_status": "unreviewed | verified | exception",  "run_id": "unique-run-identifier"}
+Fail-closed requirementReturn null, not_found, or conflict when evidence is absent, multiple values conflict, normalization is ambiguous, or confidence is below the selected threshold. Do not silently infer or overwrite a critical field.
+
+Workstream 3 - Filing Summary vs. Agreement Comparison
+For each transaction, compare values extracted from the filing summary with values extracted from the underlying agreement. Classify every field as:
+match
+normalized match
+summary only
+agreement only
+conflict
+not applicable
+unresolved
+Preserve both values and both source locations. Apply a documented source hierarchy, but do not silently discard a conflicting value.
+Workstream 4 - Transaction Timeline and Risk Map
+Generate an evidence-linked timeline and risk map covering:
+Signing date
+Shareholder vote, tender, or acceptance requirement
+Regulatory process
+Expected closing timing
+Initial outside or long-stop date
+Extensions and extension conditions
+Termination windows and cure periods
+Financing milestones
+Other material contractual deadlines
+The output must distinguish fixed calendar dates from relative dates, conditional dates, automatically extended dates, dates requiring party election, and non-binding timing estimates.
+Workstream 5 - Hedging and Financing Analytics
+Develop the initial analytics using the following standardized Bio-Techne assumptions. These inputs are synthetic and must not be represented as facts extracted from the agreement.
+financing:  expected_debt_issuance_usd: 4_000_000_000  expected_tenor_years: 7  expected_issue_date: 2027-03-15  debt_fixed_rate: truemarket:  treasury_rate: 0.0425  swap_rate: 0.0440  issuer_credit_spread: 0.0100  benchmark_dv01_per_100mm: 65_000transaction:  base_case_close_probability: 0.85  delayed_close_probability: 0.10  failure_probability: 0.05
+Required scenarios
+Rates up 25 basis points
+Rates down 25 basis points
+Rates up 50 basis points
+Parallel rate move plus 20-basis-point issuer credit-spread widening
+Closing delayed to the first extension date
+Closing delayed to the final extension date
+Transaction failure
+Required strategies
+Unhedged
+Conventional forward-starting interest-rate hedge
+Option-based or deal-contingent hedge
+Required risk separation
+Benchmark-rate exposure
+Swap-spread exposure
+Issuer credit-spread exposure
+FX exposure
+Timing risk
+Transaction-completion risk
+Hedge unwind or breakage risk
+For the validation transactions, adapt the analytics to the extracted transaction characteristics. If data are unavailable, use clearly labeled synthetic assumptions and explain why each assumption is required.
+Workstream 6 - Grounded Question Answering
+Implement a CLI, notebook, API, Streamlit application, or lightweight web interface that can answer the following questions for each transaction:
+What is the consideration per share?
+What approval, tender, or acceptance threshold applies?
+What is the outside or long-stop date?
+How may that date be extended?
+What termination fees apply?
+What triggers each fee?
+How are options, RSUs, PSUs, and other awards treated?
+What regulatory approvals are required?
+Is there a financing condition?
+What financing arrangements are disclosed?
+What remedy, burdensome-condition, or substantial-detriment limitations apply?
+Which provisions are most relevant to a deal-contingent hedge?
+Each answer must include the direct answer, document and document layer, section, page or stable locator, supporting evidence, confidence or review status, and a designation of fact, assumption, or analysis.
+Unsupported-answer behaviorIf sufficient evidence is not available, return: “I could not identify sufficient source support for this answer.”
+
+Workstream 7 - Out-of-Sample Generalization
+After building the Bio-Techne model, run it against Organon / Sun Pharma and Uber / Delivery Hero without transaction-specific hard-coding.
+Provide a cross-transaction analysis showing:
+What generalized successfully
+What required a schema extension
+What failed or produced low confidence
+Differences in legal terminology and transaction structure
+Extraction accuracy and performance by document
+Changes required to support currencies, tender mechanics, financing structures, and equity-award variations
+Recommended architecture improvements
+Generalization standardDo not build three separate applications. Extensions should be modular, documented, and compatible with the common data model wherever reasonably possible.
+
+Workstream 8 - Controls and Auditability
+Input controls
+Document checksum, source identity, version, filing date, and ingestion time
+Duplicate and page-integrity detection
+Extraction controls
+Schema validation and date/currency normalization
+Evidence-to-value consistency checks
+Conflict detection, confidence thresholds, and human-review queue
+Analytics controls
+Versioned assumptions and scenario identifiers
+Explicit sign conventions
+Reproducible calculations, unit tests, regressions, and sensitivity checks
+AI controls
+Model and prompt version
+Retrieved chunk identifiers and citations
+Unsupported-claim detection and prompt-injection defense
+Least-privilege tool access and human approval boundaries
+Output controls
+Fact, assumption, and analysis labels
+Exception report and stale-input warnings
+Review status, exportable audit record, and reproducible run ID
+5. Required Coding-Agent Workflow
+You are explicitly encouraged to use coding agents such as GitHub Copilot, Claude Code, Codex, Cursor, or comparable tools. Agent use will be evaluated based on leverage, judgment, verification, recovery, security, and ownership, not prompt volume or the percentage of generated code.
+Ownership standardYou remain responsible for every submitted calculation, extraction, citation, design decision, and line of retained code. “The agent generated it” is not an acceptable explanation for an error.
+
+EXECUTION_PLAN.md
+Workstream decomposition and dependencies
+Tasks delegated to a coding agent
+Tasks retained for direct human review
+Acceptance criteria by workstream
+Testing strategy
+Time budget
+Key risks and fallback plan
+AGENT_WORKFLOW.md
+Agents and models used
+Role assigned to each agent
+Representative instructions and project context supplied
+Major generated changes accepted
+Suggestions rejected or materially revised
+Errors encountered and recovery process
+Tests and validation loops
+Approximate time spent by workstream
+Estimated net agent leverage
+Improvements you would make in a second iteration
+Include five to ten substantive agent-decision records. At minimum, document one successful delegation, one rejected recommendation, one incorrect agent assumption, one debugging or recovery episode, one context improvement, and one revision triggered by a failed test.
+Submit a meaningful Git history reflecting major implementation stages, corrections, tests, and documentation. Do not artificially create a commit for every minor edit.
+6. Required Deliverables
+Complete source code with no embedded credentials
+Dependency file and setup instructions
+Machine-readable extraction outputs for all three transactions
+Working notebook or lightweight user interface
+Evidence-linked transaction timelines 
+Bio-Techne scenario and strategy analysis
+Adapted analysis for Organon and Uber / Delivery Hero, with assumptions clearly labeled
+Technical memo of no more than three pages
+Test execution evidence
+Meaningful Git history
+EXECUTION_PLAN.md and AGENT_WORKFLOW.md
+Known issues and productionization roadmap
+7. Other Submission Constraints
+Do not hard-code extracted transaction answers behind an AI interface.
+Disclose material manual corrections and retained agent-generated work.
+Explain how the architecture and permissions would change for material non-public information.
+8. Completion Standard
+A successful submission should demonstrate a coherent chain from primary-source evidence to structured transaction data, from transaction data to financing and hedging analysis, and from analytics to a controlled, reproducible front-office workflow.
+The final product does not need to be production-ready. It must, however, be runnable, understandable, testable, auditable, and defensible. Material limitations should be explicit, and unsupported outputs should fail safely rather than appear complete.
+What matters mostFinancial correctness, evidence quality, modularity, control-minded engineering, real generalization, and demonstrated ownership of agent-assisted work.
+
+Public-Source Reference Notes
+The transaction documents are the authoritative sources for the case. Candidates should verify all extracted terms directly against the applicable filing summary and agreement exhibit.
+1. Bio-Techne Corporation, Form 8-K and Agreement and Plan of Merger, filed June 2026. https://investors.bio-techne.com/all-sec-filings/content/0001999371-26-013527/0001999371-26-013527.pdf
+2. Organon & Co., Form 8-K and Agreement and Plan of Merger, filed April 2026. https://d18rn0p25nwr6d.cloudfront.net/CIK-0001821825/c7307cd7-fbd0-40af-acc9-3a591887131d.pdf
+3. Uber Technologies, Inc., Form 8-K, Business Combination Agreement, and Bridge Credit Agreement disclosure, filed July 2026. https://d18rn0p25nwr6d.cloudfront.net/CIK-0001543151/b4fca6cb-0d5e-4b0c-93e8-f58c357d3b48.pdf

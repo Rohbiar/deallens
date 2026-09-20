@@ -71,13 +71,26 @@ class OpenAIProvider:
                 raise ProviderError("Model request failed or timed out; its completion and billing may be unknown. No automatic timeout retry.") from None
             except (ValueError, UnicodeError):
                 raise ProviderError("Provider returned invalid JSON") from None
+        if not isinstance(data, dict):
+            raise ProviderError("Provider returned an invalid response envelope")
         self.last_metadata = {"response_id": data.get("id"), "model": data.get("model"), "usage": data.get("usage"), "attempts": attempt + 1}
         if data.get("status") != "completed":
             raise ProviderError("Model response was incomplete; no partial extraction accepted")
-        parts = [part for item in data.get("output", []) for part in item.get("content", [])]
+        output = data.get("output")
+        if not isinstance(output,list) or any(not isinstance(item,dict) for item in output):
+            raise ProviderError("Provider returned invalid output items")
+        parts = []
+        for item in output:
+            content = item.get("content", [])
+            if not isinstance(content,list) or any(not isinstance(part,dict) for part in content):
+                raise ProviderError("Provider returned invalid content items")
+            parts.extend(content)
         if any(p.get("type") == "refusal" for p in parts):
             raise ProviderError("Model refused extraction; no output accepted")
-        text = "".join(p.get("text", "") for p in parts if p.get("type") == "output_text")
+        texts = [p.get("text") for p in parts if p.get("type") == "output_text"]
+        if any(not isinstance(t,str) for t in texts):
+            raise ProviderError("Provider returned invalid text content")
+        text = "".join(texts)
         try:
             return json.loads(text)
         except (ValueError, TypeError):

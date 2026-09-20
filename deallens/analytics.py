@@ -2,11 +2,15 @@
 from __future__ import annotations
 from datetime import date
 import re
+import math
 from .extract import DATE, date_iso
 
 STRATEGIES=("unhedged","forward_starting_payer_swap","payer_option","deal_contingent_payer_swap")
 
 def validate(a):
+    for key,value in a.items():
+        if isinstance(value,(int,float)) and not isinstance(value,bool) and not math.isfinite(value):
+            raise ValueError(f"Non-finite assumption: {key}")
     if a["notional"]<=0 or a["dv01_per_100mm"]<=0:raise ValueError("Notional and DV01 must be positive")
     ps=[a[k] for k in ("base_probability","delay_probability","failure_probability")]
     if any(p<0 or p>1 for p in ps) or abs(sum(ps)-1)>1e-9:raise ValueError("Outcome probabilities must sum to one")
@@ -15,6 +19,8 @@ def validate(a):
 
 def scenario(a, strategy, benchmark_bp=0, swap_spread_bp=0, credit_bp=0, completed=True, delay_days=0):
     validate(a)
+    if any(type(v) not in {int,float} or not math.isfinite(v) for v in (benchmark_bp,swap_spread_bp,credit_bp,delay_days)):
+        raise ValueError("Scenario shocks and delay must be finite numbers")
     if strategy not in STRATEGIES:raise ValueError("Unknown strategy")
     if delay_days<0:raise ValueError("Negative delay")
     n=a["notional"];dv01=n/100_000_000*a["dv01_per_100mm"]

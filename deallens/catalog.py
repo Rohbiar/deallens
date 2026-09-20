@@ -6,7 +6,7 @@ FIELDS = {
     "guarantors_or_covered_parties": r'guarant(?:ee|or)|covered provisions|solely for the purposes',
     "agreement_date": r'(?:Agreement.{0,40}dated as of|On [A-Za-z]+ \d{1,2}, \d{4}.{0,350}entered into)',
     "transaction_type": r'voluntary public takeover offer|merge with and into',
-    "consideration_per_share": r'(?:right to receive|consideration per.{0,55}|Offer Price.{0,80}|amount in cash equal to)\s*[$€]|[$€][\d,.]+\s+(?:in cash|per)',
+    "consideration_per_share": r'(?:right to receive|consideration per.{0,160}?|Offer Price.{0,80}?|amount in cash equal to)\s*(?:[$€]|\b(?:EUR|USD|GBP|JPY|CAD|INR|KRW)\s*)|(?:[$€]|\b(?:EUR|USD|GBP|JPY|CAD|INR|KRW)\s*)[\d,.]+\s+(?:in cash|per)',
     "consideration_type": r'cash consideration|in cash.{0,80}Consideration|Offer Price',
     "expected_closing_timing": r'(?:expected|expect|anticipat).{0,100}(?:clos|complet)|(?:clos|complet).{0,80}(?:expected|half of)',
     "outside_or_long_stop_date": r'Outside Date|Long[- ]Stop Date',

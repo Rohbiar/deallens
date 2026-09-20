@@ -50,5 +50,5 @@
       "status": 404
     }
   ],
-  "browser_visual_test": "Not executed: no installed browser; download timed out. HTTP checks do not establish visual correctness."
+  "browser_visual_test": "This script tests HTTP only. See docs/BROWSER_CHECKS.json for separately recorded browser inspection."
 }

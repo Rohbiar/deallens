@@ -1,3 +1,9 @@
+test_iso_currency_consideration_retrieved (test_continuation.ContinuationControls.test_iso_currency_consideration_retrieved) ... ok
+test_malformed_citation_rejected (test_continuation.ContinuationControls.test_malformed_citation_rejected) ... ok
+test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) ... ok
+test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) ... ok
+test_nonfinite_nested_model_value_rejected (test_continuation.ContinuationControls.test_nonfinite_nested_model_value_rejected) ... ok
+test_retrieval_includes_preceding_page_context (test_continuation.ContinuationControls.test_retrieval_includes_preceding_page_context) ... ok
 test_basis_widening_has_correct_sign (test_core.AnalyticsTests.test_basis_widening_has_correct_sign) ... ok
 test_contingent_failure_only_fee (test_core.AnalyticsTests.test_contingent_failure_only_fee) ... ok
 test_delay_cost_not_added_twice (test_core.AnalyticsTests.test_delay_cost_not_added_twice) ... ok
@@ -48,9 +54,9 @@ test_unretrieved_chunk_rejected (test_semantic_review.SemanticTests.test_unretri
 test_valid_model_proposal_cannot_approve_itself (test_semantic_review.SemanticTests.test_valid_model_proposal_cannot_approve_itself) ... ok
 
 ----------------------------------------------------------------------
-Ran 48 tests in 0.082s
+Ran 54 tests in 0.663s
 
 OK
-synthetic_test {"elapsed_seconds": 0.003, "page_count": 1, "catalog_fields": 42, "machine_supported_fields": 2, "candidate_only_fields": 1, "records": 127, "evidence_exact_match_count": 4, "human_verified_records": 0, "model_proposal_records": 0, "semantic_accuracy": null, "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."}
-Run: 20260920T132932Z-d702f9ec
-Reviewed run: 20260920T132932Z-0f591f01
+synthetic_test {"elapsed_seconds": 0.002, "page_count": 1, "catalog_fields": 42, "machine_supported_fields": 2, "candidate_only_fields": 1, "records": 127, "evidence_exact_match_count": 4, "human_verified_records": 0, "model_proposal_records": 0, "semantic_accuracy": null, "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."}
+Run: 20260920T152545Z-1f4d0d01
+Reviewed run: 20260920T152546Z-22463edd

@@ -32,6 +32,6 @@ try:
     raise AssertionError('Unexpected file access')
 except HTTPError as e:
     assert e.code==404;results.append({'path_traversal':'rejected','status':404})
-report={'checks':results,'browser_visual_test':'Not executed: no installed browser; download timed out. HTTP checks do not establish visual correctness.'}
+report={'checks':results,'browser_visual_test':'This script tests HTTP only. See docs/BROWSER_CHECKS.json for separately recorded browser inspection.'}
 (root/'docs/RUNTIME_CHECKS.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

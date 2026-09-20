@@ -12,7 +12,7 @@ One Python/SQLite application processes all three PDFs. Bio-Techne was the first
 | Organon | 109 | 8 | 42 | 0 |
 | Uber and Delivery Hero | 149 | 11 | 42 | 0 |
 
-Execution times are measured in each run's `metrics.json`, approximately 4–6 seconds per source in this environment. A field type counts as supported if at least one layer contains a supported record; this does not establish that its canonical comparison is resolved or that all subfields are complete. Candidate and not-found records remain in the outputs.
+Execution times are measured in each run's `metrics.json`, with current values recorded in `docs/PIPELINE_RESULTS.txt` (earlier runs took approximately 4–6 seconds per source). A field type counts as supported if at least one layer contains a supported record; this does not establish that its canonical comparison is resolved or that all subfields are complete. Candidate and not-found records remain in the outputs.
 
 The 16 selected source fixtures pass. They were curated by the same agent through direct source inspection, not an independent human assessor. They test selected prices, qualifiers, signing/outside dates, financing conditions and fee/financing amounts. Neither this result nor exact citation matching estimates semantic accuracy across the full agreements. Full accuracy remains unmeasured.
 
@@ -42,3 +42,7 @@ The 16 selected source fixtures pass. They were curated by the same agent throug
 ## Architecture improvements
 
 Use clause/definition graphs before extending regex coverage further. The optional bounded model path includes neighboring-page retrieval, schema validation and exact-citation checks, and a versioned reviewer workflow is implemented. Neither live-model quality nor actual human review has been demonstrated. Build a separate labeled validation corpus containing negative and conflicting examples, freeze extraction rules, and evaluate complete fields with precision, recall and abstention. Preserve the current deterministic rule suite as a transparent baseline and regression gate.
+
+## Continuation retrieval evaluation
+
+The model retriever initially missed Uber’s agreement price floor because its consideration pattern recognized currency symbols but not ISO currency labels. A shared ISO-currency rule and preceding-chunk context fixed the selected retrieval miss. `MODEL_EVALUATION.json` reports 16/16 selected scalar excerpts reachable within the 16,000-character budget. This is adapted, agent-curated validation; it does not establish full-clause recall or live semantic accuracy. All 54 tests pass; live provider calls and human approvals remain zero.

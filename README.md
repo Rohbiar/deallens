@@ -4,6 +4,10 @@ DealLens is a runnable public-source research prototype for the Mizuho Derivativ
 
 **This is an initial implementation for review, not a submission-ready claim of complete legal extraction.** The deterministic baseline supports a limited group of amounts, dates and explicit conditions. Complex provisions are retrieved as candidate evidence with null normalized values. They require an actual semantic extraction/review pass. The UI makes this distinction visible. No human verification or live-model extraction is claimed.
 
+## Continuation verification (2026-09-20)
+
+54 unit/control tests and 16 selected source fixtures pass. The bounded retriever reaches all 16 fixture excerpts after an ISO-currency retrieval fix. These are agent-curated checks, not complete semantic accuracy or human review. Browser checks confirmed the supported Bio-Techne answer, strict-mode abstention and Uber price-qualifier conflict. See `docs/ASSIGNMENT_VALIDATION.md`, `docs/MODEL_EVALUATION.json` and `docs/BROWSER_CHECKS.json`. Live evaluation remains pending credentials and model selection; no provider call or human approval is claimed.
+
 ## Start locally
 
 Python 3.11 or later is required. From the extracted project directory:
@@ -11,7 +15,7 @@ Python 3.11 or later is required. From the extracted project directory:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
+python -m pip install -r requirements-tested.txt
 python -m deallens.cli serve
 ```
 
@@ -22,6 +26,8 @@ To reproduce the pipeline and tests:
 ```bash
 python -m deallens.cli run
 python -m unittest discover -s tests -v
+python tests/evaluate_sources.py
+PYTHONPATH=. python tests/evaluate_model.py
 python -m deallens.cli ask bio_techne "What is the consideration per share?"
 python -m deallens.cli ask organon "Is there a financing condition?"
 python -m deallens.cli ask uber_delivery_hero "What financing arrangements are disclosed?"
@@ -77,3 +83,7 @@ The optional `run --model YOUR_MODEL_ID` path uses bounded clause retrieval and 
 ## Before submitting
 
 Read the technical memo and known issues. Run and evaluate semantic extraction, independently inspect the important source pages, all calculations and retained code, complete actual review decisions, validate fee/award completeness, and revise the agent log to include your actual work. A small fixture pass must not be presented as accuracy across the whole contract. The repository includes genuine implementation commits; do not invent human decisions or inflate time spent.
+
+## Review package
+
+`python docs/package_deliverables.py` creates `outputs/deliverables/DealLens_review_package.zip` with source, original PDFs, latest run JSON/CSV, SQLite history, matching review packet, memo, verification reports and a genuine Git history bundle. The package manifest hashes every included file. Credentials, virtual environments and unrelated files are excluded by explicit input selection. This is a review candidate while live extraction and human review remain outstanding.
