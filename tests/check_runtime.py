@@ -16,9 +16,13 @@ for _ in range(40):
     try:urlopen(base+'/api/manifest',timeout=1);break
     except OSError:time.sleep(.1)
 results=[]
-for path in ['/','/api/manifest','/api/bio_techne','/api/organon','/api/uber_delivery_hero','/source/bio_techne']:
+for path in ['/','/api/manifest','/api/review-packet','/api/bio_techne','/api/organon','/api/uber_delivery_hero','/source/bio_techne']:
     with urlopen(base+path,timeout=10) as r:
         data=r.read();assert r.status==200 and data
+        if path=='/api/review-packet':
+            packet=json.loads(data)
+            assert packet['human_review_attested'] is False and packet['decisions']==[]
+            assert packet['records'] and all(x['record']['record_id'] for x in packet['records'])
         results.append({'route':path,'status':r.status,'bytes':len(data)})
 for doc,question,expected in [('bio_techne','consideration','73.0'),('uber_delivery_hero','consideration','sufficient source support')]:
     with urlopen(base+'/ask/'+doc+'?q='+quote(question)) as r:

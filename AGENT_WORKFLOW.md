@@ -47,4 +47,6 @@ The assignment's 8–12-hour estimate is a planning budget, not claimed time spe
 
 ## Second iteration
 
-Connect an approved model with bounded clause batches and structured output validation; add a real reviewer workflow; model cross-references and party roles; expand independently reviewed evaluation coverage; then replace illustrative hedge and bridge assumptions with approved curves, pricing and contract-specific terms. Preserve the deterministic baseline to measure whether added complexity actually improves supported precision and recall.
+The continuation implemented bounded provider requests, schema-constrained proposals, exact retrieved-citation checks, usage/request logs and explicit versioned reviewer decisions. Original runs are preserved and downstream outputs are regenerated. A control fix excludes rejected/superseded records from QA, comparisons, timelines and analytics. The suite now has 48 tests, including synthetic end-to-end review and fake HTTP transport cases. No live provider call or actual human review occurred.
+
+Next: evaluate an approved live model, perform actual human review, model cross-references and party roles, and expand independently reviewed evaluation coverage. Then replace illustrative hedge and bridge assumptions with approved curves, pricing and contract-specific terms. Preserve the deterministic baseline to measure whether added complexity actually improves supported precision and recall.

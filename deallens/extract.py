@@ -188,6 +188,7 @@ def validate_evidence(record, doc):
     return bool(record.get("evidence")) and page["text"][start:end]==record["evidence"]
 
 def comparison(records):
+    records=[r for r in records if r.get("status") not in {"superseded","rejected"}]
     output=[]
     for field in FIELDS:
         sides={layer:[r for r in records if r["field_name"]==field and r["document_layer"]==layer]
@@ -198,11 +199,14 @@ def comparison(records):
             if financing:sides["transaction-agreement"]=financing
         a,b=sides.values()
         av=[r for r in a if r["status"]=="supported"];bv=[r for r in b if r["status"]=="supported"]
-        if any(r["status"]=="conflict" for r in a+b):status="conflict"
+        import json
+        def values(items):
+            return {(json.dumps(r["normalized_value"],sort_keys=True),r["currency"],r.get("value_qualifier")) for r in items}
+        if any(r["status"]=="conflict" for r in a+b) or len(values(av))>1 or len(values(bv))>1:status="conflict"
         elif av and bv:
-            x={(str(r["normalized_value"]),r["currency"],r.get("value_qualifier")) for r in av};y={(str(r["normalized_value"]),r["currency"],r.get("value_qualifier")) for r in bv}
+            x=values(av);y=values(bv)
             if x!=y:status="conflict"
-            elif {r["raw_value"] for r in av}=={r["raw_value"] for r in bv}:status="match"
+            elif {r["raw_value"] or r.get("evidence") for r in av}=={r["raw_value"] or r.get("evidence") for r in bv}:status="match"
             else:status="normalized match"
         elif av and not any(r.get("evidence") for r in b):status="summary only"
         elif bv and not any(r.get("evidence") for r in a):status="agreement only"
@@ -218,6 +222,7 @@ def timeline(doc,records):
             "cure_periods","expected_closing_timing","approval_or_tender_threshold","regulatory_approvals","financing_maturity","financing_fees_and_stepups"}
     events=[];seen=set()
     for r in records:
+        if r.get("status") in {"superseded","rejected"}:continue
         if r["field_name"] not in fields or not r.get("evidence"):continue
         text=r["evidence"]
         if r["field_name"]=="expected_closing_timing":kind="non_binding_estimate"

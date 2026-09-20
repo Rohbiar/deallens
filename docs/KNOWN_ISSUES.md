@@ -3,8 +3,8 @@
 ## Submission blockers
 
 1. Full semantic extraction and validation are unfinished. The current baseline supports 8–11 distinct field types per document; many of the 42 catalog fields remain candidates or not found. Do not describe this as complete extraction.
-2. No live model provider has been connected or tested. The proposal adapter provides a safe integration boundary, not demonstrated end-to-end LLM extraction. Context-window batching, schema validation beyond the core fields, retries and cost accounting still need implementation.
-3. Human review remains outstanding. There is no authenticated approve/correct workflow. No shipped record is human-verified. The interface can inspect exceptions but cannot resolve them.
+2. The bounded, schema-constrained provider integration is implemented and fake-transport tested, but no live model extraction has been evaluated. Retrieval recall, semantic accuracy and dollar costs remain unmeasured; token usage is logged when returned.
+3. Human review remains outstanding. A versioned CLI approve/correct/reject workflow exists, but reviewer identity is only locally self-attested. No shipped record is human-verified; the browser interface remains read-only.
 4. Source-specific award cohorts, all fee triggers/tails, remedy limitations, cross-references, acceptance mechanics and lending conditions require complete clause-level reconciliation. Candidate windows can cut across page boundaries; read adjacent original pages.
 5. Agreement-versus-summary narrative matches are unresolved, and summary-only fees may not be normalized from the agreement. Absence is not “not applicable” or a zero termination fee.
 6. The date-kind classifier is heuristic. A page can contain several dates and conditions. Uber's regulatory timing should be represented as its own event structure rather than forced into US-style first/final outside-date extensions. Those extension scenarios are blocked in the baseline.
@@ -36,9 +36,9 @@ Add an immutable signed audit log, reviewer attribution, dual approval for mater
 
 ## Next implementation sequence
 
-1. Integrate one approved provider with schema-constrained batch extraction and explicit abstention, using the common catalog.
+1. Run and evaluate an approved model using the implemented bounded extraction path and common catalog.
 2. Add cross-page clauses, referenced-definition expansion, party-role graphs, award cohorts and typed deadline expressions.
-3. Implement reviewer decisions as append-only versions; re-run comparisons and dependent analytics after approval/correction.
+3. Complete actual reviewer decisions using versioned runs; add authenticated identities and dual approval for production.
 4. Build an independently reviewed gold set covering every critical field and diverse negative/conflict cases; quantify precision, recall and abstention.
 5. Add actual curves, option pricing, FX forwards and exact bridge cashflows; test against independent pricing tools.
 6. Add provenance signatures, reproducible dependency lock/container, authentication and deployment controls.

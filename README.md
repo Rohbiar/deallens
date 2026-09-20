@@ -39,8 +39,8 @@ python -m deallens.cli ask uber_delivery_hero "What financing arrangements are d
 | Timeline and risk | Evidence-linked events, date kinds and ten risk categories | Conditional/cross-page legal interpretations need review |
 | Analytics | USD Bio-Techne case; local-currency validation slices; EUR bridge/FX sensitivity; four hedge strategies | Synthetic assumptions, constant DV01 and expiry payoffs; no live market pricing |
 | QA | Twelve question categories; direct supported values or exact unsupported response | Does not turn keyword matches into legal answers |
-| AI controls | Provider-neutral proposal function, fixed prompt, chunk lineage, exact evidence validation, no tools, no self-approval | Live provider not connected; proposal function is not yet an end-to-end semantic pipeline |
-| Audit | Append-only SQLite runs; JSON and CSV exports; code/assumption versions; review queue | No authenticated review UI or enterprise authorization |
+| AI controls | Optional bounded Responses API extraction, strict schema, citation checks, request/usage audit, no tools or self-approval | Fake-transport tested; live quality and retrieval recall unmeasured |
+| Audit | Versioned review decisions, immutable run folders, SQLite history and regenerated downstream outputs | Reviewer identity is locally self-attested, not authenticated |
 
 ## Architecture and source hierarchy
 
@@ -72,8 +72,8 @@ Positive net incremental cost is worse for the issuer. Option premiums and conti
 
 Add a document ID and HTTPS URL to the source configuration, or supply its PDF with that ID as its filename. Run the same pipeline. There are no company-specific answer branches in extraction or QA. The development role selects the assignment's required Bio-Techne synthetic inputs; all validation cases use the common template and supported currency.
 
-`deallens.model.propose(provider, document, fields, model_name, run_id)` accepts a provider callable that returns JSON proposals. Its prompt and field catalog are shared across transactions. Model text is never allowed to mark itself verified. Provider requests require explicit integration, token budgeting, data-handling approval and provider-specific credentials; none are embedded. The interface has been tested with an in-memory provider only. Connecting it and conducting semantic/human review is a remaining milestone, not a completed deliverable.
+The optional `run --model YOUR_MODEL_ID` path uses bounded clause retrieval and schema-constrained proposals. Configure `OPENAI_API_KEY` privately in your local environment; do not put it in source code or chat. Model proposals remain unverified until explicitly reviewed. The provider transport and review lifecycle are tested with synthetic fixtures, not a live model. See [MODEL_AND_REVIEW.md](docs/MODEL_AND_REVIEW.md) for commands, limits and review instructions.
 
 ## Before submitting
 
-Read the technical memo and known issues. Independently inspect the important source pages, all calculations and retained code; finish the semantic extraction and review workflow, validate fee/award completeness, and revise the agent log to include your actual work. A small fixture pass must not be presented as accuracy across the whole contract. The repository includes genuine implementation commits; do not invent human decisions or inflate time spent.
+Read the technical memo and known issues. Run and evaluate semantic extraction, independently inspect the important source pages, all calculations and retained code, complete actual review decisions, validate fee/award completeness, and revise the agent log to include your actual work. A small fixture pass must not be presented as accuracy across the whole contract. The repository includes genuine implementation commits; do not invent human decisions or inflate time spent.

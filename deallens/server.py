@@ -17,9 +17,19 @@ def serve(root,port):
             if url.path=="/":
                 data=(Path(__file__).parent/"ui.html").read_bytes();ctype="text/html; charset=utf-8"
             elif url.path=="/api/manifest":data=json.dumps(manifest).encode()
+            elif url.path=="/api/review-packet":
+                from .review import packet
+                from .semantic import identify
+                bundles=[]
+                for ident in sorted(ids):
+                    p=folder/ident
+                    bundles.append({"document":{"document_id":ident},"extractions":identify(json.loads((p/"extractions.json").read_text()))})
+                data=json.dumps(packet(manifest,bundles),indent=2).encode()
             elif len(parts)==2 and parts[0]=="api" and parts[1] in ids:
                 p=folder/parts[1]
                 b={k:json.loads((p/(k+".json")).read_text()) for k in ("document","extractions","comparisons","timeline","analytics","metrics")}
+                for k in ("model_audit","review_events"):
+                    if (p/(k+".json")).exists():b[k]=json.loads((p/(k+".json")).read_text())
                 data=json.dumps(b).encode()
             elif len(parts)==2 and parts[0]=="source" and parts[1] in ids:
                 data=(root/"data/sources"/(parts[1]+".pdf")).read_bytes();ctype="application/pdf"

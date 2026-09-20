@@ -54,6 +54,7 @@ def extension_dates(records):
     """
     anchors={}
     for r in records:
+        if r.get("status") in {"superseded","rejected"}:continue
         if r["field_name"]!="extension_dates_and_conditions" or not r.get("evidence"):continue
         if r["document_layer"]!="transaction-agreement":continue
         text=r["evidence"]

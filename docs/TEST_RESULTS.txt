@@ -25,8 +25,32 @@ test_duplicate_and_sparse_pages_flagged (test_ingestion.IngestionTests.test_dupl
 test_expected_page_count_detects_missing_page (test_ingestion.IngestionTests.test_expected_page_count_detects_missing_page) ... ok
 test_source_pin_detects_modified_document (test_ingestion.IngestionTests.test_source_pin_detects_modified_document) ... ok
 test_threshold_blocks_scalar_normalization (test_ingestion.IngestionTests.test_threshold_blocks_scalar_normalization) ... ok
+test_review_run_rebuilds_exports_and_retains_original (test_semantic_review.PipelineIntegrationTests.test_review_run_rebuilds_exports_and_retains_original) ... ok
+test_auth_failure_does_not_leak_body_or_retry (test_semantic_review.ProviderTests.test_auth_failure_does_not_leak_body_or_retry) ... ok
+test_incomplete_output_not_accepted (test_semantic_review.ProviderTests.test_incomplete_output_not_accepted) ... ok
+test_rate_limit_has_bounded_retry (test_semantic_review.ProviderTests.test_rate_limit_has_bounded_retry) ... ok
+test_refusal_not_accepted (test_semantic_review.ProviderTests.test_refusal_not_accepted) ... ok
+test_transport_schema_and_no_storage (test_semantic_review.ProviderTests.test_transport_schema_and_no_storage) ... ok
+test_approval_preserves_original_and_enables_strict_answer (test_semantic_review.ReviewTests.test_approval_preserves_original_and_enables_strict_answer) ... ok
+test_export_has_no_preapproved_decisions (test_semantic_review.ReviewTests.test_export_has_no_preapproved_decisions) ... ok
+test_missing_attestation_rejected (test_semantic_review.ReviewTests.test_missing_attestation_rejected) ... ok
+test_missing_scope_attestation_rejected (test_semantic_review.ReviewTests.test_missing_scope_attestation_rejected) ... ok
+test_reject_keeps_history_but_cannot_answer (test_semantic_review.ReviewTests.test_reject_keeps_history_but_cannot_answer) ... ok
+test_stale_review_rejected (test_semantic_review.ReviewTests.test_stale_review_rejected) ... ok
+test_tampered_source_rejected (test_semantic_review.ReviewTests.test_tampered_source_rejected) ... ok
+test_unknown_record_rejected (test_semantic_review.ReviewTests.test_unknown_record_rejected) ... ok
+test_call_budget_and_audit (test_semantic_review.SemanticTests.test_call_budget_and_audit) ... ok
+test_fabricated_evidence_rejected (test_semantic_review.SemanticTests.test_fabricated_evidence_rejected) ... ok
+test_low_confidence_remains_null (test_semantic_review.SemanticTests.test_low_confidence_remains_null) ... ok
+test_nonfinite_json_rejected (test_semantic_review.SemanticTests.test_nonfinite_json_rejected) ... ok
+test_retrieval_budget (test_semantic_review.SemanticTests.test_retrieval_budget) ... ok
+test_unretrieved_chunk_rejected (test_semantic_review.SemanticTests.test_unretrieved_chunk_rejected) ... ok
+test_valid_model_proposal_cannot_approve_itself (test_semantic_review.SemanticTests.test_valid_model_proposal_cannot_approve_itself) ... ok
 
 ----------------------------------------------------------------------
-Ran 27 tests in 0.048s
+Ran 48 tests in 0.082s
 
 OK
+synthetic_test {"elapsed_seconds": 0.003, "page_count": 1, "catalog_fields": 42, "machine_supported_fields": 2, "candidate_only_fields": 1, "records": 127, "evidence_exact_match_count": 4, "human_verified_records": 0, "model_proposal_records": 0, "semantic_accuracy": null, "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."}
+Run: 20260920T132932Z-d702f9ec
+Reviewed run: 20260920T132932Z-0f591f01

@@ -18,6 +18,7 @@ def route(question):
     return next((key for key,p in patterns if re.search(p,question,re.I)),None)
 
 def answer(question,records,comparisons,strict=False):
+    records=[r for r in records if r.get("status") not in {"superseded","rejected"}]
     key=route(question)
     if not key:return {"question":question,"answer":UNSUPPORTED,"designation":"analysis","sources":[],"status":"unsupported"}
     fields=QUESTIONS[key];conflicts={c["field_name"] for c in comparisons if c["classification"]=="conflict"}
@@ -43,7 +44,9 @@ def answer(question,records,comparisons,strict=False):
             if f=="financing_condition" and r["normalized_value"] is False:
                 values.append("Obtaining financing is not a condition under the cited provision")
             else:
-                values.append(f"{f}: {qualifier}{r['normalized_value']}"+(f" {r['currency']}" if r.get('currency') else ""))
+                value=r["normalized_value"]
+                if isinstance(value,dict) and isinstance(value.get("summary"),str):value=value["summary"]
+                values.append(f"{f}: {qualifier}{value}"+(f" {r['currency']}" if r.get('currency') else ""))
     missing=[f for f in fields if f not in {r["field_name"] for r in sources}]
     return {"question":question,"answer":"; ".join(values),"status":"partial" if missing else "supported",
             "designation":"fact","sources":sources,"candidate_evidence":candidates[:18],

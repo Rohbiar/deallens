@@ -17,8 +17,12 @@ CREATE TABLE IF NOT EXISTS comparisons(run_id TEXT, document_id TEXT, field_name
 CREATE TABLE IF NOT EXISTS scenarios(run_id TEXT, document_id TEXT, scenario_id TEXT, strategy TEXT, currency TEXT, net_cost REAL, record_json TEXT,
  PRIMARY KEY(run_id,document_id,scenario_id,strategy), FOREIGN KEY(run_id,document_id) REFERENCES documents(run_id,document_id));
 CREATE INDEX IF NOT EXISTS fields_lookup ON fields(run_id,document_id,field_name,status);
-CREATE VIEW IF NOT EXISTS review_queue AS SELECT run_id,document_id,field_name,document_layer,status,review_status,page,record_json
- FROM fields WHERE review_status <> 'verified';
+CREATE TABLE IF NOT EXISTS review_events(event_id TEXT PRIMARY KEY, run_id TEXT, document_id TEXT, reviewer TEXT, record_json TEXT);
+CREATE TABLE IF NOT EXISTS model_requests(run_id TEXT, document_id TEXT, request_index INTEGER, status TEXT, record_json TEXT,
+ PRIMARY KEY(run_id,document_id,request_index));
+DROP VIEW IF EXISTS review_queue;
+CREATE VIEW review_queue AS SELECT run_id,document_id,field_name,document_layer,status,review_status,page,record_json
+ FROM fields WHERE review_status <> 'verified' AND status NOT IN ('superseded','rejected');
 """
 
 def save(path,manifest,bundles):
@@ -32,3 +36,6 @@ def save(path,manifest,bundles):
             db.executemany("INSERT INTO fields(run_id,document_id,field_name,document_layer,status,normalized_value,confidence,review_status,page,record_json) VALUES(?,?,?,?,?,?,?,?,?,?)",[(run,ident,r["field_name"],r["document_layer"],r["status"],json.dumps(r["normalized_value"]),r["confidence"],r["review_status"],r["page"],json.dumps(r)) for r in b["extractions"]])
             db.executemany("INSERT INTO comparisons VALUES(?,?,?,?,?)",[(run,ident,c["field_name"],c["classification"],json.dumps(c)) for c in b["comparisons"]])
             db.executemany("INSERT INTO scenarios VALUES(?,?,?,?,?,?,?)",[(run,ident,r["scenario_id"],r["strategy"],r["currency"],r["net_incremental_cost_pv"],json.dumps(r)) for r in b["analytics"].get("rows",[])])
+            for event in b.get("review_events",[]):
+                db.execute("INSERT OR IGNORE INTO review_events VALUES(?,?,?,?,?)",(event["event_id"],event["new_run_id"],ident,event["reviewer"],json.dumps(event)))
+            db.executemany("INSERT INTO model_requests VALUES(?,?,?,?,?)",[(run,ident,i,r["status"],json.dumps(r)) for i,r in enumerate(b.get("model_audit",[]))])

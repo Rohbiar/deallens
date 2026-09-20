@@ -1,0 +1,84 @@
+"""Optional OpenAI Responses transport. No credentials enter audit outputs."""
+import json
+import os
+import time
+import urllib.error
+import urllib.request
+
+SCHEMA = {
+    "type": "object", "additionalProperties": False,
+    "properties": {"proposals": {"type": "array", "items": {
+        "type": "object", "additionalProperties": False,
+        "properties": {
+            "field_name": {"type": "string"},
+            "citations": {"type": "array", "items": {
+                "type": "object", "additionalProperties": False,
+                "properties": {"chunk_id": {"type": "string"}, "evidence": {"type": "string"}},
+                "required": ["chunk_id", "evidence"]}},
+            "normalized_value_json": {"type": "string"},
+            "raw_value": {"type": ["string", "null"]},
+            "currency": {"type": ["string", "null"]},
+            "value_qualifier": {"type": ["string", "null"], "enum": ["exact", "at_least", "at_most", None]},
+            "confidence": {"type": "number"},
+            "limitations": {"type": "string"}},
+        "required": ["field_name", "citations", "normalized_value_json", "raw_value", "currency", "value_qualifier", "confidence", "limitations"]}}},
+    "required": ["proposals"]}
+
+class ProviderError(RuntimeError):
+    """Safe-to-log transport error; excludes response body and credentials."""
+
+class OpenAIProvider:
+    endpoint = "https://api.openai.com/v1/responses"
+
+    def __init__(self, api_key=None, *, timeout=90, opener=None, sleeper=time.sleep):
+        self._key = api_key or os.environ.get("OPENAI_API_KEY")
+        if not self._key:
+            raise ProviderError("Set OPENAI_API_KEY in your local environment before using --model. Never paste it into a document.")
+        self.timeout = timeout
+        # Do not forward an Authorization header through redirects.
+        class NoRedirect(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self, req, fp, code, msg, headers, newurl):
+                return None
+        self.opener = opener or urllib.request.build_opener(NoRedirect()).open
+        self.sleeper = sleeper
+        self.last_metadata = {}
+
+    def __call__(self, request):
+        self.last_metadata = {}
+        body = {"model": request["model"], "store": False,
+                "instructions": request["system"],
+                "input": json.dumps({k: v for k, v in request.items() if k not in {"system", "tools", "model"}}, ensure_ascii=False),
+                "max_output_tokens": 6000,
+                "text": {"format": {"type": "json_schema", "name": "transaction_evidence", "strict": True, "schema": SCHEMA}}}
+        encoded = json.dumps(body).encode()
+        for attempt in range(3):
+            req = urllib.request.Request(self.endpoint, data=encoded, headers={
+                "Authorization": "Bearer " + self._key, "Content-Type": "application/json"}, method="POST")
+            try:
+                with self.opener(req, timeout=self.timeout) as response:
+                    raw = response.read(2_000_001)
+                if len(raw) > 2_000_000:
+                    raise ProviderError("Provider response exceeds size limit")
+                data = json.loads(raw)
+                break
+            except urllib.error.HTTPError as exc:
+                if exc.code in {429, 500, 502, 503, 504} and attempt < 2:
+                    self.sleeper(2 ** attempt)
+                    continue
+                raise ProviderError(f"Model provider returned HTTP {exc.code}; check configuration or quota locally.") from None
+            except (urllib.error.URLError, TimeoutError):
+                # A timed-out POST may have been billed; do not automatically duplicate it.
+                raise ProviderError("Model request failed or timed out; its completion and billing may be unknown. No automatic timeout retry.") from None
+            except (ValueError, UnicodeError):
+                raise ProviderError("Provider returned invalid JSON") from None
+        self.last_metadata = {"response_id": data.get("id"), "model": data.get("model"), "usage": data.get("usage"), "attempts": attempt + 1}
+        if data.get("status") != "completed":
+            raise ProviderError("Model response was incomplete; no partial extraction accepted")
+        parts = [part for item in data.get("output", []) for part in item.get("content", [])]
+        if any(p.get("type") == "refusal" for p in parts):
+            raise ProviderError("Model refused extraction; no output accepted")
+        text = "".join(p.get("text", "") for p in parts if p.get("type") == "output_text")
+        try:
+            return json.loads(text)
+        except (ValueError, TypeError):
+            raise ProviderError("Model response did not contain a valid extraction object") from None

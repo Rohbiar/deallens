@@ -13,6 +13,7 @@ RISKS={
 }
 
 def risk_map(records):
+    records=[r for r in records if r.get("status") not in {"superseded","rejected"}]
     return [{"risk":risk,"designation":"analysis","implication":text,"field":field,
              "source_status":"supported" if any(r['status']=='supported' for r in records if r['field_name']==field) else "review_required",
              "sources":[r for r in records if r['field_name']==field and r.get('evidence')][:6]}
