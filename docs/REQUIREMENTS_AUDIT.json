@@ -1,5 +1,5 @@
 {
-  "run_id": "20260920T222402Z-74b0b6e6",
+  "run_id": "20260920T223606Z-e4288114",
   "audit_type": "machine artifact/control checks plus disclosed coverage; not expert approval",
   "all_machine_checks_pass": true,
   "all_required_bio_scenarios_present": true,
@@ -1766,7 +1766,6 @@
           },
           "source_pages": [
             19,
-            59,
             79,
             80,
             84,

@@ -1,5 +1,7 @@
 # DealLens
 
+Latest: the v6 five-call citation smoke test had four retained candidates, zero citation failures and one nested-JSON rejection. Material semantic errors remain. See [CITATION_SMOKE_EVALUATION.md](docs/CITATION_SMOKE_EVALUATION.md). V7 removes model-generated nested JSON; 77 offline tests pass, but v7 live validation remains pending. Earlier evaluations below are historical.
+
 DealLens is a runnable public-source research prototype for the Mizuho Derivatives Analytics & AI Solutions Engineer case. It connects original PDF pages to structured evidence, comparisons, timelines, a local question interface and reproducible financing sensitivities.
 
 **This is an initial implementation for review, not a submission-ready claim of complete legal extraction.** The deterministic baseline supports a limited group of amounts, dates and explicit conditions. Complex provisions are retrieved as candidate evidence with null normalized values. They require an actual semantic extraction/review pass. The UI makes this distinction visible. No human verification or complete semantic extraction is claimed. A limited live model evaluation is documented below.

@@ -7,6 +7,27 @@ import hashlib
 import json
 
 PROTOCOL = 'source-passage-ids-v1'
+VALUE_PROTOCOL = 'typed-values-v1'
+
+VALUE_SCHEMA = {'anyOf': [
+    {'type': ['string', 'number', 'boolean', 'null']},
+    {'type': 'object', 'additionalProperties': False,
+     'properties': {'summary': {'type':'string'}, 'details': {'type':'array', 'items': {
+         'type':'object', 'additionalProperties':False,
+         'properties': {'label':{'type':'string'}, 'value':{'type':'string'}},
+         'required':['label','value']}}},
+     'required':['summary','details']}
+]}
+
+def typed_value(value):
+    if value is None or type(value) in {str,int,float,bool}:
+        return json.dumps(value,ensure_ascii=False,allow_nan=False)
+    if not isinstance(value,dict) or set(value)!={'summary','details'} or not isinstance(value['summary'],str) or not isinstance(value['details'],list):
+        raise ValueError('Invalid typed proposal value')
+    for detail in value['details']:
+        if not isinstance(detail,dict) or set(detail)!={'label','value'} or any(not isinstance(detail[k],str) for k in ('label','value')):
+            raise ValueError('Invalid typed proposal value')
+    return json.dumps(value,ensure_ascii=False,allow_nan=False)
 
 
 def passage_catalog(chunks, max_chars=800):
@@ -33,6 +54,11 @@ def source_id_request(request, schema):
     payload['passages']=passages
     payload['citation_protocol']=PROTOCOL
     schema=copy.deepcopy(schema)
+    item=schema['properties']['proposals']['items']
+    item['properties'].pop('normalized_value_json')
+    item['properties']['normalized_value']=copy.deepcopy(VALUE_SCHEMA)
+    item['required']=['normalized_value' if k=='normalized_value_json' else k for k in item['required']]
+    payload['value_protocol']=VALUE_PROTOCOL
     id_type={'type':'string'}
     if passages:id_type['enum']=[p['citation_id'] for p in passages]
     schema['properties']['proposals']['items']['properties']['citations']['items']={
@@ -49,6 +75,9 @@ def resolve_citations(result,passages):
     for proposal in resolved['proposals']:
         if not isinstance(proposal,dict) or not isinstance(proposal.get('citations'),list):
             raise ValueError('Invalid citation object')
+        if 'normalized_value' not in proposal or 'normalized_value_json' in proposal:
+            raise ValueError('Invalid typed proposal value')
+        proposal['normalized_value_json']=typed_value(proposal.pop('normalized_value'))
         citations=[]
         for citation in proposal['citations']:
             if not isinstance(citation,dict) or set(citation)!={'citation_id'} or not isinstance(citation['citation_id'],str):

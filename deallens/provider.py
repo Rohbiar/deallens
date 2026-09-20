@@ -6,7 +6,7 @@ import time
 import urllib.error
 import urllib.request
 import certifi
-from .citations import source_id_request, resolve_citations, PROTOCOL
+from .citations import source_id_request, resolve_citations, PROTOCOL, VALUE_PROTOCOL
 
 SCHEMA = {
     "type": "object", "additionalProperties": False,
@@ -91,7 +91,7 @@ class OpenAIProvider:
         if not isinstance(data, dict):
             raise ProviderError("Provider returned an invalid response envelope")
         self.last_metadata = {"response_id": data.get("id"), "model": data.get("model"), "usage": data.get("usage"), "attempts": attempt + 1}
-        self.last_metadata.update(citation_protocol=PROTOCOL, passage_catalog_sha256=catalog_hash, passage_count=len(passages))
+        self.last_metadata.update(citation_protocol=PROTOCOL, value_protocol=VALUE_PROTOCOL, passage_catalog_sha256=catalog_hash, passage_count=len(passages))
         if self.budget:
             self.last_metadata['budget'] = self.budget.summary()
         if data.get("status") != "completed":

@@ -1,0 +1,68 @@
+{
+  "version": "agent-assessment-1",
+  "records": [
+    {
+      "record_id": "6f118f893e1232e34dc9eec2",
+      "document_id": "bio_techne",
+      "document_sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T223116Z-7df8a279",
+      "assessment_kind": "scope_incomplete",
+      "assessment": "The value omits the Life Science revenues/net-income measurement and overstates limits on required acceptance as prohibitions on imposition.",
+      "physical_pdf_pages": [
+        60
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "45f7a0806587bb0aec80f5e8",
+      "document_id": "organon",
+      "document_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T223116Z-7df8a279",
+      "assessment_kind": "wrong_field_focus",
+      "assessment": "The candidate primarily describes no-shop/fiduciary-out provisions and general efforts rather than remedy/Substantial Detriment limits.",
+      "physical_pdf_pages": [
+        3
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "2a9854f593f11953fba6403b",
+      "document_id": "organon",
+      "document_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T223116Z-7df8a279",
+      "assessment_kind": "unsupported_interpretation",
+      "assessment": "The definition and exceptions continue beyond the cited text. Required-efforts limits, consent restrictions, compulsion rights and the extension election are not preserved.",
+      "physical_pdf_pages": [
+        71,
+        72,
+        86,
+        87
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "bece34eaafaddcc392470cdb",
+      "document_id": "uber_delivery_hero",
+      "document_sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T223116Z-7df8a279",
+      "assessment_kind": "partial_support",
+      "assessment": "Preserves the no-duty versus consent-prohibition distinction, but generalizes the specific Asset Acquirer Transaction adjustment. Not full-field verification.",
+      "physical_pdf_pages": [
+        27
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    }
+  ]
+}
