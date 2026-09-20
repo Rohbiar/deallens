@@ -14,3 +14,6 @@ deallens = "deallens.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["deallens*"]
+
+[tool.setuptools.package-data]
+deallens = ["ui.html"]

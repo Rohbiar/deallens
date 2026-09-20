@@ -60,14 +60,14 @@ def scalar_matches(field, text):
                     if parsed and parsed[0]>0:
                         yield m.start(),m.end(),parsed[0],parsed[1],raw
     elif field == "agreement_date":
-        pattern = r'(?:AGREEMENT.{0,55}?dated as of\s*|On\s*)('+DATE+r')'
+        pattern = r'(?:(?:AGREEMENT AND PLAN OF MERGER|BUSINESS COMBINATION AGREEMENT).{0,55}?dated as of\s*|On\s*)('+DATE+r')'
         for m in re.finditer(pattern,text,re.I):
             if m.group().lower().startswith("on") and not re.search(r'entered into',text[m.end():m.end()+300],re.I):
                 continue
             value=date_iso(m.group(1))
             if value: yield m.start(),min(len(text),m.end()+250),value,None,m.group(1)
     elif field == "outside_or_long_stop_date":
-        pattern = '('+DATE+r')\s*\([^)]{0,12}?(?:Outside Date|Long[- ]Stop Date)[^)]{0,4}\)'
+        pattern = '('+DATE+r')\s*\((?:(?:as may be extended[^)]{0,100}?)?the\s+[“\"]?)(?:Outside Date|Long[- ]Stop Date)[”\"]?'
         for m in re.finditer(pattern,text,re.I):
             value=date_iso(m.group(1))
             if value: yield max(0,m.start()-100),min(len(text),m.end()+180),value,None,m.group(1)
