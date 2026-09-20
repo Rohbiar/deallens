@@ -1,30 +1,29 @@
 {
-  "run_id": "20260920T223606Z-e4288114",
+  "run_id": "20260920T224132Z-18bd66d3",
   "model": "gpt-4.1-mini-2025-04-14",
   "evaluation_kind": "agent-curated selected scalar fixtures; not full semantic accuracy or human review",
   "run_mode": "offline_reprocess",
   "new_provider_calls": 0,
   "retained_prompt_versions": [
-    "clause-extraction-v6"
+    "clause-extraction-v7"
   ],
   "response_origin_run_ids": [
-    "20260920T223116Z-7df8a279"
+    "20260920T223823Z-cb902b0a"
   ],
   "fixture_count": 25,
   "retrieved_fixture_excerpts": 25,
   "model_audit_statuses": {
-    "invalid_output": 1,
-    "proposals_retained": 4,
+    "proposals_retained": 5,
     "no_retrieved_support": 4
   },
   "provider_responses": 5,
   "reported_token_usage": {
-    "input_tokens": 18003,
-    "output_tokens": 1925,
-    "total_tokens": 19928
+    "input_tokens": 18453,
+    "output_tokens": 2695,
+    "total_tokens": 21148
   },
-  "model_proposals": 4,
-  "nonnull_model_proposals": 4,
+  "model_proposals": 5,
+  "nonnull_model_proposals": 5,
   "null_model_proposals": 0,
   "all_evidence_exact": true,
   "human_verified_records": 0,

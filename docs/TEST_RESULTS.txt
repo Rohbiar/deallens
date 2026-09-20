@@ -1,9 +1,9 @@
-.............................................................................
+...............................................................................
 ----------------------------------------------------------------------
-Ran 77 tests in 0.307s
+Ran 79 tests in 0.814s
 
 OK
-Offline refreshed run: 20260920T223456Z-587da7b9
+Offline refreshed run: 20260920T224038Z-ab58e85c
 synthetic_test {"elapsed_seconds": 0.002, "page_count": 1, "catalog_fields": 42, "machine_supported_fields": 2, "candidate_only_fields": 1, "records": 127, "evidence_exact_match_count": 4, "human_verified_records": 0, "model_proposal_records": 0, "semantic_accuracy": null, "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."}
-Run: 20260920T223456Z-7123b7a9
-Reviewed run: 20260920T223456Z-23410a7a
+Run: 20260920T224038Z-3ebd2aed
+Reviewed run: 20260920T224039Z-038d4003

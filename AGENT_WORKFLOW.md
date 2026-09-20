@@ -92,3 +92,7 @@ User ran 18 focused calls. Retention fell from nine to six on the corresponding 
 ## V6 citation smoke and typed-value recovery
 
 User executed five remedy calls: four retained candidates, zero citation failures and one nested-JSON rejection. This provides narrow live evidence that passage selection works; it is not semantic validation. Agent inspection found wrong-field focus, missing qualifications and truncated definitions in retained proposals. Added four source-bound annotations without human promotion. V7 requests actual JSON scalar/null or a summary/details object instead of asking the model to escape JSON inside a string; an adapter preserves the internal record format. All 77 offline tests pass. No new assistant API calls and no v7 live results are claimed.
+
+## V7 evaluation: format success is not semantic success
+
+User executed five calls and all five passed value/citation validation. Agent inspection still found wrong-field summaries and prohibited-versus-not-required errors. Added five explicit source assessments and conservative automatic quality warnings without changing normalized values or human review status. All 79 unit/control tests pass. Repeating the same smoke was rejected as low value; future paid evaluation must follow substantive clause/definition and semantic changes. No new assistant API call was made.

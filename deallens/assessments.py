@@ -15,4 +15,5 @@ def annotate(root, records):
             if note.get('human_review') is not False:
                 raise ValueError('Agent annotation must not attest human review')
             record['agent_assessment']=note
-    return records
+    from .quality import flag_candidates
+    return flag_candidates(records)

@@ -1,3 +1,5 @@
+Current result: [V7 typed-value evaluation](TYPED_VALUE_EVALUATION.md) — five responses passed format/citation validation, but material semantic failures persist. No further identical smoke test is requested. 79 offline tests and 25 selected source fixtures pass; human approvals remain zero. Earlier results below are historical.
+
 Current live evaluation: [FOCUSED_RETEST.md](FOCUSED_RETEST.md) records the v5 focused run and persistent semantic/citation failures. V6 source-passage citation IDs are implemented but not yet tested live. Earlier run descriptions below are historical.
 
 # Assignment validation and handoff
