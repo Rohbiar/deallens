@@ -6,7 +6,7 @@ DealLens is a runnable public-source research prototype for the Mizuho Derivativ
 
 ## Current validation status (2026-09-20)
 
-59 unit/control tests and 16 selected scalar fixtures pass. Latest two-field live run: 12 completed API responses, seven retained proposals (six non-null), three citation rejections and two empty abstentions. Agent inspection flags Uber's financing-condition inference as unsupported by its funding-guarantee citation. All model proposals remain unverified and excluded from supported answers. Human approvals are zero; full semantic accuracy remains unmeasured. See `docs/LIVE_EVALUATION.md` and `docs/LIVE_PROPOSAL_ASSESSMENT.json`. The memo and review package include the limited live results and remaining gaps.
+73 unit/control tests and 25 selected source fixtures pass. The broader live run `20260920T170013Z-4017a08d` made 76 completed requests across 15 fields: 31 retained candidates, 36 citation rejections and nine empty abstentions. Agent source inspection found substantive interpretation errors. All candidates remain unverified; human approvals are zero and full semantic accuracy is unmeasured. See [BROAD_BATCH_REVIEW.md](docs/BROAD_BATCH_REVIEW.md). Prompt v5 and retrieval changes pass offline tests but have not been evaluated live.
 
 ## Start locally
 
@@ -45,7 +45,7 @@ python -m deallens.cli ask uber_delivery_hero "What financing arrangements are d
 | Timeline and risk | Evidence-linked events, date kinds and ten risk categories | Conditional/cross-page legal interpretations need review |
 | Analytics | USD Bio-Techne case; local-currency validation slices; EUR bridge/FX sensitivity; four hedge strategies | Synthetic assumptions, constant DV01 and expiry payoffs; no live market pricing |
 | QA | Twelve question categories; direct supported values or exact unsupported response | Does not turn keyword matches into legal answers |
-| AI controls | Optional bounded Responses API extraction, strict schema, citation checks, request/usage audit, no tools or self-approval | Limited two-field live test; complete semantic quality and retrieval recall unmeasured |
+| AI controls | Optional bounded Responses API extraction, strict schema, citation checks, request/usage audit, no tools or self-approval | Broader 15-field live test; complete semantic quality and retrieval recall unmeasured |
 | Audit | Versioned review decisions, immutable run folders, SQLite history and regenerated downstream outputs | Reviewer identity is locally self-attested, not authenticated |
 
 ## Architecture and source hierarchy
@@ -78,11 +78,15 @@ Positive net incremental cost is worse for the issuer. Option premiums and conti
 
 Add a document ID and HTTPS URL to the source configuration, or supply its PDF with that ID as its filename. Run the same pipeline. There are no company-specific answer branches in extraction or QA. The development role selects the assignment's required Bio-Techne synthetic inputs; all validation cases use the common template and supported currency.
 
-The optional `run --model YOUR_MODEL_ID` path uses bounded clause retrieval and schema-constrained proposals. Configure `OPENAI_API_KEY` privately in your local environment; do not put it in source code or chat. Model proposals remain unverified until explicitly reviewed. The provider transport has been exercised live on two fields; the review lifecycle is tested with synthetic fixtures only. See [MODEL_AND_REVIEW.md](docs/MODEL_AND_REVIEW.md) for commands, limits and review instructions.
+The optional `run --model YOUR_MODEL_ID` path uses bounded clause retrieval and schema-constrained proposals. Configure `OPENAI_API_KEY` privately in your local environment; do not put it in source code or chat. Model proposals remain unverified until explicitly reviewed. The provider transport has been exercised live on 15 complex fields plus the earlier two-field test; the review lifecycle is tested with synthetic fixtures only. See [MODEL_AND_REVIEW.md](docs/MODEL_AND_REVIEW.md) for commands, limits and review instructions.
+
+## Demonstration and ownership
+
+Read [DEMO_GUIDE.md](docs/DEMO_GUIDE.md) for a five-minute walkthrough and the calculations to explain. [REQUIREMENTS_AUDIT.json](docs/REQUIREMENTS_AUDIT.json) records coverage and remaining gaps. Agent source annotations are displayed separately from human verification; no legal attestation is expected from a nonexpert user.
 
 ## Before submitting
 
-Read the technical memo and known issues. Run and evaluate semantic extraction, independently inspect the important source pages, all calculations and retained code, complete actual review decisions, validate fee/award completeness, and revise the agent log to include your actual work. A small fixture pass must not be presented as accuracy across the whole contract. The repository includes genuine implementation commits; do not invent human decisions or inflate time spent.
+Read the technical memo and known issues. Run and evaluate semantic extraction, independently inspect the important source pages, all calculations and retained code, disclose unresolved fee/award completeness, and revise the agent log to include your actual work. A small fixture pass must not be presented as accuracy across the whole contract. If a qualified reviewer later verifies complete fields, record their actual decisions; do not create nominal approvals. The repository includes genuine implementation commits; do not invent human decisions or inflate time spent.
 
 ## Review package
 
@@ -90,4 +94,10 @@ Read the technical memo and known issues. Run and evaluate semantic extraction, 
 
 ## Budget-controlled semantic batch
 
-The user authorized $10 for further testing. Run `bash scripts/run_semantic_batch.sh` from the project in the terminal containing your exported API key. It expands to 15 unresolved fields across all sources. CLI calls share a persistent $10 local reservation ledger, including a $1 historical buffer; retries and uncertain failures consume reservations. See `docs/BATCH_PLAN.json` and `docs/MODEL_AND_REVIEW.md`. This controls this application only, not account-wide billing. The latest packaged archive predates this budget feature; refresh it after evaluating the next live run.
+The user authorized $10 for further testing. Run `bash scripts/run_semantic_batch.sh` from the project in the terminal containing your exported API key. It expands to 15 unresolved fields across all sources. CLI calls share a persistent $10 local reservation ledger, including a $1 historical buffer; retries and uncertain failures consume reservations. See `docs/BATCH_PLAN.json` and `docs/MODEL_AND_REVIEW.md`. This controls this application only, not account-wide billing. The review archive includes the latest batch findings; live verification of prompt v5 remains outstanding.
+
+## Refresh and focused retest
+
+`python -m deallens.cli refresh` reruns offline rules while retaining historical model proposals and audits. It makes no API calls and creates a new immutable run. The browser now reads the latest completed run when refreshed, pins QA/review exports to the displayed run and blocks changed source bytes. Restart a server launched before this code update once.
+
+For the next paid experiment, use `bash scripts/run_focused_retest.sh` in the terminal containing the API key. It tests vested options, fee triggers, remedies and borrowing conditions using the existing persistent budget; evaluate the result before repeating a broad batch.

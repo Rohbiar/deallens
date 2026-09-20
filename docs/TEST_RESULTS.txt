@@ -1,72 +1,9 @@
-test_cap_survives_concurrent_attempts (test_budget.BudgetTests.test_cap_survives_concurrent_attempts) ... ok
-test_each_http_retry_reserves_before_transport (test_budget.BudgetTests.test_each_http_retry_reserves_before_transport) ... ok
-test_exhausted_budget_never_calls_transport (test_budget.BudgetTests.test_exhausted_budget_never_calls_transport) ... ok
-test_rejects_unpriced_models_tools_and_oversize_requests (test_budget.BudgetTests.test_rejects_unpriced_models_tools_and_oversize_requests) ... ok
-test_reservations_survive_restarts_and_usage_does_not_refund (test_budget.BudgetTests.test_reservations_survive_restarts_and_usage_does_not_refund) ... ok
-test_certificate_failure_has_specific_safe_diagnostic (test_continuation.ContinuationControls.test_certificate_failure_has_specific_safe_diagnostic) ... ok
-test_financing_proposals_require_boolean (test_continuation.ContinuationControls.test_financing_proposals_require_boolean) ... ok
-test_invalid_json_audit_explains_rejection (test_continuation.ContinuationControls.test_invalid_json_audit_explains_rejection) ... ok
-test_iso_currency_consideration_retrieved (test_continuation.ContinuationControls.test_iso_currency_consideration_retrieved) ... ok
-test_malformed_citation_rejected (test_continuation.ContinuationControls.test_malformed_citation_rejected) ... ok
-test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) ... ok
-test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) ... ok
-test_nonfinite_nested_model_value_rejected (test_continuation.ContinuationControls.test_nonfinite_nested_model_value_rejected) ... ok
-test_provider_failure_is_not_budget_exhaustion (test_continuation.ContinuationControls.test_provider_failure_is_not_budget_exhaustion) ... ok
-test_provider_preserves_tls_verification (test_continuation.ContinuationControls.test_provider_preserves_tls_verification) ... ok
-test_retrieval_includes_preceding_page_context (test_continuation.ContinuationControls.test_retrieval_includes_preceding_page_context) ... ok
-test_basis_widening_has_correct_sign (test_core.AnalyticsTests.test_basis_widening_has_correct_sign) ... ok
-test_contingent_failure_only_fee (test_core.AnalyticsTests.test_contingent_failure_only_fee) ... ok
-test_delay_cost_not_added_twice (test_core.AnalyticsTests.test_delay_cost_not_added_twice) ... ok
-test_failure_down_rates_creates_unwind_loss (test_core.AnalyticsTests.test_failure_down_rates_creates_unwind_loss) ... ok
-test_forward_eliminates_benchmark_not_credit (test_core.AnalyticsTests.test_forward_eliminates_benchmark_not_credit) ... ok
-test_negative_notional_rejected (test_core.AnalyticsTests.test_negative_notional_rejected) ... ok
-test_option_and_contingent_not_equivalent (test_core.AnalyticsTests.test_option_and_contingent_not_equivalent) ... ok
-test_option_preserves_benefit_net_premium (test_core.AnalyticsTests.test_option_preserves_benefit_net_premium) ... ok
-test_probability_validation (test_core.AnalyticsTests.test_probability_validation) ... ok
-test_sensitivity_is_linear (test_core.AnalyticsTests.test_sensitivity_is_linear) ... ok
-test_up25_independent_dv01_and_coupon (test_core.AnalyticsTests.test_up25_independent_dv01_and_coupon) ... ok
-test_ancillary_agreement_date_rejected (test_core.ExtractionTests.test_ancillary_agreement_date_rejected) ... ok
-test_cash_price_not_par_value (test_core.ExtractionTests.test_cash_price_not_par_value) ... ok
-test_conflict_is_not_overwritten (test_core.ExtractionTests.test_conflict_is_not_overwritten) ... ok
-test_evidence_tampering_rejected (test_core.ExtractionTests.test_evidence_tampering_rejected) ... ok
-test_extension_not_initial_outside_date (test_core.ExtractionTests.test_extension_not_initial_outside_date) ... ok
-test_german_date (test_core.ExtractionTests.test_german_date) ... ok
-test_initial_outside_date_with_proviso (test_core.ExtractionTests.test_initial_outside_date_with_proviso) ... ok
-test_invalid_date_returns_null (test_core.ExtractionTests.test_invalid_date_returns_null) ... ok
-test_minimum_price_qualifier_preserved (test_core.ExtractionTests.test_minimum_price_qualifier_preserved) ... ok
-test_model_cannot_self_verify (test_core.ExtractionTests.test_model_cannot_self_verify) ... ok
-test_prompt_injection_abstains (test_core.ExtractionTests.test_prompt_injection_abstains) ... ok
-test_unknown_question_abstains (test_core.ExtractionTests.test_unknown_question_abstains) ... ok
-test_duplicate_and_sparse_pages_flagged (test_ingestion.IngestionTests.test_duplicate_and_sparse_pages_flagged) ... ok
-test_expected_page_count_detects_missing_page (test_ingestion.IngestionTests.test_expected_page_count_detects_missing_page) ... ok
-test_source_pin_detects_modified_document (test_ingestion.IngestionTests.test_source_pin_detects_modified_document) ... ok
-test_threshold_blocks_scalar_normalization (test_ingestion.IngestionTests.test_threshold_blocks_scalar_normalization) ... ok
-test_review_run_rebuilds_exports_and_retains_original (test_semantic_review.PipelineIntegrationTests.test_review_run_rebuilds_exports_and_retains_original) ... ok
-test_auth_failure_does_not_leak_body_or_retry (test_semantic_review.ProviderTests.test_auth_failure_does_not_leak_body_or_retry) ... ok
-test_incomplete_output_not_accepted (test_semantic_review.ProviderTests.test_incomplete_output_not_accepted) ... ok
-test_rate_limit_has_bounded_retry (test_semantic_review.ProviderTests.test_rate_limit_has_bounded_retry) ... ok
-test_refusal_not_accepted (test_semantic_review.ProviderTests.test_refusal_not_accepted) ... ok
-test_transport_schema_and_no_storage (test_semantic_review.ProviderTests.test_transport_schema_and_no_storage) ... ok
-test_approval_preserves_original_and_enables_strict_answer (test_semantic_review.ReviewTests.test_approval_preserves_original_and_enables_strict_answer) ... ok
-test_export_has_no_preapproved_decisions (test_semantic_review.ReviewTests.test_export_has_no_preapproved_decisions) ... ok
-test_missing_attestation_rejected (test_semantic_review.ReviewTests.test_missing_attestation_rejected) ... ok
-test_missing_scope_attestation_rejected (test_semantic_review.ReviewTests.test_missing_scope_attestation_rejected) ... ok
-test_reject_keeps_history_but_cannot_answer (test_semantic_review.ReviewTests.test_reject_keeps_history_but_cannot_answer) ... ok
-test_stale_review_rejected (test_semantic_review.ReviewTests.test_stale_review_rejected) ... ok
-test_tampered_source_rejected (test_semantic_review.ReviewTests.test_tampered_source_rejected) ... ok
-test_unknown_record_rejected (test_semantic_review.ReviewTests.test_unknown_record_rejected) ... ok
-test_call_budget_and_audit (test_semantic_review.SemanticTests.test_call_budget_and_audit) ... ok
-test_fabricated_evidence_rejected (test_semantic_review.SemanticTests.test_fabricated_evidence_rejected) ... ok
-test_low_confidence_remains_null (test_semantic_review.SemanticTests.test_low_confidence_remains_null) ... ok
-test_nonfinite_json_rejected (test_semantic_review.SemanticTests.test_nonfinite_json_rejected) ... ok
-test_retrieval_budget (test_semantic_review.SemanticTests.test_retrieval_budget) ... ok
-test_unretrieved_chunk_rejected (test_semantic_review.SemanticTests.test_unretrieved_chunk_rejected) ... ok
-test_valid_model_proposal_cannot_approve_itself (test_semantic_review.SemanticTests.test_valid_model_proposal_cannot_approve_itself) ... ok
-
+.........................................................................
 ----------------------------------------------------------------------
-Ran 64 tests in 0.255s
+Ran 73 tests in 0.269s
 
 OK
+Offline refreshed run: 20260920T201629Z-65eaca5f
 synthetic_test {"elapsed_seconds": 0.002, "page_count": 1, "catalog_fields": 42, "machine_supported_fields": 2, "candidate_only_fields": 1, "records": 127, "evidence_exact_match_count": 4, "human_verified_records": 0, "model_proposal_records": 0, "semantic_accuracy": null, "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."}
-Run: 20260920T165920Z-c74c942e
-Reviewed run: 20260920T165920Z-8ca82bb3
+Run: 20260920T201629Z-019ae805
+Reviewed run: 20260920T201629Z-91194faf

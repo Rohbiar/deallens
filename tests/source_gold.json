@@ -1,21 +1,192 @@
 {
-  "description":"Small agent-curated fixture set from direct inspection of supplied sources. Not independent human ground truth and not comprehensive extraction accuracy.",
-  "fixtures":[
-    {"document_id":"bio_techne","field_name":"consideration_per_share","document_layer":"8-k-summary","value":73.0,"currency":"USD","page":2},
-    {"document_id":"bio_techne","field_name":"agreement_date","document_layer":"transaction-agreement","value":"2026-06-25","page":10},
-    {"document_id":"bio_techne","field_name":"outside_or_long_stop_date","document_layer":"transaction-agreement","value":"2027-03-25","page":71},
-    {"document_id":"bio_techne","field_name":"financing_condition","document_layer":"transaction-agreement","value":false,"page":46},
-    {"document_id":"bio_techne","field_name":"target_termination_fee","document_layer":"8-k-summary","value":230455000.0,"currency":"USD","page":3},
-    {"document_id":"organon","field_name":"consideration_per_share","document_layer":"transaction-agreement","value":14.0,"currency":"USD","page":25},
-    {"document_id":"organon","field_name":"agreement_date","document_layer":"transaction-agreement","value":"2026-04-26","page":13},
-    {"document_id":"organon","field_name":"outside_or_long_stop_date","document_layer":"transaction-agreement","value":"2027-01-26","page":86},
-    {"document_id":"organon","field_name":"financing_condition","document_layer":"transaction-agreement","value":false,"page":60},
-    {"document_id":"organon","field_name":"target_termination_fee","document_layer":"8-k-summary","value":120000000.0,"currency":"USD","page":4},
-    {"document_id":"uber_delivery_hero","field_name":"consideration_per_share","document_layer":"8-k-summary","value":41.5,"currency":"EUR","page":2,"value_qualifier":"exact"},
-    {"document_id":"uber_delivery_hero","field_name":"consideration_per_share","document_layer":"transaction-agreement","value":41.5,"currency":"EUR","page":15,"value_qualifier":"at_least"},
-    {"document_id":"uber_delivery_hero","field_name":"outside_or_long_stop_date","document_layer":"transaction-agreement","value":"2028-05-10","page":13},
-    {"document_id":"uber_delivery_hero","field_name":"bridge_amount","document_layer":"8-k-summary","value":14200000000.0,"currency":"EUR","page":4},
-    {"document_id":"uber_delivery_hero","field_name":"committed_financing_minimum","document_layer":"transaction-agreement","value":11500000000.0,"currency":"EUR","page":15,"value_qualifier":"at_least"},
-    {"document_id":"uber_delivery_hero","field_name":"target_termination_fee","document_layer":"transaction-agreement","value":200000000.0,"currency":"EUR","page":35}
+  "description": "Small agent-curated fixture set from direct inspection of supplied sources. Not independent human ground truth and not comprehensive extraction accuracy.",
+  "fixtures": [
+    {
+      "document_id": "bio_techne",
+      "field_name": "consideration_per_share",
+      "document_layer": "8-k-summary",
+      "value": 73.0,
+      "currency": "USD",
+      "page": 2
+    },
+    {
+      "document_id": "bio_techne",
+      "field_name": "agreement_date",
+      "document_layer": "transaction-agreement",
+      "value": "2026-06-25",
+      "page": 10
+    },
+    {
+      "document_id": "bio_techne",
+      "field_name": "outside_or_long_stop_date",
+      "document_layer": "transaction-agreement",
+      "value": "2027-03-25",
+      "page": 71
+    },
+    {
+      "document_id": "bio_techne",
+      "field_name": "financing_condition",
+      "document_layer": "transaction-agreement",
+      "value": false,
+      "page": 46
+    },
+    {
+      "document_id": "bio_techne",
+      "field_name": "target_termination_fee",
+      "document_layer": "8-k-summary",
+      "value": 230455000.0,
+      "currency": "USD",
+      "page": 3
+    },
+    {
+      "document_id": "organon",
+      "field_name": "consideration_per_share",
+      "document_layer": "transaction-agreement",
+      "value": 14.0,
+      "currency": "USD",
+      "page": 25
+    },
+    {
+      "document_id": "organon",
+      "field_name": "agreement_date",
+      "document_layer": "transaction-agreement",
+      "value": "2026-04-26",
+      "page": 13
+    },
+    {
+      "document_id": "organon",
+      "field_name": "outside_or_long_stop_date",
+      "document_layer": "transaction-agreement",
+      "value": "2027-01-26",
+      "page": 86
+    },
+    {
+      "document_id": "organon",
+      "field_name": "financing_condition",
+      "document_layer": "transaction-agreement",
+      "value": false,
+      "page": 60
+    },
+    {
+      "document_id": "organon",
+      "field_name": "target_termination_fee",
+      "document_layer": "8-k-summary",
+      "value": 120000000.0,
+      "currency": "USD",
+      "page": 4
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "consideration_per_share",
+      "document_layer": "8-k-summary",
+      "value": 41.5,
+      "currency": "EUR",
+      "page": 2,
+      "value_qualifier": "exact"
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "consideration_per_share",
+      "document_layer": "transaction-agreement",
+      "value": 41.5,
+      "currency": "EUR",
+      "page": 15,
+      "value_qualifier": "at_least"
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "outside_or_long_stop_date",
+      "document_layer": "transaction-agreement",
+      "value": "2028-05-10",
+      "page": 13
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "bridge_amount",
+      "document_layer": "8-k-summary",
+      "value": 14200000000.0,
+      "currency": "EUR",
+      "page": 4
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "committed_financing_minimum",
+      "document_layer": "transaction-agreement",
+      "value": 11500000000.0,
+      "currency": "EUR",
+      "page": 15,
+      "value_qualifier": "at_least"
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "target_termination_fee",
+      "document_layer": "transaction-agreement",
+      "value": 200000000.0,
+      "currency": "EUR",
+      "page": 35
+    },
+    {
+      "document_id": "bio_techne",
+      "field_name": "target",
+      "document_layer": "transaction-agreement",
+      "value": "Bio- Techne Corporation",
+      "page": 10
+    },
+    {
+      "document_id": "bio_techne",
+      "field_name": "parent_or_bidder",
+      "document_layer": "transaction-agreement",
+      "value": "Merck KGaA, Darmstadt, Germany",
+      "page": 10
+    },
+    {
+      "document_id": "bio_techne",
+      "field_name": "acquisition_vehicle",
+      "document_layer": "transaction-agreement",
+      "value": "EMD Holdings NewCo, Inc.",
+      "page": 10
+    },
+    {
+      "document_id": "organon",
+      "field_name": "target",
+      "document_layer": "transaction-agreement",
+      "value": "Organon & Co.",
+      "page": 13
+    },
+    {
+      "document_id": "organon",
+      "field_name": "parent_or_bidder",
+      "document_layer": "transaction-agreement",
+      "value": "Sun Pharmaceutical Holdings USA, Inc.",
+      "page": 13
+    },
+    {
+      "document_id": "organon",
+      "field_name": "acquisition_vehicle",
+      "document_layer": "transaction-agreement",
+      "value": "Sun Pharma America, Inc.",
+      "page": 13
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "target",
+      "document_layer": "transaction-agreement",
+      "value": "DELIVERY HERO SE",
+      "page": 10
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "parent_or_bidder",
+      "document_layer": "transaction-agreement",
+      "value": "UBER INTERNATIONAL TECHNOLOGIES II CORPORATION",
+      "page": 10
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "field_name": "acquisition_vehicle",
+      "document_layer": "transaction-agreement",
+      "value": "UBER INTERNATIONAL TECHNOLOGIES II CORPORATION",
+      "page": 10
+    }
   ]
 }

@@ -27,9 +27,17 @@ def build():
     with sqlite3.connect(ROOT/'outputs/deallens.sqlite') as source:
         with sqlite3.connect(dest/'deallens.sqlite') as target:
             source.backup(target)
+    # Carry the persistent reservation ledger so restoring the package cannot
+    # accidentally reset the authorized API allowance.
+    budget_snapshot = None
+    if (ROOT/'outputs/api_budget.sqlite').exists():
+        budget_snapshot = dest/'api_budget.sqlite'
+        with sqlite3.connect(ROOT/'outputs/api_budget.sqlite') as source:
+            with sqlite3.connect(budget_snapshot) as target:
+                source.backup(target)
     files = [p for p in ROOT.iterdir() if p.is_file() and p.name in
              {'README.md','EXECUTION_PLAN.md','AGENT_WORKFLOW.md','requirements.txt','requirements-tested.txt','pyproject.toml','.gitignore'}]
-    for folder in ['deallens','config','tests','docs','scripts','data/sources',f'outputs/{run}']:
+    for folder in ['deallens','config','tests','docs','scripts','data/assessments','data/sources',f'outputs/{run}']:
         files += [p for p in (ROOT/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc']
     files += [ROOT/'outputs/latest.json']
     # Only include a packet tied to the packaged run; never reuse stale decisions.
@@ -40,10 +48,13 @@ def build():
             packet_paths.append(p)
     files += packet_paths
     content = {str(p.relative_to(ROOT)):p.read_bytes() for p in files}
+    if budget_snapshot:
+        content['outputs/api_budget.sqlite'] = budget_snapshot.read_bytes()
     content['history.bundle'] = bundle.read_bytes()
     content['outputs/deallens.sqlite'] = (dest/'deallens.sqlite').read_bytes()
     content['RESTORE_HISTORY.txt'] = b'To restore the genuine repository history: git clone history.bundle deallens-history\nThe package contains latest run JSON plus SQLite history; older run JSON remains in the working repository.\n'
-    manifest = {'run_id':run,'status':'review candidate; limited two-field live evaluation complete; full semantic validation and human review pending',
+    manifest = {'run_id':run,'status':'review candidate; broader live batch evaluated with material errors; v5 live validation and human review pending',
+                'working_tree_changes':subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).splitlines(),
                 'git_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
                 'files':{name:hashlib.sha256(data).hexdigest() for name,data in sorted(content.items())}}
     content['PACKAGE_MANIFEST.json'] = (json.dumps(manifest,indent=2)+'\n').encode()

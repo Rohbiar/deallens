@@ -1,6 +1,6 @@
 # Model extraction and attributed review
 
-The latest limited live run is `20260920T163210Z-a5687251` with prompt v4: 12 completed responses, seven candidates, three citation rejections and two empty abstentions across two fields. See [LIVE_EVALUATION.md](LIVE_EVALUATION.md). One retained non-null interpretation is unsupported by its quoted funding guarantee. All candidates remain unverified; no actual human approval is claimed. Historical setup notes below describe earlier runs, not the current result.
+73 unit/control tests and 25 selected source fixtures pass. The broader live run `20260920T170013Z-4017a08d` made 76 completed requests across 15 fields: 31 retained candidates, 36 citation rejections and nine empty abstentions. Agent source inspection found substantive interpretation errors. All candidates remain unverified; human approvals are zero and full semantic accuracy is unmeasured. See [BROAD_BATCH_REVIEW.md](BROAD_BATCH_REVIEW.md). Prompt v5 and retrieval changes pass offline tests but have not been evaluated live.
 
 ## Bounded model run
 
@@ -10,7 +10,7 @@ Configure `OPENAI_API_KEY` securely in your local shell and choose a Responses A
 python -m deallens.cli run --model YOUR_MODEL_ID --model-fields consideration_per_share financing_condition --max-model-calls 12
 ```
 
-The limit is per document, not per project. Each request covers one field/source layer, with at most 16,000 retrieved characters and 6,000 output tokens. Selected retryable HTTP failures allow up to three attempts per logical call. These are size/call bounds, not a monetary spending cap. Request hashes, retrieved chunk IDs, returned model identity and token usage are retained in `model_audit.json`; no API key is logged. No dollar-cost calculation is provided.
+The limit is per document, not per project. Each request covers one field/source layer, with at most 16,000 retrieved characters and 6,000 output tokens. Selected retryable HTTP failures allow up to three attempts per logical call. These size/call bounds operate alongside the persistent monetary reservation guard described below. Request hashes, retrieved chunk IDs, returned model identity and token usage are retained in `model_audit.json`; no API key is logged. Usage-based estimates are reported separately from reservations and actual billing.
 
 Omit `--model-fields` to consider the common 42-field catalog. The default budget will not cover every field/layer. A budget of 126 permits up to 42 fields across three layers per document, but does not guarantee complete retrieval or accurate interpretation. Requests with no retrieved evidence abstain. Cross-page neighbors improve context, but definition chains and distant exceptions can still be missed.
 
@@ -48,7 +48,7 @@ Reviewer attribution is a local self-attestation, not authenticated identity or 
 
 ## Evaluation commands and current result
 
-After any run, execute `python tests/evaluate_sources.py` and `PYTHONPATH=. python tests/evaluate_model.py`. The latter writes `docs/MODEL_EVALUATION.json`, separating retrieval excerpt hits, provider audit outcomes, reported usage, candidate matches and human verification. Matching a selected scalar fixture cannot validate complex awards, fees or all exceptions. Current baseline: 16/16 fixture excerpts retrieved, zero provider responses, zero human approvals; complete semantic precision and recall remain null.
+After any run, execute `python tests/evaluate_sources.py` and `PYTHONPATH=. python tests/evaluate_model.py`. The latter writes `docs/MODEL_EVALUATION.json`, separating retrieval excerpt hits, provider audit outcomes, reported usage, candidate matches and human verification. Matching a selected scalar fixture cannot validate complex awards, fees or all exceptions. Current baseline: 16/16 fixture excerpts retrieved, 76 provider responses, zero human approvals; complete semantic precision and recall remain null.
 
 The 2026-09-20 continuation found no `OPENAI_API_KEY` in the task environment. The user plans to configure credentials and name a model. A shell export in another terminal may not propagate to the running app; run the bounded command in the configured shell if needed and then return its run ID for evaluation. Never paste the key into chat. No substitute model has been selected.
 
@@ -71,3 +71,7 @@ bash scripts/run_semantic_batch.sh
 ```
 
 The batch selects 15 common fields on all three sources and pins the existing model snapshot. `BATCH_PLAN.json` is an offline plan: 76 calls with retrieved evidence, approximately $2.94 reserved without retries and $8.81 if every call makes three attempts, plus the $1 buffer. No paid calls were made to generate that plan. Progress is printed after each logical request. Model outputs remain candidates requiring review. The API key is never stored in the script or budget ledger.
+
+## Agent source inspection is not human approval
+
+The user has stated that they cannot personally certify legal interpretations. The project therefore keeps agent source findings in `data/assessments/broad_batch.json`, bound to record and PDF hashes, and displays them as annotations only. They do not change review status or normalized values. No approval is required merely to document an agent finding. The human review CLI remains available for genuine qualified review; do not attest on behalf of the user.

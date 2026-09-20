@@ -16,7 +16,7 @@ Build a reusable research prototype within the assignment's suggested 8–12 hou
 
 ## Delegation and human control
 
-User delegated source review, implementation, test writing, documentation and packaging to Codex. Codex retains generated code only after inspection and test execution. Human review remains required for material legal interpretations, completeness of award cohorts and fee triggers, hedge contract terms, synthetic assumptions, final memo, and all submission claims. No email, submission, trade execution or credential access is authorized.
+User delegated source review, implementation, test writing, documentation and packaging to Codex. Codex retains generated code only after inspection and test execution. The candidate retains ownership of calculations, assumptions, code and submission claims. Expert verification of material legal interpretations, complete award cohorts, fee triggers and actual hedge terms remains unavailable; agent inspection is disclosed separately and unresolved results fail closed. Do not request nominal legal approval from a nonexpert. No email, submission, trade execution or credential access is authorized.
 
 ## Testing strategy
 

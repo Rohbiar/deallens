@@ -1,10 +1,12 @@
+Latest update: see [BROAD_BATCH_REVIEW.md](BROAD_BATCH_REVIEW.md) for the 15-field live run, substantive failures, budget and offline-only v5 changes. Earlier results below are historical where they refer to two fields.
+
 # Known issues and production roadmap
 
-## Submission blockers
+## Material limitations
 
-1. Full semantic extraction and validation are unfinished. The current baseline supports 8–11 distinct field types per document; many of the 42 catalog fields remain candidates or not found. Do not describe this as complete extraction.
-2. A two-field live evaluation is complete: 12 responses, seven retained proposals (one null), three citation rejections and two empty abstentions. Uber financing_condition=true is unsupported by the cited guarantee. Exact evidence and self-confidence do not establish semantics. Full precision/recall and dollar cost are unmeasured; all model records remain unverified. See LIVE_EVALUATION.md.
-3. Human review remains outstanding. A versioned CLI approve/correct/reject workflow exists, but reviewer identity is only locally self-attested. No shipped record is human-verified; the browser interface remains read-only.
+1. Full semantic extraction and validation are unfinished. The current baseline supports 11–14 distinct field types per document; many of the 42 catalog fields remain candidates or not found. Do not describe this as complete extraction.
+2. The broader live batch returned 31 candidates from 76 responses, with 36 exact-citation failures and multiple semantic errors. Historical findings are annotated without human promotion. Prompt v5 and current retrieval changes have offline checks only; the focused live retest is pending. Full precision/recall remains unmeasured.
+3. Expert legal review has not occurred and is not replaced by agent source inspection. A versioned CLI approve/correct/reject workflow exists, but reviewer identity is only locally self-attested. No shipped record is human-verified; the browser interface remains read-only.
 4. Source-specific award cohorts, all fee triggers/tails, remedy limitations, cross-references, acceptance mechanics and lending conditions require complete clause-level reconciliation. Candidate windows can cut across page boundaries; read adjacent original pages.
 5. Agreement-versus-summary narrative matches are unresolved, and summary-only fees may not be normalized from the agreement. Absence is not “not applicable” or a zero termination fee.
 6. The date-kind classifier is heuristic. A page can contain several dates and conditions. Uber's regulatory timing should be represented as its own event structure rather than forced into US-style first/final outside-date extensions. Those extension scenarios are blocked in the baseline.
@@ -38,7 +40,7 @@ Add an immutable signed audit log, reviewer attribution, dual approval for mater
 
 1. Run and evaluate an approved model using the implemented bounded extraction path and common catalog.
 2. Add cross-page clauses, referenced-definition expansion, party-role graphs, award cohorts and typed deadline expressions.
-3. Complete actual reviewer decisions using versioned runs; add authenticated identities and dual approval for production.
+3. When a qualified reviewer is available, record their genuine decisions using versioned runs; add authenticated identities and dual approval for production. Never ask a nonexpert to provide a nominal legal attestation.
 4. Build an independently reviewed gold set covering every critical field and diverse negative/conflict cases; quantify precision, recall and abstention.
 5. Add actual curves, option pricing, FX forwards and exact bridge cashflows; test against independent pricing tools.
 6. Add provenance signatures, reproducible dependency lock/container, authentication and deployment controls.

@@ -1,3 +1,5 @@
+Latest update: see [BROAD_BATCH_REVIEW.md](BROAD_BATCH_REVIEW.md) for the 15-field live run, substantive failures, budget and offline-only v5 changes. Earlier results below are historical where they refer to two fields.
+
 # Latest live evaluation: prompt v4
 
 Run: `20260920T163210Z-a5687251`, 2026-09-20. Requested model `gpt-4.1-mini`; returned snapshot `gpt-4.1-mini-2025-04-14`. Same two fields (consideration per share and transaction financing condition); six-call cap per document. No budget exhaustion occurred.

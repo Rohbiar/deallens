@@ -2,7 +2,7 @@
 
 ## Ownership and actual participants
 
-The user delegated assignment review and project development to Codex. A single Codex assistant performed source reading, implementation, tests and documentation. No subagents or external coding agents were used. The exact underlying model identifier was not independently verified in the runtime. The application's live model field is null because no live inference provider was connected. An in-memory test provider was used solely for adapter tests.
+The user delegated assignment review and project development to Codex. A single Codex assistant performed source reading, implementation, tests and documentation. No subagents or external coding agents were used. The exact underlying model identifier was not independently verified in the runtime. Initial implementation used an in-memory test provider. Subsequent user-executed live runs used GPT-4.1 mini; see the dated continuation entries and current broader batch report.
 
 Rohit has not yet reviewed or approved this implementation. No human legal verification, manual correction or hedge approval is claimed. All retained code and accompanying documentation were agent-generated and then inspected/tested as described below. The source fixture set and source review are agent-curated, not human ground truth.
 
@@ -76,3 +76,11 @@ The user executed run `20260920T163210Z-a5687251`. Assessed twelve completed res
 ## Authorized budget and broader batch preparation
 
 The user authorized a $10 testing budget. Added persistent SQLite reservations to CLI provider calls, counted separately before every HTTP attempt, with a $1 buffer for previous usage and billing uncertainty. No automatic release on failures, concurrent overspending, or unknown-price models is allowed. Verified current model prices from official documentation. Five spending-control tests bring the suite to 64 tests. An offline fake-transport plan sizes 76 requests across 15 common fields: $2.936138 reservation for single attempts, $8.808414 for three attempts each, excluding the $1 buffer. These are conservative reservations, not actual billed cost. No new paid API calls occurred; the key is still in the user terminal only. Prepared an executable batch script and per-request progress reporting for the user to launch.
+
+## Broader batch continuation
+
+Evaluated user-executed run 20260920T170013Z-4017a08d against selected original PDF clauses. Recorded material semantic errors without changing human review status. Added prompt v5 field contracts, operative borrowing-heading retrieval priority and safe differentiated citation diagnostics. All 66 unit/control tests and 16 scalar fixtures pass. No new paid request was made and v5 effectiveness is unmeasured. Prepared an undecided review packet and priority findings in docs/BROAD_BATCH_REVIEW.md.
+
+## Requirements continuation after user clarification
+
+The user explained that they are not qualified to certify legal interpretations. Removed instructions asking for nominal legal approval; retained expert-review limitations and technical ownership. Added nine common-rule party identities, ten disclosed agent annotations, offline regeneration preserving paid proposal history, refreshed/pinned browser runs and stale-source blocking. Added field-by-field requirement coverage and a demo/ownership guide. A synthetic adjacent-party test checks that definition delimiters are not consumed and alternate parties lost. HTTP validation initially hit sandbox restrictions, then an import-path error; the corrected loopback test passed. Seventy-three unit/control tests and 25 selected source fixtures pass. No new API calls were made by the assistant; a four-field live retest awaits execution in the user's credential-bearing Terminal. Workstream time and net savings remain unmeasured rather than retrospectively invented.

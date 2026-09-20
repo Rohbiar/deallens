@@ -114,6 +114,7 @@ def run(root,ids=None,threshold=0.9,model=None,model_fields=None,max_model_calls
               "model_budget_per_document":max_model_calls if model else 0}
     code_files=sorted((root/"deallens").glob("*.py"))+[root/"deallens/ui.html",root/"config/sources.json",root/"config/assumptions.json"]
     manifest["code_file_sha256"]={str(p.relative_to(root)):sha256(p.read_bytes()) for p in code_files}
+    manifest["assessment_file_sha256"]={str(p.relative_to(root)):sha256(p.read_bytes()) for p in sorted((root/"data/assessments").glob("*.json"))}
     bundles=[]
     for source in configs:
         start=time.perf_counter();path=root/"data/sources"/(source["document_id"]+".pdf")
@@ -126,7 +127,8 @@ def run(root,ids=None,threshold=0.9,model=None,model_fields=None,max_model_calls
             for entry in model_audit:
                 if entry['status']=='provider_error':
                     print(f"WARNING {source['document_id']}: {entry['error']} Offline results will still be saved; this is not successful live extraction.")
-        records=identify(records)
+        from .assessments import annotate
+        records=annotate(root,identify(records))
         for r in records:
             if r.get("evidence") and not validate_evidence(r,doc):raise ValueError("Internal evidence mismatch")
         b=derive_bundle(doc,records,assumptions,time.perf_counter()-start,model_audit=model_audit)
@@ -148,12 +150,16 @@ def main():
     r=sub.add_parser("run");r.add_argument("--documents",nargs="+");r.add_argument("--threshold",type=float,default=.9)
     r.add_argument("--model",help="Optional OpenAI model identifier; requires local OPENAI_API_KEY")
     r.add_argument("--model-fields",nargs="+",choices=list(FIELDS));r.add_argument("--max-model-calls",type=int,default=12)
+    sub.add_parser("refresh",help="Re-run offline rules and retain historical unverified model proposals; no API calls")
     e=sub.add_parser("review-export");e.add_argument("--out",type=Path,required=True)
     a=sub.add_parser("review-apply");a.add_argument("packet",type=Path)
     q=sub.add_parser("ask");q.add_argument("document");q.add_argument("question");q.add_argument("--strict",action="store_true")
     s=sub.add_parser("serve");s.add_argument("--port",type=int,default=8765)
     args=p.parse_args();root=args.root.resolve()
     if args.command=="run":run(root,args.documents,args.threshold,args.model,args.model_fields,args.max_model_calls)
+    elif args.command=="refresh":
+        from .reprocess import reprocess
+        reprocess(root)
     elif args.command=="review-export":
         from .review import packet
         _,manifest,bundles=load_latest(root)

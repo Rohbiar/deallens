@@ -12,7 +12,7 @@ from .ingest import normalize
 DATE = r'(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}|\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}'
 MONEY = r'(?:\$|€|EUR\s*|USD\s*)(\d[\d,]*(?:\.\d+)?)\s*(million|billion)?'
 SCALARS = {"consideration_per_share", "agreement_date", "outside_or_long_stop_date", "bridge_amount",
-           "transaction_type", "consideration_type", "financing_condition", "financing_maturity",
+           "target", "parent_or_bidder", "acquisition_vehicle", "transaction_type", "consideration_type", "financing_condition", "financing_maturity",
            "target_termination_fee", "parent_termination_fee", "approval_or_tender_threshold", "committed_financing_minimum"}
 
 def date_iso(raw):
@@ -59,7 +59,12 @@ def evidence_record(doc, page, field, start, end, run_id, value=None, currency=N
 
 def scalar_matches(field, text):
     """Yield exact evidence spans and values; never use document identity."""
-    if field == "consideration_per_share":
+    if field in {"target", "parent_or_bidder", "acquisition_vehicle"}:
+        from .parties import party_declarations
+        for matched_field,start,end,name,alias in party_declarations(text):
+            if field == matched_field:
+                yield start,end,name,None,name
+    elif field == "consideration_per_share":
         patterns = [r'(?:right to receive|cash consideration per.{0,65}?of|Offer Price shall (?:be|amount to))\s*('+MONEY+r')',
                     r'[“\"](?:Per Share )?Merger Consideration[”\"]\s+means\s*('+MONEY+r')',
                     r'('+MONEY+r')\s+(?:in cash|per.{0,35}Share).{0,90}?(?:Merger Consideration|Offer Price)',
@@ -141,7 +146,7 @@ def extract(doc, run_id, threshold=0.9):
                 text=page["text"]
                 # Index pages are not operative provisions.
                 if re.search(r'TABLE OF CONTENTS|^CONTENTS\b',text,re.I): continue
-                if field in SCALARS:
+                if field in SCALARS and (field not in {"target", "parent_or_bidder", "acquisition_vehicle"} or layer=="transaction-agreement"):
                     for start,end,value,currency,raw in scalar_matches(field,text):
                         scalar.append(evidence_record(doc,page,field,start,end,run_id,value,currency,raw))
                 for match in re.finditer(pattern,text,re.I):
