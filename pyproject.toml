@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deallens"
+version = "0.1.0"
+description = "Evidence-first transaction and hedging research prototype"
+requires-python = ">=3.11"
+dependencies = ["PyMuPDF>=1.24,<2"]
+
+[project.scripts]
+deallens = "deallens.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["deallens*"]
