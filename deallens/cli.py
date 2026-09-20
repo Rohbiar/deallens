@@ -121,6 +121,9 @@ def run(root,ids=None,threshold=0.9,model=None,model_fields=None,max_model_calls
         if provider:
             proposed,model_audit=extract_semantic(doc,run_id,provider,model,fields=model_fields,threshold=threshold,max_calls=max_model_calls)
             records.extend(proposed)
+            for entry in model_audit:
+                if entry['status']=='provider_error':
+                    print(f"WARNING {source['document_id']}: {entry['error']} Offline results will still be saved; this is not successful live extraction.")
         records=identify(records)
         for r in records:
             if r.get("evidence") and not validate_evidence(r,doc):raise ValueError("Internal evidence mismatch")

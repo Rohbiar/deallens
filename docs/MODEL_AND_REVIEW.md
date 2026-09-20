@@ -1,6 +1,6 @@
 # Model extraction and attributed review
 
-The shipped outputs are an offline baseline. No live model run or actual human approval is claimed. The optional integration is tested through fake HTTP responses and synthetic evidence fixtures.
+A limited live run is now available: `20260920T162331Z-957420e8`, with 11 completed responses and five retained candidates across two fields. See [LIVE_EVALUATION.md](LIVE_EVALUATION.md). No actual human approval is claimed. Earlier packaged outputs and memo predate this run. Prompt v4 and stricter scalar types were added after evaluating v3 and still require a live repeat.
 
 ## Bounded model run
 
@@ -53,3 +53,7 @@ After any run, execute `python tests/evaluate_sources.py` and `PYTHONPATH=. pyth
 The 2026-09-20 continuation found no `OPENAI_API_KEY` in the task environment. The user plans to configure credentials and name a model. A shell export in another terminal may not propagate to the running app; run the bounded command in the configured shell if needed and then return its run ID for evaluation. Never paste the key into chat. No substitute model has been selected.
 
 The transport follows the [official Structured Outputs guide](https://developers.openai.com/api/docs/guides/structured-outputs). The continuation added safe handling of malformed response envelopes, non-finite nested proposal values and preceding context retrieval. Provider output remains unverified even when its schema and citations pass.
+
+## TLS setup recovery
+
+The first user-initiated live run (`20260920T161654Z-c7b3c412`) retained zero proposals after connection errors. A local probe identified missing trusted CA certificates. The transport now loads Certifi roots alongside default trust and reports certificate failures specifically; HTTPS certificate verification remains enabled. Install the updated pinned requirements when moving this project to another environment. A successful unauthenticated probe returned HTTP 401, confirming connectivity only. Rerun the bounded extraction in the terminal containing your exported key to test authentication and model output.

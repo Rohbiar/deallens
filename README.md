@@ -2,11 +2,11 @@
 
 DealLens is a runnable public-source research prototype for the Mizuho Derivatives Analytics & AI Solutions Engineer case. It connects original PDF pages to structured evidence, comparisons, timelines, a local question interface and reproducible financing sensitivities.
 
-**This is an initial implementation for review, not a submission-ready claim of complete legal extraction.** The deterministic baseline supports a limited group of amounts, dates and explicit conditions. Complex provisions are retrieved as candidate evidence with null normalized values. They require an actual semantic extraction/review pass. The UI makes this distinction visible. No human verification or live-model extraction is claimed.
+**This is an initial implementation for review, not a submission-ready claim of complete legal extraction.** The deterministic baseline supports a limited group of amounts, dates and explicit conditions. Complex provisions are retrieved as candidate evidence with null normalized values. They require an actual semantic extraction/review pass. The UI makes this distinction visible. No human verification or complete semantic extraction is claimed. A limited live model evaluation is documented below.
 
-## Continuation verification (2026-09-20)
+## Current validation status (2026-09-20)
 
-54 unit/control tests and 16 selected source fixtures pass. The bounded retriever reaches all 16 fixture excerpts after an ISO-currency retrieval fix. These are agent-curated checks, not complete semantic accuracy or human review. Browser checks confirmed the supported Bio-Techne answer, strict-mode abstention and Uber price-qualifier conflict. See `docs/ASSIGNMENT_VALIDATION.md`, `docs/MODEL_EVALUATION.json` and `docs/BROWSER_CHECKS.json`. Live evaluation remains pending credentials and model selection; no provider call or human approval is claimed.
+59 unit/control tests pass. The first completed live run used `gpt-4.1-mini-2025-04-14` on two fields: 11 API responses, five retained proposals and six rejected outputs. Four price proposals agree with the selected evidence; the fifth has a financing-condition type mismatch. Human-verified records remain zero. See `docs/LIVE_EVALUATION.md` for the exact scope, limitations and subsequent untested-live prompt changes. The 16 selected source fixtures pass; neither this nor citation matching establishes full semantic accuracy. The earlier review ZIP and memo predate live evaluation and await refresh.
 
 ## Start locally
 
@@ -45,7 +45,7 @@ python -m deallens.cli ask uber_delivery_hero "What financing arrangements are d
 | Timeline and risk | Evidence-linked events, date kinds and ten risk categories | Conditional/cross-page legal interpretations need review |
 | Analytics | USD Bio-Techne case; local-currency validation slices; EUR bridge/FX sensitivity; four hedge strategies | Synthetic assumptions, constant DV01 and expiry payoffs; no live market pricing |
 | QA | Twelve question categories; direct supported values or exact unsupported response | Does not turn keyword matches into legal answers |
-| AI controls | Optional bounded Responses API extraction, strict schema, citation checks, request/usage audit, no tools or self-approval | Fake-transport tested; live quality and retrieval recall unmeasured |
+| AI controls | Optional bounded Responses API extraction, strict schema, citation checks, request/usage audit, no tools or self-approval | Limited two-field live test; complete semantic quality and retrieval recall unmeasured |
 | Audit | Versioned review decisions, immutable run folders, SQLite history and regenerated downstream outputs | Reviewer identity is locally self-attested, not authenticated |
 
 ## Architecture and source hierarchy
@@ -78,7 +78,7 @@ Positive net incremental cost is worse for the issuer. Option premiums and conti
 
 Add a document ID and HTTPS URL to the source configuration, or supply its PDF with that ID as its filename. Run the same pipeline. There are no company-specific answer branches in extraction or QA. The development role selects the assignment's required Bio-Techne synthetic inputs; all validation cases use the common template and supported currency.
 
-The optional `run --model YOUR_MODEL_ID` path uses bounded clause retrieval and schema-constrained proposals. Configure `OPENAI_API_KEY` privately in your local environment; do not put it in source code or chat. Model proposals remain unverified until explicitly reviewed. The provider transport and review lifecycle are tested with synthetic fixtures, not a live model. See [MODEL_AND_REVIEW.md](docs/MODEL_AND_REVIEW.md) for commands, limits and review instructions.
+The optional `run --model YOUR_MODEL_ID` path uses bounded clause retrieval and schema-constrained proposals. Configure `OPENAI_API_KEY` privately in your local environment; do not put it in source code or chat. Model proposals remain unverified until explicitly reviewed. The provider transport has been exercised live on two fields; the review lifecycle is tested with synthetic fixtures only. See [MODEL_AND_REVIEW.md](docs/MODEL_AND_REVIEW.md) for commands, limits and review instructions.
 
 ## Before submitting
 

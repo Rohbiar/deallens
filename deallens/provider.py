@@ -1,9 +1,11 @@
 """Optional OpenAI Responses transport. No credentials enter audit outputs."""
 import json
 import os
+import ssl
 import time
 import urllib.error
 import urllib.request
+import certifi
 
 SCHEMA = {
     "type": "object", "additionalProperties": False,
@@ -39,7 +41,12 @@ class OpenAIProvider:
         class NoRedirect(urllib.request.HTTPRedirectHandler):
             def redirect_request(self, req, fp, code, msg, headers, newurl):
                 return None
-        self.opener = opener or urllib.request.build_opener(NoRedirect()).open
+        # Preserve system/custom trust and add a portable CA bundle. Some macOS
+        # Python installers have no usable default CA file until separately set up.
+        context = ssl.create_default_context()
+        context.load_verify_locations(cafile=certifi.where())
+        self.opener = opener or urllib.request.build_opener(
+            NoRedirect(), urllib.request.HTTPSHandler(context=context)).open
         self.sleeper = sleeper
         self.last_metadata = {}
 
@@ -66,7 +73,11 @@ class OpenAIProvider:
                     self.sleeper(2 ** attempt)
                     continue
                 raise ProviderError(f"Model provider returned HTTP {exc.code}; check configuration or quota locally.") from None
-            except (urllib.error.URLError, TimeoutError):
+            except urllib.error.URLError as exc:
+                if isinstance(exc.reason, ssl.SSLCertVerificationError):
+                    raise ProviderError("TLS certificate verification failed; check the installed CA bundle or your network's approved trust configuration. Certificate verification remains enabled.") from None
+                raise ProviderError("Model connection failed; check DNS, network access and proxy configuration. Completion and billing may be unknown. No automatic connection retry.") from None
+            except TimeoutError:
                 # A timed-out POST may have been billed; do not automatically duplicate it.
                 raise ProviderError("Model request failed or timed out; its completion and billing may be unknown. No automatic timeout retry.") from None
             except (ValueError, UnicodeError):
