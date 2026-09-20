@@ -1,6 +1,6 @@
 # Model extraction and attributed review
 
-A limited live run is now available: `20260920T162331Z-957420e8`, with 11 completed responses and five retained candidates across two fields. See [LIVE_EVALUATION.md](LIVE_EVALUATION.md). No actual human approval is claimed. Earlier packaged outputs and memo predate this run. Prompt v4 and stricter scalar types were added after evaluating v3 and still require a live repeat.
+The latest limited live run is `20260920T163210Z-a5687251` with prompt v4: 12 completed responses, seven candidates, three citation rejections and two empty abstentions across two fields. See [LIVE_EVALUATION.md](LIVE_EVALUATION.md). One retained non-null interpretation is unsupported by its quoted funding guarantee. All candidates remain unverified; no actual human approval is claimed. Historical setup notes below describe earlier runs, not the current result.
 
 ## Bounded model run
 

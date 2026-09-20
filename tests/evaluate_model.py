@@ -53,6 +53,8 @@ def evaluate(root):
               'provider_responses':sum(bool(a.get('provider_metadata',{}).get('response_id')) for a in audits),
               'reported_token_usage':dict(usage) or None,
               'model_proposals':len(proposed),
+              'nonnull_model_proposals':sum(r.get('candidate_value') is not None for r in proposed),
+              'null_model_proposals':sum(r.get('candidate_value') is None for r in proposed),
               'all_evidence_exact':all(validate_evidence(s,d) for d,s in evidence),
               'human_verified_records':sum(b['metrics']['human_verified_records'] for b in bundles),
               'semantic_precision':None,'semantic_recall':None,'dollar_cost':None,

@@ -1,0 +1,78 @@
+{
+  "run_id": "20260920T163210Z-a5687251",
+  "assessor": "Codex agent",
+  "human_review_attested": false,
+  "source_run_modified": false,
+  "assessments": [
+    {
+      "document_id": "bio_techne",
+      "record_id": "743bb6570752d5bd18794530",
+      "field_name": "consideration_per_share",
+      "document_layer": "8-k-summary",
+      "page": 2,
+      "candidate_value": 73.0,
+      "assessment": "consistent_with_selected_source",
+      "note": "Agent comparison of candidate with cited source and deterministic baseline; not human verification or complete-field review."
+    },
+    {
+      "document_id": "bio_techne",
+      "record_id": "69843b1100b5de9fb370a30d",
+      "field_name": "financing_condition",
+      "document_layer": "transaction-agreement",
+      "page": 46,
+      "candidate_value": false,
+      "assessment": "consistent_with_selected_source",
+      "note": "Agent comparison of candidate with cited source and deterministic baseline; not human verification or complete-field review."
+    },
+    {
+      "document_id": "organon",
+      "record_id": "11c021e9deb302a97cc2dba9",
+      "field_name": "consideration_per_share",
+      "document_layer": "transaction-agreement",
+      "page": 25,
+      "candidate_value": 14.0,
+      "assessment": "consistent_with_selected_source",
+      "note": "Agent comparison of candidate with cited source and deterministic baseline; not human verification or complete-field review."
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "record_id": "c69faf7c5e4666cf2fca0b97",
+      "field_name": "consideration_per_share",
+      "document_layer": "8-k-summary",
+      "page": 2,
+      "candidate_value": 41.5,
+      "assessment": "consistent_with_selected_source",
+      "note": "Agent comparison of candidate with cited source and deterministic baseline; not human verification or complete-field review."
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "record_id": "a8a586b5e898d1642866b581",
+      "field_name": "consideration_per_share",
+      "document_layer": "transaction-agreement",
+      "page": 15,
+      "candidate_value": 41.5,
+      "assessment": "consistent_with_selected_source",
+      "note": "Agent comparison of candidate with cited source and deterministic baseline; not human verification or complete-field review."
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "record_id": "eefe9fa2dc49a0166cc9a449",
+      "field_name": "financing_condition",
+      "document_layer": "8-k-summary",
+      "page": 5,
+      "candidate_value": null,
+      "assessment": "unresolved_null",
+      "note": "No substantive answer; the quoted forward-looking risk language does not resolve a transaction financing condition."
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "record_id": "714c3b6403265ece6fc83af8",
+      "field_name": "financing_condition",
+      "document_layer": "transaction-agreement",
+      "page": 15,
+      "candidate_value": true,
+      "assessment": "unsupported_interpretation",
+      "note": "Clause 1.5 imposes funding/guarantee obligations. This excerpt does not establish a condition allowing non-completion because financing is unavailable. Do not approve true from this citation; full conditions and cross-references require review."
+    }
+  ]
+}

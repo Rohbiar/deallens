@@ -6,7 +6,7 @@ DealLens is a runnable public-source research prototype for the Mizuho Derivativ
 
 ## Current validation status (2026-09-20)
 
-59 unit/control tests pass. The first completed live run used `gpt-4.1-mini-2025-04-14` on two fields: 11 API responses, five retained proposals and six rejected outputs. Four price proposals agree with the selected evidence; the fifth has a financing-condition type mismatch. Human-verified records remain zero. See `docs/LIVE_EVALUATION.md` for the exact scope, limitations and subsequent untested-live prompt changes. The 16 selected source fixtures pass; neither this nor citation matching establishes full semantic accuracy. The earlier review ZIP and memo predate live evaluation and await refresh.
+59 unit/control tests and 16 selected scalar fixtures pass. Latest two-field live run: 12 completed API responses, seven retained proposals (six non-null), three citation rejections and two empty abstentions. Agent inspection flags Uber's financing-condition inference as unsupported by its funding-guarantee citation. All model proposals remain unverified and excluded from supported answers. Human approvals are zero; full semantic accuracy remains unmeasured. See `docs/LIVE_EVALUATION.md` and `docs/LIVE_PROPOSAL_ASSESSMENT.json`. The memo and review package include the limited live results and remaining gaps.
 
 ## Start locally
 
@@ -86,4 +86,4 @@ Read the technical memo and known issues. Run and evaluate semantic extraction, 
 
 ## Review package
 
-`python docs/package_deliverables.py` creates `outputs/deliverables/DealLens_review_package.zip` with source, original PDFs, latest run JSON/CSV, SQLite history, matching review packet, memo, verification reports and a genuine Git history bundle. The package manifest hashes every included file. Credentials, virtual environments and unrelated files are excluded by explicit input selection. This is a review candidate while live extraction and human review remain outstanding.
+`python docs/package_deliverables.py` creates `outputs/deliverables/DealLens_review_package.zip` with source, original PDFs, latest run JSON/CSV, SQLite history, matching review packet, memo, verification reports and a genuine Git history bundle. The package manifest hashes every included file. Credentials, virtual environments and unrelated files are excluded by explicit input selection. This is a review candidate while complete semantic validation and human review remain outstanding.

@@ -1,4 +1,29 @@
-# First completed live model evaluation
+# Latest live evaluation: prompt v4
+
+Run: `20260920T163210Z-a5687251`, 2026-09-20. Requested model `gpt-4.1-mini`; returned snapshot `gpt-4.1-mini-2025-04-14`. Same two fields (consideration per share and transaction financing condition); six-call cap per document. No budget exhaustion occurred.
+
+| Document | Completed API responses | Retained proposals | Citation rejections | Empty abstentions |
+|---|---:|---:|---:|---:|
+| Bio-Techne | 4 | 2 | 1 | 1 |
+| Organon | 3 | 1 | 2 | 0 |
+| Uber / Delivery Hero | 5 | 4 | 0 | 1 |
+| Total | 12 | 7 | 3 | 2 |
+
+Six additional field/layer slots had no retrieved evidence and generated no API call. Provider-reported usage: 38,367 input tokens and 2,780 output tokens (41,147 total). Dollar cost is not reconciled against billing. The three rejections failed exact, unambiguous citation matching within the named retrieved chunk; no citation check was relaxed.
+
+Of seven retained proposals, six contain non-null values and one is unresolved null. Agent inspection finds four price proposals and Bio-Techne's explicit absence of a transaction financing condition consistent with their selected cited sources. This is five limited source-consistency observations, not independently reviewed accuracy. Bio-Techne's financing value is now a boolean; the v3 type mismatch is resolved in this run.
+
+**Material semantic failure:** Uber agreement p. 15 proposes `financing_condition=true` by citing clause 1.5. That clause describes a financing guarantee and funding obligations; the excerpt does not establish a transaction condition allowing the bidder not to complete if financing is unavailable. The proposal's 0.95 self-score and exact quote do not make this inference reliable. It remains an unverified candidate with null normalized value, excluded from supported QA and analytics. This agent assessment is separate in `LIVE_PROPOSAL_ASSESSMENT.json`; no human review event was manufactured and the immutable run was not edited. Do not flip the value to false without full clause review.
+
+Uber's null summary candidate comes from forward-looking risk language and supplies no answer. The financing-exhibit request abstained, appropriately avoiding automatic equivalence between lender borrowing conditions and transaction financing conditions. Its substantive legal completeness is still unmeasured.
+
+Compared with v3, invalid outputs fell from six of eleven responses to three of twelve. The samples are tiny, the budget changed and generation is stochastic: this does not prove a general quality improvement. Machine-supported field coverage remains 9/42, 8/42 and 11/42. Full semantic precision/recall remain null; human-verified records remain zero. The model added no approved facts.
+
+Current verification: 59 tests and 16 selected scalar fixtures pass. The memo and review archive are refreshed to include this evidence. Broad semantic extraction, independent review and remaining assignment gaps are still outstanding. No further connectivity test is needed; prioritize complete clause evaluation over repeating these two fields.
+
+---
+
+# Historical first completed live model evaluation
 
 Run: `20260920T162331Z-957420e8` (2026-09-20). Requested model: `gpt-4.1-mini`; returned snapshot: `gpt-4.1-mini-2025-04-14`. Prompt: `clause-extraction-v3`. Scope: consideration per share and transaction financing condition, across the same three source PDFs, maximum four logical calls per document. The preceding TLS-failed run is preserved separately.
 

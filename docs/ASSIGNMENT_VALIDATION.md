@@ -13,16 +13,16 @@ The original `DealLens_Core_Case_Study_Editable.docx` was read in document order
 | 5. Financing and hedging | Bio-Techne synthetic USD 4bn case; four strategies; rate, basis, credit, failure and delay scenarios; adapted USD/EUR slices, FX and bridge sensitivities | Reproducible illustrative analysis. All supplied assumptions are labeled; no live derivative pricing. Validation funding sizes/fees are synthetic. |
 | 6. Grounded QA | Read-only browser and CLI; twelve categories; exact unsupported response; strict review gate | Works for supported fields and partial answers. Many required complex questions abstain or remain partial. This is not full question coverage. |
 | 7. Generalization | Same code on all three sources; GENERALIZATION.md; selected fixture and retrieval reports | Adapted validation, not pristine holdout. Full extraction precision/recall unmeasured. |
-| 8. Controls/audit | SQLite history, immutable run folders, evidence checks, review queue, versioned decisions, model request audit | Implemented locally with limitations. Human identity is self-attested; no authenticated approval. Live model evaluation remains pending. |
+| 8. Controls/audit | SQLite history, immutable run folders, evidence checks, review queue, versioned decisions, model request audit | Implemented locally with limitations. Human identity is self-attested; no authenticated approval. Limited two-field live evaluation complete; one retained interpretation is unsupported. Full semantic validation remains outstanding. |
 | Coding-agent workflow | EXECUTION_PLAN.md, AGENT_WORKFLOW.md, genuine Git history and failing/passing regression evidence | Agent actions and failures disclosed. No reliable workstream timer or invented time-saved estimate. Candidate retains ownership. |
 | Final deliverables | Source/setup, original PDFs, machine outputs, timelines, CSV scenarios, UI, three-page memo, tests, audit and review packet | Prepared as a review package. Submission readiness remains blocked by semantic completeness and actual human review. |
 
 ## Verification performed
 
-- 54 unit/control tests pass; six new test methods cover failures found during continuation.
+- 59 unit/control tests pass, including TLS trust, typed proposal and audit diagnostics.
 - 16 selected scalar source fixtures pass. They were curated by the same agent and do not estimate contract-wide accuracy.
 - Bounded retrieval initially reached 15/16 selected excerpts. The shared ISO-currency correction now reaches 16/16. This checks the supplied excerpt, not every exception or definition needed to interpret it.
-- All 654 retained baseline excerpts match the normalized source-page text. Source byte hashes and page counts are retained in the run manifest. Citation validity is distinct from value correctness and completeness.
+- All retained excerpts in the latest run match the normalized source-page text. Source byte hashes and page counts are retained in the run manifest. Citation validity is distinct from value correctness and completeness.
 - HTTP routes and selected actual browser flows pass; see RUNTIME_CHECKS.json and BROWSER_CHECKS.json. The three-page memo was rendered and all pages visually inspected.
 - Financial tests independently confirm USD 2.6mm/bp portfolio DV01, USD 65mm PV versus USD 10mm annual coupon sensitivity for +25bp, credit/basis residuals and failure payoffs. These are first-order scenario identities, not independent derivative valuations.
 
@@ -32,7 +32,7 @@ Re-read selected original PDF text: Bio-Techne pp. 2-3, 46, 71-72; Organon pp. 2
 
 ## Required next steps
 
-1. Configure credentials locally and supply the chosen API model. Run bounded extraction, then evaluate audit outcomes, usage, candidate values and complete clause support. No live request has been made in this continuation.
+1. Limited live evaluation is complete; expand complete-clause evaluation beyond the two tested fields. Resolve the unsupported Uber financing-condition inference; preserve the candidate/history and require genuine human review before approval.
 2. Expand semantic extraction and clause reconciliation for the unresolved critical fields. Do not promote a model proposal merely because its citation matches.
 3. Rohit must inspect material source interpretations, calculations, assumptions and retained code, then record genuine approve/correct/reject decisions in the exported packet. It contains no pre-approved decisions.
 4. Regenerate reports and the package after any model or review run. A review packet is tied to its base run and becomes stale after a new run. The package is prepared for review, not sent or submitted.

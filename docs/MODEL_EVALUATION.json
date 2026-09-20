@@ -1,22 +1,24 @@
 {
-  "run_id": "20260920T162331Z-957420e8",
+  "run_id": "20260920T163210Z-a5687251",
   "model": "gpt-4.1-mini",
   "evaluation_kind": "agent-curated selected scalar fixtures; not full semantic accuracy or human review",
   "fixture_count": 16,
   "retrieved_fixture_excerpts": 16,
   "model_audit_statuses": {
-    "proposals_retained": 5,
+    "proposals_retained": 7,
+    "invalid_output": 3,
     "no_retrieved_support": 6,
-    "invalid_output": 6,
-    "budget_exhausted": 1
+    "abstained": 2
   },
-  "provider_responses": 11,
+  "provider_responses": 12,
   "reported_token_usage": {
-    "input_tokens": 31894,
-    "output_tokens": 3404,
-    "total_tokens": 35298
+    "input_tokens": 38367,
+    "output_tokens": 2780,
+    "total_tokens": 41147
   },
-  "model_proposals": 5,
+  "model_proposals": 7,
+  "nonnull_model_proposals": 6,
+  "null_model_proposals": 1,
   "all_evidence_exact": true,
   "human_verified_records": 0,
   "semantic_precision": null,
@@ -83,7 +85,7 @@
         "proposals_retained"
       ],
       "model_candidate_count": 1,
-      "selected_model_value_match": false
+      "selected_model_value_match": true
     },
     {
       "fixture": {
@@ -189,10 +191,10 @@
       "baseline_match": true,
       "retrieval_contains_baseline_excerpt": true,
       "live_request_statuses": [
-        "invalid_output"
+        "proposals_retained"
       ],
-      "model_candidate_count": 0,
-      "selected_model_value_match": false
+      "model_candidate_count": 1,
+      "selected_model_value_match": true
     },
     {
       "fixture": {

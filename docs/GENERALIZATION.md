@@ -41,8 +41,10 @@ The 16 selected source fixtures pass. They were curated by the same agent throug
 
 ## Architecture improvements
 
-Use clause/definition graphs before extending regex coverage further. The optional bounded model path includes neighboring-page retrieval, schema validation and exact-citation checks, and a versioned reviewer workflow is implemented. Neither live-model quality nor actual human review has been demonstrated. Build a separate labeled validation corpus containing negative and conflicting examples, freeze extraction rules, and evaluate complete fields with precision, recall and abstention. Preserve the current deterministic rule suite as a transparent baseline and regression gate.
+Use clause/definition graphs before extending regex coverage further. The optional bounded model path includes neighboring-page retrieval, schema validation and exact-citation checks, and a versioned reviewer workflow is implemented. Limited two-field live evaluation is documented in LIVE_EVALUATION.md; comprehensive model quality and actual human review remain unestablished. Build a separate labeled validation corpus containing negative and conflicting examples, freeze extraction rules, and evaluate complete fields with precision, recall and abstention. Preserve the current deterministic rule suite as a transparent baseline and regression gate.
 
 ## Continuation retrieval evaluation
 
 The model retriever initially missed Uber’s agreement price floor because its consideration pattern recognized currency symbols but not ISO currency labels. A shared ISO-currency rule and preceding-chunk context fixed the selected retrieval miss. `MODEL_EVALUATION.json` reports 16/16 selected scalar excerpts reachable within the 16,000-character budget. This is adapted, agent-curated validation; it does not establish full-clause recall or live semantic accuracy. All 54 tests pass; live provider calls and human approvals remain zero.
+
+Latest live follow-up: prompt v4 produced seven retained candidates from twelve responses, including one null and an unsupported Uber financing inference. Full legal extraction accuracy remains unmeasured. See LIVE_EVALUATION.md for the current result; earlier counts above are historical.

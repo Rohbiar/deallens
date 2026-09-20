@@ -68,3 +68,7 @@ The user ran gpt-4.1-mini with a locally configured key. Run `20260920T161654Z-c
 ## First completed live evaluation
 
 The user executed run `20260920T162331Z-957420e8` with their locally configured key. Inspected all 11 request outcomes and all five retained proposals. Four prices agree with cited evidence; the financing narrative was not a valid boolean for the review workflow. Six outputs were rejected, with exact causes unavailable for four because older audits stored only the exception class. Preserved the original run; added prompt v4 field contracts, scalar type validation, safe rejection reasons and distinct provider-error skip status. All 59 tests pass. No live execution of v4 and no actual human review occurred. See LIVE_EVALUATION.md; the earlier review archive awaits refresh.
+
+## Prompt v4 live follow-up and refreshed handoff
+
+The user executed run `20260920T163210Z-a5687251`. Assessed twelve completed responses: seven candidates (six non-null), three exact-citation rejections, two empty abstentions. Four prices and Bio-Techne financing=false agree with selected evidence. Flagged Uber financing=true as unsupported by clause 1.5 funding obligations; preserved the candidate and recorded a separate agent assessment, without using human review attestation or changing the immutable run. Tiny changed-budget samples do not prove overall quality improvement. Updated the three-page memo, current-run review packet and package. Complete semantic extraction and human review remain pending.
