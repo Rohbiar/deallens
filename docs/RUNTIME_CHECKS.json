@@ -8,7 +8,7 @@
     {
       "route": "/api/manifest",
       "status": 200,
-      "bytes": 1747
+      "bytes": 3032
     },
     {
       "route": "/api/bio_techne",
@@ -23,7 +23,7 @@
     {
       "route": "/api/uber_delivery_hero",
       "status": 200,
-      "bytes": 2754756
+      "bytes": 2754757
     },
     {
       "route": "/source/bio_techne",

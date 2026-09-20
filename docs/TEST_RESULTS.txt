@@ -27,6 +27,6 @@ test_source_pin_detects_modified_document (test_ingestion.IngestionTests.test_so
 test_threshold_blocks_scalar_normalization (test_ingestion.IngestionTests.test_threshold_blocks_scalar_normalization) ... ok
 
 ----------------------------------------------------------------------
-Ran 27 tests in 0.045s
+Ran 27 tests in 0.048s
 
 OK
