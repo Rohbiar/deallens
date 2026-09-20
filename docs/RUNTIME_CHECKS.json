@@ -1,0 +1,49 @@
+{
+  "checks": [
+    {
+      "route": "/",
+      "status": 200,
+      "bytes": 10945
+    },
+    {
+      "route": "/api/manifest",
+      "status": 200,
+      "bytes": 1747
+    },
+    {
+      "route": "/api/bio_techne",
+      "status": 200,
+      "bytes": 2155443
+    },
+    {
+      "route": "/api/organon",
+      "status": 200,
+      "bytes": 2417829
+    },
+    {
+      "route": "/api/uber_delivery_hero",
+      "status": 200,
+      "bytes": 2754756
+    },
+    {
+      "route": "/source/bio_techne",
+      "status": 200,
+      "bytes": 594309
+    },
+    {
+      "document": "bio_techne",
+      "question": "consideration",
+      "answer": "consideration_per_share: 73.0 USD"
+    },
+    {
+      "document": "uber_delivery_hero",
+      "question": "consideration",
+      "answer": "I could not identify sufficient source support for this answer."
+    },
+    {
+      "path_traversal": "rejected",
+      "status": 404
+    }
+  ],
+  "browser_visual_test": "Not executed: no installed browser; download timed out. HTTP checks do not establish visual correctness."
+}

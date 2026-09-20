@@ -30,6 +30,8 @@ def run(root,ids=None,threshold=0.9):
     manifest={"run_id":run_id,"started_at":datetime.now(timezone.utc).isoformat(),"code_version":code,
               "assumptions_version":assumptions["version"],"assumptions_sha256":sha256((root/"config/assumptions.json").read_bytes()),
               "mode":"deterministic","model":None,"threshold":threshold,"documents":[]}
+    code_files=sorted((root/"deallens").glob("*.py"))+[root/"deallens/ui.html",root/"config/sources.json",root/"config/assumptions.json"]
+    manifest["code_file_sha256"]={str(p.relative_to(root)):sha256(p.read_bytes()) for p in code_files}
     bundles=[]
     for source in configs:
         start=time.perf_counter();path=root/"data/sources"/(source["document_id"]+".pdf")

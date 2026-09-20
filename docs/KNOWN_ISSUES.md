@@ -18,6 +18,7 @@
 - Source and assumption hashes are recorded, but installed dependency pins and execution environments need stronger reproducibility controls for production.
 - Candidate retrieval uses a fixed maximum per field/layer. It is a navigation aid, not an exhaustive contract parser. No ranked retrieval recall has been established.
 - Only a small manually inspected fixture set is evaluated. Citation validity and field coverage are distinct from semantic accuracy. No production accuracy percentage is available.
+- UI HTTP routes and embedded JavaScript syntax pass checks, but full browser execution and visual layout were not verified because the required browser download timed out.
 
 ## Financial limitations
 

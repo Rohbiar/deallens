@@ -1,0 +1,32 @@
+test_basis_widening_has_correct_sign (test_core.AnalyticsTests.test_basis_widening_has_correct_sign) ... ok
+test_contingent_failure_only_fee (test_core.AnalyticsTests.test_contingent_failure_only_fee) ... ok
+test_delay_cost_not_added_twice (test_core.AnalyticsTests.test_delay_cost_not_added_twice) ... ok
+test_failure_down_rates_creates_unwind_loss (test_core.AnalyticsTests.test_failure_down_rates_creates_unwind_loss) ... ok
+test_forward_eliminates_benchmark_not_credit (test_core.AnalyticsTests.test_forward_eliminates_benchmark_not_credit) ... ok
+test_negative_notional_rejected (test_core.AnalyticsTests.test_negative_notional_rejected) ... ok
+test_option_and_contingent_not_equivalent (test_core.AnalyticsTests.test_option_and_contingent_not_equivalent) ... ok
+test_option_preserves_benefit_net_premium (test_core.AnalyticsTests.test_option_preserves_benefit_net_premium) ... ok
+test_probability_validation (test_core.AnalyticsTests.test_probability_validation) ... ok
+test_sensitivity_is_linear (test_core.AnalyticsTests.test_sensitivity_is_linear) ... ok
+test_up25_independent_dv01_and_coupon (test_core.AnalyticsTests.test_up25_independent_dv01_and_coupon) ... ok
+test_ancillary_agreement_date_rejected (test_core.ExtractionTests.test_ancillary_agreement_date_rejected) ... ok
+test_cash_price_not_par_value (test_core.ExtractionTests.test_cash_price_not_par_value) ... ok
+test_conflict_is_not_overwritten (test_core.ExtractionTests.test_conflict_is_not_overwritten) ... ok
+test_evidence_tampering_rejected (test_core.ExtractionTests.test_evidence_tampering_rejected) ... ok
+test_extension_not_initial_outside_date (test_core.ExtractionTests.test_extension_not_initial_outside_date) ... ok
+test_german_date (test_core.ExtractionTests.test_german_date) ... ok
+test_initial_outside_date_with_proviso (test_core.ExtractionTests.test_initial_outside_date_with_proviso) ... ok
+test_invalid_date_returns_null (test_core.ExtractionTests.test_invalid_date_returns_null) ... ok
+test_minimum_price_qualifier_preserved (test_core.ExtractionTests.test_minimum_price_qualifier_preserved) ... ok
+test_model_cannot_self_verify (test_core.ExtractionTests.test_model_cannot_self_verify) ... ok
+test_prompt_injection_abstains (test_core.ExtractionTests.test_prompt_injection_abstains) ... ok
+test_unknown_question_abstains (test_core.ExtractionTests.test_unknown_question_abstains) ... ok
+test_duplicate_and_sparse_pages_flagged (test_ingestion.IngestionTests.test_duplicate_and_sparse_pages_flagged) ... ok
+test_expected_page_count_detects_missing_page (test_ingestion.IngestionTests.test_expected_page_count_detects_missing_page) ... ok
+test_source_pin_detects_modified_document (test_ingestion.IngestionTests.test_source_pin_detects_modified_document) ... ok
+test_threshold_blocks_scalar_normalization (test_ingestion.IngestionTests.test_threshold_blocks_scalar_normalization) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.045s
+
+OK

@@ -39,7 +39,11 @@ def answer(question,records,comparisons,strict=False):
         choices=[r for r in sources if r["field_name"]==f]
         if choices:
             r=next((r for r in choices if r["document_layer"]=="transaction-agreement"),choices[0])
-            values.append(f"{f}: {r['normalized_value']}"+(f" {r['currency']}" if r.get('currency') else ""))
+            qualifier={"at_least":"at least ","at_most":"at most "}.get(r.get("value_qualifier"),"")
+            if f=="financing_condition" and r["normalized_value"] is False:
+                values.append("Obtaining financing is not a condition under the cited provision")
+            else:
+                values.append(f"{f}: {qualifier}{r['normalized_value']}"+(f" {r['currency']}" if r.get('currency') else ""))
     missing=[f for f in fields if f not in {r["field_name"] for r in sources}]
     return {"question":question,"answer":"; ".join(values),"status":"partial" if missing else "supported",
             "designation":"fact","sources":sources,"candidate_evidence":candidates[:18],
