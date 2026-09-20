@@ -29,7 +29,7 @@ def build():
             source.backup(target)
     files = [p for p in ROOT.iterdir() if p.is_file() and p.name in
              {'README.md','EXECUTION_PLAN.md','AGENT_WORKFLOW.md','requirements.txt','requirements-tested.txt','pyproject.toml','.gitignore'}]
-    for folder in ['deallens','config','tests','docs','data/sources',f'outputs/{run}']:
+    for folder in ['deallens','config','tests','docs','scripts','data/sources',f'outputs/{run}']:
         files += [p for p in (ROOT/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc']
     files += [ROOT/'outputs/latest.json']
     # Only include a packet tied to the packaged run; never reuse stale decisions.

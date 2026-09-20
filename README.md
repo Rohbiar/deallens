@@ -87,3 +87,7 @@ Read the technical memo and known issues. Run and evaluate semantic extraction, 
 ## Review package
 
 `python docs/package_deliverables.py` creates `outputs/deliverables/DealLens_review_package.zip` with source, original PDFs, latest run JSON/CSV, SQLite history, matching review packet, memo, verification reports and a genuine Git history bundle. The package manifest hashes every included file. Credentials, virtual environments and unrelated files are excluded by explicit input selection. This is a review candidate while complete semantic validation and human review remain outstanding.
+
+## Budget-controlled semantic batch
+
+The user authorized $10 for further testing. Run `bash scripts/run_semantic_batch.sh` from the project in the terminal containing your exported API key. It expands to 15 unresolved fields across all sources. CLI calls share a persistent $10 local reservation ledger, including a $1 historical buffer; retries and uncertain failures consume reservations. See `docs/BATCH_PLAN.json` and `docs/MODEL_AND_REVIEW.md`. This controls this application only, not account-wide billing. The latest packaged archive predates this budget feature; refresh it after evaluating the next live run.

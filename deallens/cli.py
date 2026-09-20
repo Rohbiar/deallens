@@ -103,7 +103,8 @@ def run(root,ids=None,threshold=0.9,model=None,model_fields=None,max_model_calls
     provider=None
     if model:
         from .provider import OpenAIProvider
-        provider=OpenAIProvider()
+        from .budget import BudgetLedger
+        provider=OpenAIProvider(budget=BudgetLedger(root/'outputs/api_budget.sqlite'))
     run_id=new_run_id()
     try:code=subprocess.check_output(["git","rev-parse","HEAD"],cwd=root,text=True,stderr=subprocess.DEVNULL).strip()
     except (OSError,subprocess.CalledProcessError):code="unversioned"
@@ -119,7 +120,8 @@ def run(root,ids=None,threshold=0.9,model=None,model_fields=None,max_model_calls
         if not path.exists():download(source["url"],path)
         doc=ingest(path,source);records=extract(doc,run_id,threshold);model_audit=[]
         if provider:
-            proposed,model_audit=extract_semantic(doc,run_id,provider,model,fields=model_fields,threshold=threshold,max_calls=max_model_calls)
+            proposed,model_audit=extract_semantic(doc,run_id,provider,model,fields=model_fields,threshold=threshold,max_calls=max_model_calls,
+                progress=lambda field,layer,status: print(f"{source['document_id']} / {field} / {layer}: {status}",flush=True))
             records.extend(proposed)
             for entry in model_audit:
                 if entry['status']=='provider_error':
@@ -132,6 +134,9 @@ def run(root,ids=None,threshold=0.9,model=None,model_fields=None,max_model_calls
         print(source["document_id"],json.dumps(b["metrics"]))
     hashes=[b["document"]["sha256"] for b in bundles]
     if len(hashes)!=len(set(hashes)):raise ValueError("Duplicate source documents in this run")
+    if provider:
+        manifest['api_budget'] = provider.budget.summary()
+        print('API budget:',json.dumps(manifest['api_budget']))
     persist(root,manifest,bundles,assumptions)
     print("Run:",run_id)
     return run_id

@@ -32,7 +32,7 @@ class ProviderError(RuntimeError):
 class OpenAIProvider:
     endpoint = "https://api.openai.com/v1/responses"
 
-    def __init__(self, api_key=None, *, timeout=90, opener=None, sleeper=time.sleep):
+    def __init__(self, api_key=None, *, timeout=90, opener=None, sleeper=time.sleep, budget=None):
         self._key = api_key or os.environ.get("OPENAI_API_KEY")
         if not self._key:
             raise ProviderError("Set OPENAI_API_KEY in your local environment before using --model. Never paste it into a document.")
@@ -49,6 +49,7 @@ class OpenAIProvider:
             NoRedirect(), urllib.request.HTTPSHandler(context=context)).open
         self.sleeper = sleeper
         self.last_metadata = {}
+        self.budget = budget
 
     def __call__(self, request):
         self.last_metadata = {}
@@ -59,6 +60,7 @@ class OpenAIProvider:
                 "text": {"format": {"type": "json_schema", "name": "transaction_evidence", "strict": True, "schema": SCHEMA}}}
         encoded = json.dumps(body).encode()
         for attempt in range(3):
+            reservation_id = self.budget.reserve(body) if self.budget else None
             req = urllib.request.Request(self.endpoint, data=encoded, headers={
                 "Authorization": "Bearer " + self._key, "Content-Type": "application/json"}, method="POST")
             try:
@@ -67,6 +69,8 @@ class OpenAIProvider:
                 if len(raw) > 2_000_000:
                     raise ProviderError("Provider response exceeds size limit")
                 data = json.loads(raw)
+                if self.budget and isinstance(data,dict):
+                    self.budget.record_usage(reservation_id, data.get('usage'))
                 break
             except urllib.error.HTTPError as exc:
                 if exc.code in {429, 500, 502, 503, 504} and attempt < 2:
@@ -85,6 +89,8 @@ class OpenAIProvider:
         if not isinstance(data, dict):
             raise ProviderError("Provider returned an invalid response envelope")
         self.last_metadata = {"response_id": data.get("id"), "model": data.get("model"), "usage": data.get("usage"), "attempts": attempt + 1}
+        if self.budget:
+            self.last_metadata['budget'] = self.budget.summary()
         if data.get("status") != "completed":
             raise ProviderError("Model response was incomplete; no partial extraction accepted")
         output = data.get("output")

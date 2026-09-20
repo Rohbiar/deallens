@@ -57,3 +57,17 @@ The transport follows the [official Structured Outputs guide](https://developers
 ## TLS setup recovery
 
 The first user-initiated live run (`20260920T161654Z-c7b3c412`) retained zero proposals after connection errors. A local probe identified missing trusted CA certificates. The transport now loads Certifi roots alongside default trust and reports certificate failures specifically; HTTPS certificate verification remains enabled. Install the updated pinned requirements when moving this project to another environment. A successful unauthenticated probe returned HTTP 401, confirming connectivity only. Rerun the bounded extraction in the terminal containing your exported key to test authentication and model output.
+
+## Authorized $10 testing allowance
+
+On 2026-09-20 the user authorized $10 for testing. CLI live runs now always use `outputs/api_budget.sqlite`: an atomic SQLite reservation ledger shared across documents and subsequent runs. $1 is held for earlier use and billing uncertainty, leaving $9 for new request reservations. This buffer is not claimed as actual historical spend. Each HTTP attempt reserves before sending; retry, timeout, crash and invalid-output reservations are never automatically refunded. Concurrent runs cannot both spend the same remaining allowance. Do not delete/reset the ledger without new authorization.
+
+The local guard accepts only `gpt-4.1-mini` and its `2025-04-14` snapshot. Prices checked against [official model documentation](https://developers.openai.com/api/docs/models/gpt-4.1-mini) on 2026-09-20: $0.40/M input and $1.60/M output tokens. Reservation uses serialized request byte length plus 8,192 framing tokens, the 6,000 output-token maximum, and a 2x margin, with no caching discount. Unknown prices, tools and oversized requests are blocked. This is conservative local cost control, not the provider's account billing enforcement; it cannot control other applications, taxes or future price changes. Retain the account-side budget too.
+
+Run the prepared batch in the terminal holding the exported key:
+
+```bash
+bash scripts/run_semantic_batch.sh
+```
+
+The batch selects 15 common fields on all three sources and pins the existing model snapshot. `BATCH_PLAN.json` is an offline plan: 76 calls with retrieved evidence, approximately $2.94 reserved without retries and $8.81 if every call makes three attempts, plus the $1 buffer. No paid calls were made to generate that plan. Progress is printed after each logical request. Model outputs remain candidates requiring review. The API key is never stored in the script or budget ledger.

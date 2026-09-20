@@ -145,7 +145,7 @@ def validate_proposals(result, request, doc, run_id, threshold):
         records.append(primary)
     return identify(records)
 
-def extract_semantic(doc, run_id, provider, model_name, *, fields=None, threshold=.9, max_calls=12, max_chars=16000):
+def extract_semantic(doc, run_id, provider, model_name, *, fields=None, threshold=.9, max_calls=12, max_chars=16000, progress=None):
     fields=list(fields or FIELDS)
     if not fields or any(f not in FIELDS for f in fields):raise ValueError("Unknown or empty field selection")
     if not 1 <= max_calls <= 500 or not 1800 <= max_chars <= 32000:raise ValueError("Invalid model budget")
@@ -191,6 +191,8 @@ def extract_semantic(doc, run_id, provider, model_name, *, fields=None, threshol
                 entry.update(status="provider_error",error=str(exc))
             entry["provider_metadata"]=getattr(provider,"last_metadata",{})
             audit.append(entry)
+            if progress:
+                progress(field, layer, entry['status'])
             if entry["status"]=="provider_error":
                 # Stop a failed provider, instead of repeating charges or auth errors for every field.
                 provider_failed=True
