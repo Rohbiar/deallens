@@ -1,3 +1,5 @@
+Current live evaluation: [FOCUSED_RETEST.md](FOCUSED_RETEST.md) records the v5 focused run and persistent semantic/citation failures. V6 source-passage citation IDs are implemented but not yet tested live. Earlier run descriptions below are historical.
+
 Latest update: see [BROAD_BATCH_REVIEW.md](BROAD_BATCH_REVIEW.md) for the 15-field live run, substantive failures, budget and offline-only v5 changes. Earlier results below are historical where they refer to two fields.
 
 # Latest live evaluation: prompt v4

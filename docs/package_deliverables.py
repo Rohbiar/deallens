@@ -53,7 +53,7 @@ def build():
     content['history.bundle'] = bundle.read_bytes()
     content['outputs/deallens.sqlite'] = (dest/'deallens.sqlite').read_bytes()
     content['RESTORE_HISTORY.txt'] = b'To restore the genuine repository history: git clone history.bundle deallens-history\nThe package contains latest run JSON plus SQLite history; older run JSON remains in the working repository.\n'
-    manifest = {'run_id':run,'status':'review candidate; broader live batch evaluated with material errors; v5 live validation and human review pending',
+    manifest = {'run_id':run,'status':'review candidate; focused v5 evaluated with material errors; v6 citation protocol live validation pending; no expert legal review',
                 'working_tree_changes':subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).splitlines(),
                 'git_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
                 'files':{name:hashlib.sha256(data).hexdigest() for name,data in sorted(content.items())}}

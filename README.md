@@ -6,7 +6,7 @@ DealLens is a runnable public-source research prototype for the Mizuho Derivativ
 
 ## Current validation status (2026-09-20)
 
-73 unit/control tests and 25 selected source fixtures pass. The broader live run `20260920T170013Z-4017a08d` made 76 completed requests across 15 fields: 31 retained candidates, 36 citation rejections and nine empty abstentions. Agent source inspection found substantive interpretation errors. All candidates remain unverified; human approvals are zero and full semantic accuracy is unmeasured. See [BROAD_BATCH_REVIEW.md](docs/BROAD_BATCH_REVIEW.md). Prompt v5 and retrieval changes pass offline tests but have not been evaluated live.
+76 unit/control tests and 25 selected source fixtures pass. The focused v5 run `20260920T203028Z-779ed393` made 18 requests: six retained candidates, ten citation failures, one nested-JSON failure and one abstention. Agent source checks still found material interpretation errors. See [FOCUSED_RETEST.md](docs/FOCUSED_RETEST.md). Prompt v6 now uses source-passage IDs to avoid quotation-copying errors; it has offline tests only. All model candidates remain unverified and full semantic accuracy is unmeasured.
 
 ## Start locally
 
@@ -100,4 +100,4 @@ The user authorized $10 for further testing. Run `bash scripts/run_semantic_batc
 
 `python -m deallens.cli refresh` reruns offline rules while retaining historical model proposals and audits. It makes no API calls and creates a new immutable run. The browser now reads the latest completed run when refreshed, pins QA/review exports to the displayed run and blocks changed source bytes. Restart a server launched before this code update once.
 
-For the next paid experiment, use `bash scripts/run_focused_retest.sh` in the terminal containing the API key. It tests vested options, fee triggers, remedies and borrowing conditions using the existing persistent budget; evaluate the result before repeating a broad batch.
+The focused v5 test is complete and did not establish improvement. Next use `bash scripts/run_citation_smoke.sh` in the terminal containing the API key. It checks the v6 citation protocol with five remedy requests under the existing guard. See docs/FOCUSED_RETEST.md before any broader rerun.

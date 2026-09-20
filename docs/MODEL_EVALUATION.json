@@ -1,24 +1,32 @@
 {
-  "run_id": "20260920T201630Z-7c258ca0",
+  "run_id": "20260920T222402Z-74b0b6e6",
   "model": "gpt-4.1-mini-2025-04-14",
   "evaluation_kind": "agent-curated selected scalar fixtures; not full semantic accuracy or human review",
+  "run_mode": "offline_reprocess",
+  "new_provider_calls": 0,
+  "retained_prompt_versions": [
+    "clause-extraction-v5"
+  ],
+  "response_origin_run_ids": [
+    "20260920T203028Z-779ed393"
+  ],
   "fixture_count": 25,
   "retrieved_fixture_excerpts": 25,
   "model_audit_statuses": {
-    "invalid_output": 36,
-    "abstained": 9,
-    "no_retrieved_support": 59,
-    "proposals_retained": 31
+    "proposals_retained": 6,
+    "invalid_output": 11,
+    "no_retrieved_support": 18,
+    "abstained": 1
   },
-  "provider_responses": 76,
+  "provider_responses": 18,
   "reported_token_usage": {
-    "input_tokens": 259179,
-    "output_tokens": 40443,
-    "total_tokens": 299622
+    "input_tokens": 59262,
+    "output_tokens": 16259,
+    "total_tokens": 75521
   },
-  "model_proposals": 31,
-  "nonnull_model_proposals": 27,
-  "null_model_proposals": 4,
+  "model_proposals": 6,
+  "nonnull_model_proposals": 6,
+  "null_model_proposals": 0,
   "all_evidence_exact": true,
   "human_verified_records": 0,
   "semantic_precision": null,
@@ -272,11 +280,9 @@
       },
       "baseline_match": true,
       "retrieval_contains_baseline_excerpt": true,
-      "live_request_statuses": [
-        "abstained"
-      ],
+      "live_request_statuses": [],
       "model_candidate_count": 0,
-      "selected_model_value_match": false
+      "selected_model_value_match": null
     },
     {
       "fixture": {
@@ -288,11 +294,9 @@
       },
       "baseline_match": true,
       "retrieval_contains_baseline_excerpt": true,
-      "live_request_statuses": [
-        "proposals_retained"
-      ],
-      "model_candidate_count": 1,
-      "selected_model_value_match": false
+      "live_request_statuses": [],
+      "model_candidate_count": 0,
+      "selected_model_value_match": null
     },
     {
       "fixture": {
@@ -318,11 +322,9 @@
       },
       "baseline_match": true,
       "retrieval_contains_baseline_excerpt": true,
-      "live_request_statuses": [
-        "abstained"
-      ],
+      "live_request_statuses": [],
       "model_candidate_count": 0,
-      "selected_model_value_match": false
+      "selected_model_value_match": null
     },
     {
       "fixture": {
@@ -334,11 +336,9 @@
       },
       "baseline_match": true,
       "retrieval_contains_baseline_excerpt": true,
-      "live_request_statuses": [
-        "proposals_retained"
-      ],
-      "model_candidate_count": 1,
-      "selected_model_value_match": false
+      "live_request_statuses": [],
+      "model_candidate_count": 0,
+      "selected_model_value_match": null
     },
     {
       "fixture": {
@@ -364,11 +364,9 @@
       },
       "baseline_match": true,
       "retrieval_contains_baseline_excerpt": true,
-      "live_request_statuses": [
-        "proposals_retained"
-      ],
-      "model_candidate_count": 1,
-      "selected_model_value_match": true
+      "live_request_statuses": [],
+      "model_candidate_count": 0,
+      "selected_model_value_match": null
     },
     {
       "fixture": {
@@ -380,11 +378,9 @@
       },
       "baseline_match": true,
       "retrieval_contains_baseline_excerpt": true,
-      "live_request_statuses": [
-        "proposals_retained"
-      ],
-      "model_candidate_count": 1,
-      "selected_model_value_match": false
+      "live_request_statuses": [],
+      "model_candidate_count": 0,
+      "selected_model_value_match": null
     },
     {
       "fixture": {

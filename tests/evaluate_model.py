@@ -47,6 +47,10 @@ def evaluate(root):
             if isinstance(value,int): usage[key] += value
     report = {'run_id':manifest['run_id'], 'model':manifest.get('model'),
               'evaluation_kind':'agent-curated selected scalar fixtures; not full semantic accuracy or human review',
+              'run_mode':manifest.get('mode'),
+              'new_provider_calls':manifest.get('new_provider_calls'),
+              'retained_prompt_versions':sorted({a.get('prompt_version','unknown') for a in audits}),
+              'response_origin_run_ids':sorted({a.get('origin_run_id',manifest['run_id']) for a in audits}),
               'fixture_count':len(results),
               'retrieved_fixture_excerpts':sum(r['retrieval_contains_baseline_excerpt'] for r in results),
               'model_audit_statuses':dict(Counter(a['status'] for a in audits)),

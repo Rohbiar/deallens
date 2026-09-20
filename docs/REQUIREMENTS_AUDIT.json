@@ -1,5 +1,5 @@
 {
-  "run_id": "20260920T201630Z-7c258ca0",
+  "run_id": "20260920T222402Z-74b0b6e6",
   "audit_type": "machine artifact/control checks plus disclosed coverage; not expert approval",
   "all_machine_checks_pass": true,
   "all_required_bio_scenarios_present": true,
@@ -71,7 +71,6 @@
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review",
               "supported"
             ],
             "financing-agreement": [
@@ -82,8 +81,7 @@
             1,
             2,
             3,
-            10,
-            44
+            10
           ],
           "complete_legal_interpretation_verified": false
         },
@@ -803,7 +801,6 @@
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
-              "low_confidence",
               "requires_review"
             ],
             "transaction-agreement": [
@@ -1046,7 +1043,6 @@
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review",
               "supported"
             ],
             "financing-agreement": [
@@ -1057,8 +1053,7 @@
             2,
             3,
             4,
-            13,
-            96
+            13
           ],
           "complete_legal_interpretation_verified": false
         },
@@ -1771,6 +1766,7 @@
           },
           "source_pages": [
             19,
+            59,
             79,
             80,
             84,
@@ -1808,7 +1804,6 @@
               "requires_review"
             ],
             "transaction-agreement": [
-              "low_confidence",
               "requires_review"
             ],
             "financing-agreement": [
@@ -2010,7 +2005,6 @@
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review",
               "supported"
             ],
             "financing-agreement": [
@@ -2040,7 +2034,6 @@
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review",
               "supported"
             ],
             "financing-agreement": [
@@ -2640,7 +2633,6 @@
               "requires_review"
             ],
             "financing-agreement": [
-              "low_confidence",
               "requires_review"
             ]
           },
@@ -2921,7 +2913,6 @@
               "not_found"
             ],
             "transaction-agreement": [
-              "low_confidence",
               "requires_review"
             ],
             "financing-agreement": [

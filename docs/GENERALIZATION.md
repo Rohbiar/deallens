@@ -1,3 +1,5 @@
+Current live evaluation: [FOCUSED_RETEST.md](FOCUSED_RETEST.md) records the v5 focused run and persistent semantic/citation failures. V6 source-passage citation IDs are implemented but not yet tested live. Earlier run descriptions below are historical.
+
 # Generalization assessment
 
 ## What was actually evaluated

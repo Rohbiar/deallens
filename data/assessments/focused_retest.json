@@ -1,0 +1,102 @@
+{
+  "version": "agent-assessment-1",
+  "records": [
+    {
+      "record_id": "4400665349aafda4d03f7a57",
+      "document_id": "bio_techne",
+      "document_sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+      "field_name": "vested_options",
+      "source_run_id": "20260920T203028Z-779ed393",
+      "assessment_kind": "partial_support",
+      "assessment": "Cancellation and intrinsic-value formula follow the excerpt; Effective Time identifies conversion/entitlement and does not by itself establish the cash payment deadline.",
+      "physical_pdf_pages": [
+        2
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "3e83c1b7eef17ddfeb2275b6",
+      "document_id": "organon",
+      "document_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T203028Z-779ed393",
+      "assessment_kind": "unsupported_interpretation",
+      "assessment": "A regulatory closing condition does not establish the general prohibition on acceptance asserted in the details.",
+      "physical_pdf_pages": [
+        3
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "fcb3d25772371ffb2135eb6d",
+      "document_id": "organon",
+      "document_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T203028Z-779ed393",
+      "assessment_kind": "unsupported_interpretation",
+      "assessment": "Limits on required remedies are again treated as prohibitions. Read the complete definition and separate consent restrictions and extension election.",
+      "physical_pdf_pages": [
+        71,
+        72,
+        86,
+        87
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "eac5543070f8c1357e430e48",
+      "document_id": "organon",
+      "document_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+      "field_name": "financing_conditions",
+      "source_run_id": "20260920T203028Z-779ed393",
+      "assessment_kind": "wrong_clause",
+      "assessment": "Parent financing representations and efforts covenants do not establish lender conditions precedent in the referenced commitment letter.",
+      "physical_pdf_pages": [
+        59,
+        79
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "baf671405614992b4d873c60",
+      "document_id": "uber_delivery_hero",
+      "document_sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+      "field_name": "fee_triggers_and_tails",
+      "source_run_id": "20260920T203028Z-779ed393",
+      "assessment_kind": "unsupported_interpretation",
+      "assessment": "The completion grace period is not a fee tail and the long-stop date is not the fee payment deadline. Regulatory non-completion qualification and party aliases require preservation.",
+      "physical_pdf_pages": [
+        3,
+        34,
+        35
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "7f9c3df5352c580a5b3cc703",
+      "document_id": "uber_delivery_hero",
+      "document_sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+      "field_name": "fee_triggers_and_tails",
+      "source_run_id": "20260920T203028Z-779ed393",
+      "assessment_kind": "unsupported_interpretation",
+      "assessment": "Company fee triggers and termination actor are misstated; the operative triggers begin on page 34. A five-business-day payment deadline is not a fee tail.",
+      "physical_pdf_pages": [
+        34,
+        35
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    }
+  ]
+}

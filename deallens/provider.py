@@ -6,6 +6,7 @@ import time
 import urllib.error
 import urllib.request
 import certifi
+from .citations import source_id_request, resolve_citations, PROTOCOL
 
 SCHEMA = {
     "type": "object", "additionalProperties": False,
@@ -53,11 +54,12 @@ class OpenAIProvider:
 
     def __call__(self, request):
         self.last_metadata = {}
+        payload,schema,passages,catalog_hash=source_id_request(request,SCHEMA)
         body = {"model": request["model"], "store": False,
                 "instructions": request["system"],
-                "input": json.dumps({k: v for k, v in request.items() if k not in {"system", "tools", "model"}}, ensure_ascii=False),
+                "input": json.dumps(payload, ensure_ascii=False),
                 "max_output_tokens": 6000,
-                "text": {"format": {"type": "json_schema", "name": "transaction_evidence", "strict": True, "schema": SCHEMA}}}
+                "text": {"format": {"type": "json_schema", "name": "transaction_evidence", "strict": True, "schema": schema}}}
         encoded = json.dumps(body).encode()
         for attempt in range(3):
             reservation_id = self.budget.reserve(body) if self.budget else None
@@ -89,6 +91,7 @@ class OpenAIProvider:
         if not isinstance(data, dict):
             raise ProviderError("Provider returned an invalid response envelope")
         self.last_metadata = {"response_id": data.get("id"), "model": data.get("model"), "usage": data.get("usage"), "attempts": attempt + 1}
+        self.last_metadata.update(citation_protocol=PROTOCOL, passage_catalog_sha256=catalog_hash, passage_count=len(passages))
         if self.budget:
             self.last_metadata['budget'] = self.budget.summary()
         if data.get("status") != "completed":
@@ -109,6 +112,8 @@ class OpenAIProvider:
             raise ProviderError("Provider returned invalid text content")
         text = "".join(texts)
         try:
-            return json.loads(text)
+            result = json.loads(text)
         except (ValueError, TypeError):
             raise ProviderError("Model response did not contain a valid extraction object") from None
+
+        return resolve_citations(result, passages)

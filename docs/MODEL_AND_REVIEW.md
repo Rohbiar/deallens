@@ -1,6 +1,6 @@
 # Model extraction and attributed review
 
-73 unit/control tests and 25 selected source fixtures pass. The broader live run `20260920T170013Z-4017a08d` made 76 completed requests across 15 fields: 31 retained candidates, 36 citation rejections and nine empty abstentions. Agent source inspection found substantive interpretation errors. All candidates remain unverified; human approvals are zero and full semantic accuracy is unmeasured. See [BROAD_BATCH_REVIEW.md](BROAD_BATCH_REVIEW.md). Prompt v5 and retrieval changes pass offline tests but have not been evaluated live.
+Latest v5 evaluation: 18 responses, six candidates, eleven validation failures and one abstention; material semantic errors persist. See [FOCUSED_RETEST.md](FOCUSED_RETEST.md). V6 replaces model-written quotations with IDs selected from a request-specific source catalogue. The adapter reconstructs exact evidence and retains the existing integrity checks. This protocol passes offline tests but has not been evaluated live. No human approval is implied.
 
 ## Bounded model run
 

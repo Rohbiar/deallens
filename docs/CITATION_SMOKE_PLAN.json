@@ -1,0 +1,43 @@
+{
+  "prompt_version": "clause-extraction-v6",
+  "live_executed": false,
+  "calls": 5,
+  "single_attempt_reservation_usd": 0.19197,
+  "cases": [
+    {
+      "document": "bio_techne",
+      "layer": "8-k-summary",
+      "passages": 16,
+      "reserved_usd_per_attempt": 0.038172,
+      "all_retrieved_text_present": true
+    },
+    {
+      "document": "bio_techne",
+      "layer": "transaction-agreement",
+      "passages": 22,
+      "reserved_usd_per_attempt": 0.042072,
+      "all_retrieved_text_present": true
+    },
+    {
+      "document": "organon",
+      "layer": "8-k-summary",
+      "passages": 9,
+      "reserved_usd_per_attempt": 0.034071,
+      "all_retrieved_text_present": true
+    },
+    {
+      "document": "organon",
+      "layer": "transaction-agreement",
+      "passages": 27,
+      "reserved_usd_per_attempt": 0.044351,
+      "all_retrieved_text_present": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "layer": "transaction-agreement",
+      "passages": 8,
+      "reserved_usd_per_attempt": 0.033304,
+      "all_retrieved_text_present": true
+    }
+  ]
+}
