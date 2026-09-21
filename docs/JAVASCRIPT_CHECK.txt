@@ -1,1 +1,1 @@
-PASS: embedded UI JavaScript parses; not a browser execution test.
+2026-09-21: bundled Node --check passed for the script extracted from deallens/ui.html. Actual selected browser flows are recorded separately in BROWSER_CHECKS.json.

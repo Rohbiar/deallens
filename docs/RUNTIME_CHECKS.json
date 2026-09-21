@@ -3,32 +3,32 @@
     {
       "route": "/",
       "status": 200,
-      "bytes": 12776
+      "bytes": 15272
     },
     {
       "route": "/api/manifest",
       "status": 200,
-      "bytes": 5928
+      "bytes": 8048
     },
     {
       "route": "/api/review-packet",
       "status": 200,
-      "bytes": 1444596
+      "bytes": 3238448
     },
     {
       "route": "/api/bio_techne",
       "status": 200,
-      "bytes": 2279758
+      "bytes": 3840989
     },
     {
       "route": "/api/organon",
       "status": 200,
-      "bytes": 2518596
+      "bytes": 4215200
     },
     {
       "route": "/api/uber_delivery_hero",
       "status": 200,
-      "bytes": 2905354
+      "bytes": 3653677
     },
     {
       "route": "/source/bio_techne",
@@ -44,6 +44,36 @@
       "document": "uber_delivery_hero",
       "question": "consideration",
       "answer": "I could not identify sufficient source support for this answer."
+    },
+    {
+      "document": "bio_techne",
+      "question": "awards",
+      "status": "partial",
+      "full_source_sections": true
+    },
+    {
+      "document": "bio_techne",
+      "strict_awards_abstention": true
+    },
+    {
+      "document": "organon",
+      "question": "awards",
+      "status": "partial",
+      "full_source_sections": true
+    },
+    {
+      "document": "organon",
+      "strict_awards_abstention": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "question": "awards",
+      "status": "partial",
+      "full_source_sections": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "strict_awards_abstention": true
     },
     {
       "path_traversal": "rejected",

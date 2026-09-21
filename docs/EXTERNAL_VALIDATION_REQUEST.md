@@ -1,0 +1,9 @@
+# Optional independent model assessment
+
+Give the other model the original three PDFs and the task below first, without this project's interpretations. Preserve the actual answer, model identifier and date. No external upload has been performed by this project. This review is optional and cannot establish human legal verification.
+
+> Using only the attached public transaction PDFs, explain each transaction's regulatory remedy obligations and limitations. Identify the obligated parties, business scope, material-adverse threshold and how it is measured, consent and control rights, closing conditionality, and any effect of an outside-date extension election. Distinguish a limit on required action from a prohibition. Separate the filing summary from the operative agreement. Cite physical PDF pages and the clauses supporting each material statement. Follow cross-references in the full PDF, explicitly identify missing schedules or definitions, and do not infer that undisclosed exceptions are absent. Do not provide an overall accuracy percentage or claim human/legal approval.
+
+After the independent answer is saved, provide the five candidate_value objects and evidence_sources from the consolidated run's extractions.json files. Ask for a statement-by-statement comparison, specifying unsupported inferences, omitted qualifiers and disagreements. Ask the reviewer to explain its evidence rather than choose an output by model reputation. Record agreement/disagreement as machine assessment only; do not apply approval decisions automatically.
+
+Relevant starting points for source navigation: Bio-Techne physical pp. 2–3, 59–60, 71; Organon pp. 3, 71–72, 85–87; Uber/Delivery Hero pp. 13–15, 26–27. These are starting points, not a substitute for following definitions and conditions elsewhere in the PDFs.

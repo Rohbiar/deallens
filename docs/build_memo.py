@@ -8,6 +8,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 import reportlab
+import json
 
 font_root = Path(reportlab.__file__).resolve().parent/'fonts'
 pdfmetrics.registerFont(TTFont('DejaVu',str(font_root/'Vera.ttf')))
@@ -15,6 +16,9 @@ pdfmetrics.registerFont(TTFont('DejaVuBold',str(font_root/'VeraBd.ttf')))
 pdfmetrics.registerFontFamily('DejaVu',normal='DejaVu',bold='DejaVuBold')
 
 ROOT=Path(__file__).resolve().parents[1]
+run=json.loads((ROOT/'outputs/latest.json').read_text())['run_id']
+runfolder=ROOT/'outputs'/run
+case_metrics={d:json.loads((runfolder/d/'metrics.json').read_text()) for d in ('bio_techne','organon','uber_delivery_hero')}
 styles=getSampleStyleSheet()
 styles.add(ParagraphStyle(name='MemoTitle',fontName='DejaVuBold',fontSize=21,leading=26,spaceAfter=14,textColor=colors.black))
 styles.add(ParagraphStyle(name='MemoH',fontName='DejaVuBold',fontSize=11,leading=14,spaceBefore=11,spaceAfter=6,textColor=colors.black))
@@ -31,15 +35,15 @@ def table(rows,widths):
 
 p('DealLens technical assessment','MemoTitle')
 p('Mizuho Derivatives Risk Solutions | Public source prototype','MemoSmall')
-p('DealLens links three public transaction filings to evidence, source comparisons and illustrative financing sensitivities. It is a reviewable baseline, not complete legal extraction. Bounded model extraction has been evaluated live on 15 complex fields plus an earlier two-field test; actual human verification has not occurred. A source-matching model proposal still made an unsupported legal inference. Complex clauses remain unresolved.')
+p('DealLens links three public transaction filings to structured evidence, source comparisons and illustrative financing sensitivities. The current prototype adds full numbered provisions, continuation pages and explicit reference context. It remains a submission candidate with incomplete normalized interpretation of complex clauses. Source excerpts are labeled partial; no human verification is claimed.')
 h('Implementation and evidence controls')
 p('Python ingestion preserves PDF hashes, page inventories, exhibit layers and page/character locators. A common 42-field catalog drives scalar extraction and bounded model proposals with exact citation checks. Explicit review decisions create new runs and regenerate dependent outputs; prior runs are preserved. SQLite retains request and review events. Reviewer identity is self-attested. The browser is read-only and loopback-bound.')
-p('Relevant executed agreements outrank summaries, but conflicting values and qualifiers are retained. Exact evidence matching proves provenance, not semantic correctness. Complex provisions return null normalized values and enter the review queue. Actual filing dates and external page completeness remain unverified; neither is inferred from signing dates or internal page counts.')
-table([['Document','Pages','Supported field types','Human verified'],['Bio-Techne','99','12 of 42','0'],['Organon','109','11 of 42','0'],['Uber and Delivery Hero','149','14 of 42','0']],[170,55,125,118])
-p('A supported field count means at least one source layer has a machine-supported value; it does not imply complete subfields or a resolved canonical comparison. All three sources use the same code. Common rules were revised after validation inspection, so the final results are adapted validation results, not pristine holdout accuracy.','MemoSmall')
+p('Relevant executed agreements outrank summaries, but conflicting values and qualifiers are retained. Exact evidence matching proves provenance, not semantic correctness. Complex provisions return null normalized values and enter the review queue. All three PDFs match fresh publisher downloads. Organon and Uber filing dates are SEC-index-verified; Bio-Techne is explicitly PDF-metadata-reported. Omitted schedules and incorporated documents are not assumed available.')
+table([['Document','Pages','Supported fields','Section excerpt fields']]+[[label,str(case_metrics[key]['page_count']),str(case_metrics[key]['machine_supported_fields'])+' of 42',str(case_metrics[key]['source_excerpt_fields'])] for label,key in [('Bio-Techne','bio_techne'),('Organon','organon'),('Uber and Delivery Hero','uber_delivery_hero')]],[160,48,120,140])
+p('Supported counts exclude section excerpts and do not imply a resolved canonical comparison. Excerpts preserve contractual wording and references but do not establish a complete legal interpretation. All three sources use the same code. Common rules were revised after validation inspection, so the final results are adapted validation results, not pristine holdout accuracy.','MemoSmall')
 h('Material source distinctions')
 p('<b>Bio-Techne:</b> March 25, 2027 outside date with specified automatic extensions to June 25 and September 25; further written agreement can extend it again. The debt-issuance assumptions in the assignment are synthetic, not disclosed financing terms. [1]')
-p('<b>Organon:</b> an elective extension can change the remedy obligations when Parent elects it. Award treatment also varies by grant year. Neither distinction is adequately represented by a single date or generic award description. [2]')
+p('<b>Organon:</b> an elective extension can change the remedy obligations when Parent elects it. Award treatment also varies by grant year. Full sections preserve the grant-year cohorts, closing-time-condition exception and Parent-elected waiver for review. [2]')
 p('<b>Uber:</b> a German public takeover, not a US merger. The summary price is EUR 41.50; the agreement specifies at least EUR 41.50. A EUR 11.5bn financing floor is distinct from the disclosed EUR 14.2bn bridge commitment. The model preserves these distinctions. [3]')
 
 story.append(PageBreak())
@@ -53,16 +57,16 @@ h('Failure and timing')
 p('A conventional payer swap can require an unwind payment when the deal fails after rates fall. An ordinary payer option can still pay on a failure scenario with higher rates; a deal-contingent swap is assumed to cancel without settlement on failure, retaining the fee. The two strategies are therefore modeled separately. No transaction termination fee is automatically offset against hedge loss.')
 p('Delay scenarios use hypothetical closing on an explicitly stated extension date with separately labeled roll or renewal costs. They do not assert that extension conditions have been met. A +25bp rate move changes annual coupon cost by USD 10mm, distinct from the USD 65mm PV sensitivity; these measures are never summed. Outcome-weighted results depend on an explicitly synthetic joint rate/completion distribution.')
 h('Validation adaptations')
-p('Organon uses a synthetic USD 1bn fixed-rate refinancing slice because the baseline does not establish a supported issuance size and tenor. Uber uses a synthetic EUR 1bn slice plus separate FX and floating-bridge sensitivities. The bridge commitment is not assumed fully drawn, and its 364-day floating exposure does not use the seven-year bond DV01. Actual fee grids, day counts and lending conditions remain for review. [2, 3]')
+p('Organon uses a synthetic USD 1bn fixed-rate refinancing slice because the baseline does not establish a supported issuance size and tenor. Uber uses a synthetic EUR 1bn slice plus separate FX and floating-bridge sensitivities. The bridge commitment is not assumed fully drawn, and its 364-day floating exposure does not use the seven-year bond DV01. A six-level disclosed bridge grid is now separate from assumed draw and EURIBOR. Step-up amounts, duration fees and funding fees are publicly redacted; no missing amount is inferred. [2, 3]')
 
 story.append(PageBreak())
 p('Validation and next steps','MemoTitle')
 h('Verification evidence')
-p('The project passes 79 unit/control tests and 25 selected source fixtures. Tests cover financial identities, evidence integrity, qualifiers, unsupported QA, malformed model output, non-finite inputs, stale reviews and synthetic review regeneration. Browser checks confirmed supported and strict-mode answers and the Uber price-qualifier conflict. Agent-curated fixtures are not independent human ground truth; full-document semantic accuracy remains unmeasured.')
-p('Tests exposed ancillary-date contamination, a missed outside-date proviso, missing preceding retrieval context and failure to retrieve ISO-currency consideration. Shared rules and regression tests address these failures. Bounded retrieval now reaches all 16 selected scalar fixture excerpts; this does not measure complete clause recall. No human decisions are fabricated.')
-h('Required before submission')
-p('V7 smoke test: all five remedy responses passed citation and typed-value validation. Source inspection nevertheless found wrong-field summaries, overstated prohibitions, missing scope qualifications and incomplete definitions. All candidates remain unverified and excluded from supported answers. Automatic quality warnings highlight some risks but do not establish correctness. No further identical smoke is warranted; clause context and semantic reliability remain the priorities. See TYPED_VALUE_EVALUATION.md.')
-p('Unresolved fees, award cohorts, remedies and regulatory clocks remain documented gaps. Agent source checks do not constitute expert legal verification, and the candidate is not asked for a nominal legal attestation. The tested fields do not establish extraction completeness. Full precision/recall and billed cost remain unmeasured; no model candidate was promoted to an approved fact.')
+p('The project passes 97 unit/control tests, 25 selected scalar/source fixtures and 18 section/qualifier retention fixtures. Tests cover financial identities, evidence integrity, qualifiers, unsupported QA, malformed model output, non-finite inputs, stale reviews and synthetic review regeneration. Browser checks confirmed full award sections, strict-mode abstention and the risk-map view. HTTP checks cover the supported answer and Uber price conflict. Agent-curated fixtures are not independent human ground truth; full-document semantic accuracy remains unmeasured.')
+p('Tests exposed ancillary-date contamination, a missed outside-date proviso, missing preceding retrieval context and failure to retrieve ISO-currency consideration. Shared rules and regression tests address these failures. Section tests retain continuation-page exceptions and references. Word boundaries prevent RSU/pursuant and cure/procure false matches. These tests do not measure full legal recall. No human decisions are fabricated.')
+h('Current scope and remaining work')
+p('Across 36 required transaction/question combinations, 12 answers are fully supported, 22 are partial and two remain review-required or conflicted. Complex partial answers now expose whole provisions and available references. They do not count as completed normalized legal extraction. Typed business-day expressions retain their contractual anchors without inventing calendar dates.')
+p('The section-aware continuation used no new provider calls and preserved earlier model proposals and budget records. Complete reconciliation of complex fee triggers, award cohorts, regulatory remedies and conditional deadlines remains outstanding. Redacted public financial terms cannot be recovered by guessing. Independent semantic precision and recall remain unmeasured; the candidate retains ownership of the submitted code, calculations and limitations.')
 
 h('Production and confidential information')
 p('For material non-public information, use firm-approved isolated infrastructure, authenticated deal-level access, private model endpoints, restricted egress, encrypted storage and approved retention terms. Reapply source permissions at retrieval and output. Keep credentials in a secrets service. Document text has no authority to execute tools or transmit data. Material corrections and distribution require attributed human approval; trading remains outside this application.')

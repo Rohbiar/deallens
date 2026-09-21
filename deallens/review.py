@@ -43,7 +43,8 @@ def apply_decisions(manifest, bundles, submission, new_run_id):
             if not r or r["field_name"]!=field or r["document_layer"]!=layer or r.get("status") in {"superseded","rejected"}:
                 raise ValueError("Review references an invalid or inactive record")
             if not validate_evidence(r,doc):raise ValueError("Review evidence no longer matches source")
-            for extra in r.get("evidence_sources",[]):
+            from .provisions import all_evidence
+            for extra in all_evidence(r):
                 if not validate_evidence(extra,doc):raise ValueError("Supplemental evidence does not match source")
             selected.append(r)
         now=datetime.now(timezone.utc).isoformat()
@@ -60,6 +61,8 @@ def apply_decisions(manifest, bundles, submission, new_run_id):
         if d.get("complete_field_layer") is not True:
             raise ValueError("Approval/correction requires explicit complete_field_layer attestation")
         if d["action"]=="approve":
+            if any(r.get("status")=="source_excerpt" for r in selected):
+                raise ValueError("Source excerpts need an explicit normalized interpretation; use correct, not approve")
             values=[r.get("candidate_value",r.get("normalized_value")) for r in selected]
             if any(v is None for v in values) or len({json.dumps(v,sort_keys=True,allow_nan=False) for v in values})!=1:
                 raise ValueError("Approve requires one consistent existing value; use correct for a combined interpretation")

@@ -129,6 +129,16 @@ def run_analytics(doc,records,comparisons,config):
                 "annualized_interest_after_three_synthetic_stepups":draw*(x["euribor"]+x["bridge_margin"]+3*x["bridge_stepup_bp_per_90_days"]/10000),
                 "annualized_increment_if_euribor_up_25":draw*0.0025,
                 "note":"Annualized run rates, not 364-day cashflow totals. Fees and exact rating schedule excluded; bridge is separate from synthetic fixed-rate refinancing slice."}
+            from .financing import disclosed_pricing
+            pricing=disclosed_pricing(doc)
+            adaptation['disclosed_bridge_pricing']=pricing
+            if pricing['status']=='disclosed_grid':
+                adaptation['bridge_interest_by_disclosed_pricing_level']=[
+                    {**row,'currency':a['currency'],'assumed_draw':draw,
+                     'assumed_euribor':x['euribor'],
+                     'annualized_initial_interest':draw*(x['euribor']+row['loan_margin_rate']),
+                     'designation':'analysis','note':'Disclosed base margin; synthetic draw and EURIBOR. No rating selected, redacted step-ups or fees inferred.'}
+                    for row in pricing['pricing_grid']]
     return {"status":"illustrative","assumptions":a,"rows":rows,"extension_anchors":anchors,
             "blocked_scenarios":unresolved,"expected_costs":expected,"adaptation":adaptation,
             "baseline_coupon":a["benchmark_rate"]+a["issuer_credit_spread"],

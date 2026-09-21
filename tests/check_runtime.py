@@ -1,5 +1,6 @@
 """HTTP smoke checks in one process; separate from browser visual QA."""
 import json
+import argparse
 import threading
 import time
 from pathlib import Path
@@ -10,8 +11,10 @@ from deallens.server import serve
 
 root=Path(__file__).resolve().parents[1]
 port=8876
-threading.Thread(target=serve,args=(root,port),daemon=True).start()
-base=f'http://127.0.0.1:{port}'
+parser=argparse.ArgumentParser();parser.add_argument('--base-url')
+args=parser.parse_args()
+base=args.base_url or f'http://127.0.0.1:{port}'
+if not args.base_url:threading.Thread(target=serve,args=(root,port),daemon=True).start()
 for _ in range(40):
     try:urlopen(base+'/api/manifest',timeout=1);break
     except OSError:time.sleep(.1)
@@ -27,6 +30,13 @@ for path in ['/','/api/manifest','/api/review-packet','/api/bio_techne','/api/or
 for doc,question,expected in [('bio_techne','consideration','73.0'),('uber_delivery_hero','consideration','sufficient source support')]:
     with urlopen(base+'/ask/'+doc+'?q='+quote(question)) as r:
         a=json.load(r);assert expected in a['answer'];results.append({'document':doc,'question':question,'answer':a['answer']})
+for doc in ['bio_techne','organon','uber_delivery_hero']:
+    with urlopen(base+'/ask/'+doc+'?q=awards') as r:
+        a=json.load(r);assert a['status']=='partial' and a['source_answers'] and a['review_status']=='unreviewed'
+        results.append({'document':doc,'question':'awards','status':a['status'],'full_source_sections':True})
+    with urlopen(base+'/ask/'+doc+'?q=awards&strict=true') as r:
+        a=json.load(r);assert a['answer']=='I could not identify sufficient source support for this answer.'
+        results.append({'document':doc,'strict_awards_abstention':True})
 try:
     urlopen(base+'/source/../../config/assumptions.json')
     raise AssertionError('Unexpected file access')

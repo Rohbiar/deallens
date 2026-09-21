@@ -96,3 +96,22 @@ User executed five remedy calls: four retained candidates, zero citation failure
 ## V7 evaluation: format success is not semantic success
 
 User executed five calls and all five passed value/citation validation. Agent inspection still found wrong-field summaries and prohibited-versus-not-required errors. Added five explicit source assessments and conservative automatic quality warnings without changing normalized values or human review status. All 79 unit/control tests pass. Repeating the same smoke was rejected as low value; future paid evaluation must follow substantive clause/definition and semantic changes. No new assistant API call was made.
+
+## GPT-5.5 continuation and consolidation
+
+User executed GPT-5.5 comparison and Organon retest in their credential-bearing Terminal. The agent inspected saved outputs and selected original-source clauses. A missing transport citation bound caused the initial Organon rejection; v8 aligned schema, prompt and local validation, and both retest requests passed. Source interpretation improvements and remaining qualifiers are recorded as agent annotations, never human approvals.
+
+An offline consolidation selected Bio-Techne/Uber from 20260920T233813Z-64f21f5e and Organon from 20260920T234423Z-9b827d83. Run 20260921T034805Z-88a4e5cf preserves origin IDs, checks PDF hashes, requires matching assumptions/thresholds and retains the five unverified candidates. No paid request was made during consolidation. 82 tests, 25 selected source fixtures, requirement artifact checks and loopback HTTP checks passed. The HTTP test initially failed sandbox binding and succeeded after approved escalation. The updated memo was rendered and all three pages visually inspected. Full semantic coverage remains incomplete.
+
+
+## Section-aware continuation on 2026-09-21
+
+The user requested continued implementation toward submission readiness following a repository/specification gap assessment. Work was performed by the current Codex agent; no subagents or new paid model calls were used. Existing user changes and historical model outputs were preserved.
+
+The initial section index missed Organon's headings because they contain a trailing decimal period; source inspection exposed zero indexed sections. The parser was corrected to accept both forms, with a regression test. A second inspection found RSU matching inside “pursuant” and cure inside “procure”; word-boundary rules and negative tests now prevent both. Full sections preserve the previously omitted Organon closing-time-condition exception and Parent-elected waiver. These are source-retention checks, not claims of complete interpretation.
+
+A proposed completeness shortcut—counting every newly retrieved section as a fully answered legal field—was rejected. Excerpts keep null normalized values, a separate status and partial QA; strict human-verification mode still abstains. The interface exposes references and selected definitions for review. Source excerpts require a deliberate normalized correction rather than nominal approval.
+
+Source review located a public six-level bridge pricing grid and redacted step-up, duration-fee and funding-fee amounts. The analysis now separates the disclosed grid from synthetic draw and EURIBOR assumptions, and does not fill redactions. All three publisher downloads matched the stored bytes; Organon and Uber filing dates were verified against SEC indexes. Bio-Techne's inaccessible index remains a limitation, with its PDF-metadata date explicitly labeled.
+
+Current measured checks and coverage are in docs/SUBMISSION_STATUS.md. No independent human semantic review, calibrated accuracy, or net time saving is claimed. The original ten substantive decision records above remain the representative workflow record; this continuation documents subsequent recovery and implementation.

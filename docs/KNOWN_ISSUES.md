@@ -1,48 +1,26 @@
-Current live evaluation: [FOCUSED_RETEST.md](FOCUSED_RETEST.md) records the v5 focused run and persistent semantic/citation failures. V6 source-passage citation IDs are implemented but not yet tested live. Earlier run descriptions below are historical.
-
-Latest update: see [BROAD_BATCH_REVIEW.md](BROAD_BATCH_REVIEW.md) for the 15-field live run, substantive failures, budget and offline-only v5 changes. Earlier results below are historical where they refer to two fields.
-
 # Known issues and production roadmap
 
-## Material limitations
+Current measurements are in [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md). Historical model reports describe their own runs; they are not current coverage claims.
 
-1. Full semantic extraction and validation are unfinished. The current baseline supports 11–14 distinct field types per document; many of the 42 catalog fields remain candidates or not found. Do not describe this as complete extraction.
-2. The broader live batch returned 31 candidates from 76 responses, with 36 exact-citation failures and multiple semantic errors. Historical findings are annotated without human promotion. Prompt v5 and current retrieval changes have offline checks only; the focused live retest is pending. Full precision/recall remains unmeasured.
-3. Expert legal review has not occurred and is not replaced by agent source inspection. A versioned CLI approve/correct/reject workflow exists, but reviewer identity is only locally self-attested. No shipped record is human-verified; the browser interface remains read-only.
-4. Source-specific award cohorts, all fee triggers/tails, remedy limitations, cross-references, acceptance mechanics and lending conditions require complete clause-level reconciliation. Candidate windows can cut across page boundaries; read adjacent original pages.
-5. Agreement-versus-summary narrative matches are unresolved, and summary-only fees may not be normalized from the agreement. Absence is not “not applicable” or a zero termination fee.
-6. The date-kind classifier is heuristic. A page can contain several dates and conditions. Uber's regulatory timing should be represented as its own event structure rather than forced into US-style first/final outside-date extensions. Those extension scenarios are blocked in the baseline.
+## Remaining assignment limitations
 
-## Engineering and data limitations
+1. Complete normalized interpretation of complex clauses is unfinished. Whole sections and selected references are now retained, but excerpts do not establish complete treatment of award cohorts, fee triggers, regulatory remedies or conditions. QA labels these responses partial and keeps normalized values null.
+2. Section lookup is based on numbered headings. Unnumbered provisions, incorporated documents, nested references and definitions outside recognized dictionaries may remain unresolved. Cross-reference lookup is one hop, same-instrument and bounded. Full source pages remain authoritative.
+3. The three PDFs match fresh publisher downloads. This establishes the downloaded snapshot, not completeness of omitted schedules or separate commitment/fee letters. Some bridge pricing components are visibly redacted and cannot be extracted from the supplied public record.
+4. Organon and Uber filing dates are SEC-index-verified. Bio-Techne's date is reported by publisher PDF metadata; an accessible independent filing index was not obtained.
+5. Comparisons resolve supported scalars but leave narrative equivalence unresolved. The Uber exact-price versus minimum-price difference remains visible and blocks its canonical answer.
+6. Timeline expressions preserve contractual anchors and units, but conditional and business-day deadlines are not executable schedules. Uber's regulatory clocks are not forced into US merger extension scenarios.
+7. All source fixtures and qualitative assessments are agent-curated. Contract-wide precision, recall and calibration are unmeasured. Validation documents informed shared improvements, so final results are adapted validation, not untouched holdouts.
+8. No human-verified records are shipped. This does not imply that a nonexpert should provide nominal legal approval. The candidate remains responsible for the submission and its disclosed limitations.
 
-- Actual filing dates are null until verified from filing-index metadata. Event and signature dates are preserved separately. Document title does not prove filing date.
-- Text checksums find exact duplicates, not near duplicates. Missing internal pages can be detected when an independent expected count is supplied; otherwise completeness is unknown. Sparse pages may be intentionally blank rather than OCR failures.
-- Sources are filing snapshots; subsequent amendments and deal developments have not been checked. Public document content can contain redactions and omitted schedules; jurisdiction lists may therefore be incomplete.
-- Section detection is approximate. Stable physical page/character locators are authoritative. The extractor's `normalize` function changes whitespace, so offsets refer to normalized text, not PDF bytes.
-- Source and assumption hashes are recorded, but installed dependency pins and execution environments need stronger reproducibility controls for production.
-- Candidate retrieval uses a fixed maximum per field/layer. It is a navigation aid, not an exhaustive contract parser. No ranked retrieval recall has been established.
-- Only a small manually inspected fixture set is evaluated. Citation validity and field coverage are distinct from semantic accuracy. No production accuracy percentage is available.
-- HTTP routes and selected browser flows pass. On 2026-09-20 the Codex browser displayed the dashboard, supported Bio-Techne answer, strict-mode abstention and Uber qualifier conflict. This is limited agent browser inspection, not exhaustive accessibility, responsiveness or human acceptance testing.
+## Financial scope
 
-## Financial limitations
+The scenario model uses constant DV01, synthetic forward reference levels, assumed premiums and linear roll/renewal costs. It has no yield/volatility curve valuation, convexity, early-unwind pricing or hedge-accounting model. These are disclosed prototype simplifications; live pricing is not necessary to demonstrate the assignment's scenarios.
 
-- No full yield curve, volatility surface, option valuation, convexity, credit term structure, carry, hedge accounting, collateral or capital modeling.
-- Validation funding sizes and fixed-rate terms are synthetic illustrative slices. The EUR bridge disclosure is a maximum commitment, not proof of full drawdown or the same exposure as a seven-year refinancing.
-- Bridge costs use synthetic rating/margin/step-up assumptions; actual grids, funding/duration/commitment fees and day counts are not priced. Annualized sensitivities are not bridge lifetime cashflow estimates.
-- Delay costs are synthetic linear roll/renewal sensitivities. Extension-condition satisfaction is not established. Failure P&L is evaluated at a common modeled expiry; earlier failure requires a real valuation model.
-- No source termination fee is netted against hedge unwind. Recipient identity, payment conditions, timing and actual collectability matter.
+The EUR bridge base pricing grid is extracted separately. Borrower rating, draw fraction and EURIBOR are not established by the agreement's grid. Public step-up sizes, funding fees and duration fees are redacted. Annualized interest by rating level is not a lifetime cashflow calculation. No termination fee is assumed available to offset hedge losses.
 
-## Production changes for material non-public information
+## Production work for confidential information
 
-Use an approved isolated deployment with identity-based access, least-privilege service roles, deal-level document permissions, encryption, private endpoints, restricted egress and an approved model/data-retention contract. Reapply source access controls at retrieval and answer generation. Separate ingestion, model inference, reviewer approval and analytics services. Remove arbitrary external URL access; ingest only allowlisted repositories. Document text cannot authorize tools or external transmission.
+Use approved isolated infrastructure, authenticated deal-level permissions, encryption, private model endpoints, restricted egress, an approved retention contract and a secrets manager. Reapply document access controls at retrieval and output. Document text cannot authorize tools or external transmission. Add signed immutable audit records, attributed review and dual approval for material corrections or distribution. Trading remains outside this application.
 
-Add an immutable signed audit log, reviewer attribution, dual approval for material corrections, retention rules and redaction handling. Keep credentials in the firm's secret manager. Require authorized human approval for any external distribution or hedge recommendation; trade execution remains outside this research application. Log evidence/chunk/prompt/model versions without putting sensitive text in unrestricted telemetry.
-
-## Next implementation sequence
-
-1. Run and evaluate an approved model using the implemented bounded extraction path and common catalog.
-2. Add cross-page clauses, referenced-definition expansion, party-role graphs, award cohorts and typed deadline expressions.
-3. When a qualified reviewer is available, record their genuine decisions using versioned runs; add authenticated identities and dual approval for production. Never ask a nonexpert to provide a nominal legal attestation.
-4. Build an independently reviewed gold set covering every critical field and diverse negative/conflict cases; quantify precision, recall and abstention.
-5. Add actual curves, option pricing, FX forwards and exact bridge cashflows; test against independent pricing tools.
-6. Add provenance signatures, reproducible dependency lock/container, authentication and deployment controls.
+Add reproducible environment locks, authenticated review, source-update monitoring, independent semantic benchmarks and exact financial valuation before operational use. These production features should not displace the remaining extraction and validation work for this case study.

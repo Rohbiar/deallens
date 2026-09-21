@@ -1,5 +1,38 @@
 [
-  {"document_id":"bio_techne","role":"development","url":"https://investors.bio-techne.com/all-sec-filings/content/0001999371-26-013527/0001999371-26-013527.pdf"},
-  {"document_id":"organon","role":"validation","url":"https://d18rn0p25nwr6d.cloudfront.net/CIK-0001821825/c7307cd7-fbd0-40af-acc9-3a591887131d.pdf"},
-  {"document_id":"uber_delivery_hero","role":"validation","url":"https://d18rn0p25nwr6d.cloudfront.net/CIK-0001543151/b4fca6cb-0d5e-4b0c-93e8-f58c357d3b48.pdf"}
+  {
+    "document_id": "bio_techne",
+    "role": "development",
+    "url": "https://investors.bio-techne.com/all-sec-filings/content/0001999371-26-013527/0001999371-26-013527.pdf",
+    "expected_sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+    "expected_page_count": 99,
+    "inventory_source": "https://investors.bio-techne.com/all-sec-filings/content/0001999371-26-013527/0001999371-26-013527.pdf",
+    "source_checked_at": "2026-09-21T14:32:25.353311+00:00",
+    "filing_date": "2026-06-26",
+    "filing_date_status": "pdf_metadata_reported",
+    "filing_date_source": "Publisher PDF metadata title: 8-K - 06/26/2026 - Bio-Techne Corporation"
+  },
+  {
+    "document_id": "organon",
+    "role": "validation",
+    "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001821825/c7307cd7-fbd0-40af-acc9-3a591887131d.pdf",
+    "expected_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+    "expected_page_count": 109,
+    "inventory_source": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001821825/c7307cd7-fbd0-40af-acc9-3a591887131d.pdf",
+    "source_checked_at": "2026-09-21T14:32:25.355529+00:00",
+    "filing_date": "2026-04-27",
+    "filing_date_status": "sec_index_verified",
+    "filing_date_source": "https://www.sec.gov/Archives/edgar/data/1821825/000119312526178718/0001193125-26-178718-index.htm"
+  },
+  {
+    "document_id": "uber_delivery_hero",
+    "role": "validation",
+    "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001543151/b4fca6cb-0d5e-4b0c-93e8-f58c357d3b48.pdf",
+    "expected_sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+    "expected_page_count": 149,
+    "inventory_source": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001543151/b4fca6cb-0d5e-4b0c-93e8-f58c357d3b48.pdf",
+    "source_checked_at": "2026-09-21T14:32:25.360245+00:00",
+    "filing_date": "2026-07-16",
+    "filing_date_status": "sec_index_verified",
+    "filing_date_source": "https://www.sec.gov/Archives/edgar/data/1543151/000155278126000382/0001552781-26-000382-index.htm"
+  }
 ]

@@ -1,0 +1,67 @@
+{
+  "version": "agent-assessment-1",
+  "records": [
+    {
+      "record_id": "5bee14cd8bd7ef808b676917",
+      "document_id": "bio_techne",
+      "document_sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T233813Z-64f21f5e",
+      "assessment_kind": "improved_with_review_limits",
+      "assessment": "Improved field focus; recognizes the Burdensome Condition closing condition and explicitly leaves its unseen definition unresolved.",
+      "physical_pdf_pages": [
+        2,
+        3
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "3787f1e2664e25edf8c43a16",
+      "document_id": "bio_techne",
+      "document_sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T233813Z-64f21f5e",
+      "assessment_kind": "improved_with_review_limits",
+      "assessment": "Improved obligation modality, Life Science revenues/net-income measurement, remedy conditionality and Parent control. Source comparison is an agent assessment; not expert approval.",
+      "physical_pdf_pages": [
+        60,
+        71
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "87fa66c56f35ddf05ce51a7a",
+      "document_id": "organon",
+      "document_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T233813Z-64f21f5e",
+      "assessment_kind": "improved_with_review_limits",
+      "assessment": "Improved field focus; distinguishes Substantial Detriment closing condition from efforts obligation and acknowledges missing definition.",
+      "physical_pdf_pages": [
+        3
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    },
+    {
+      "record_id": "e8b8508ca82414e75064eaa5",
+      "document_id": "uber_delivery_hero",
+      "document_sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+      "field_name": "remedy_limitations",
+      "source_run_id": "20260920T233813Z-64f21f5e",
+      "assessment_kind": "improved_with_review_limits",
+      "assessment": "Detailed entries preserve not-required modality, Asset Acquirer Transaction adjustment, closing conditionality and consent/request duties. Summary uses unless to compress the consent/request relationship; prefer the separately stated source duties, not an inferred blanket exception.",
+      "physical_pdf_pages": [
+        27
+      ],
+      "author": "Codex agent",
+      "human_review": false,
+      "effect": "annotation only; does not approve, correct, reject or normalize a record"
+    }
+  ]
+}

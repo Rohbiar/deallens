@@ -44,7 +44,7 @@ def serve(root,port):
                 data=json.dumps(packet(manifest,bundles),indent=2).encode()
             elif len(parts)==2 and parts[0]=="api" and parts[1] in ids:
                 p=folder/parts[1]
-                b={k:json.loads((p/(k+".json")).read_text()) for k in ("document","extractions","comparisons","timeline","analytics","metrics")}
+                b={k:json.loads((p/(k+".json")).read_text()) for k in ("document","extractions","comparisons","timeline","risk_map","analytics","metrics")}
                 for k in ("model_audit","review_events"):
                     if (p/(k+".json")).exists():b[k]=json.loads((p/(k+".json")).read_text())
                 b["stale_source"]=not source_is_current(root,manifest,parts[1])

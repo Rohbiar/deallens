@@ -1,0 +1,61 @@
+{
+  "status": "executed",
+  "baseline_run": "20260920T223823Z-cb902b0a",
+  "model": "gpt-5.5-2026-04-23",
+  "reasoning_effort": "medium",
+  "max_output_tokens_per_request": 6000,
+  "attempts_per_request": 1,
+  "requests": [
+    {
+      "document_id": "bio_techne",
+      "layer": "8-k-summary",
+      "passage_catalog_sha256": "20875ac9f69c2294a0e617556565b916285bcb082a486e3730e88373b38faa63",
+      "reserved_usd": 0.60331,
+      "source_sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+      "matches_baseline_passages": true
+    },
+    {
+      "document_id": "bio_techne",
+      "layer": "transaction-agreement",
+      "passage_catalog_sha256": "33f9c67343e10e0a59edbdbb0e2d7f16fd9083f1dc3ec376db7f0f0c2bf68a0f",
+      "reserved_usd": 0.65206,
+      "source_sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+      "matches_baseline_passages": true
+    },
+    {
+      "document_id": "organon",
+      "layer": "8-k-summary",
+      "passage_catalog_sha256": "8e26b0855954a80f82c35feb3387bd14c080452f33f8619b85f9f3dbe337dc47",
+      "reserved_usd": 0.55204,
+      "source_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+      "matches_baseline_passages": true
+    },
+    {
+      "document_id": "organon",
+      "layer": "transaction-agreement",
+      "passage_catalog_sha256": "2ec6d52ec61659ba283b2aa32927efdce308532eeab53f66c77226a00f851111",
+      "reserved_usd": 0.68054,
+      "source_sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+      "matches_baseline_passages": true
+    },
+    {
+      "document_id": "uber_delivery_hero",
+      "layer": "transaction-agreement",
+      "passage_catalog_sha256": "1de3d4f5288e48c7cb75500463ae3c0f132b4373b444ff4679795fed80390f7b",
+      "reserved_usd": 0.54246,
+      "source_sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+      "matches_baseline_passages": true
+    }
+  ],
+  "maximum_planned_reservation_usd": 3.03041,
+  "credentials_available_to_agent": false,
+  "billing_spend_user_reported_usd": 0.3,
+  "billing_spend_independently_verified": false,
+  "executed_run": "20260920T233813Z-64f21f5e",
+  "input_tokens": 18443,
+  "output_tokens": 7902,
+  "estimated_usage_cost_usd": 0.329275,
+  "retained_proposals": 4,
+  "invalid_outputs": 1,
+  "human_verified_records": 0
+}

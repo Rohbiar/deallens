@@ -5,12 +5,13 @@ This guide helps explain the prototype without requiring you to certify legal in
 ## A five-minute demonstration
 
 1. Run `python -m deallens.cli serve` and open `http://127.0.0.1:8765`. Restart an older server once to load updated Python code. After that, **Refresh run** loads the latest completed results. The footer identifies the run.
-2. In **Overview**, show the original document, checksum, transaction classification and separate machine-supported/human-verified counts. Filing dates and external page completeness are explicitly unresolved.
+2. In **Overview**, show the original document, checksum, transaction classification and separate machine-supported/human-verified counts. Show the checked publisher snapshot and distinguish SEC-index-verified filing dates from Bio-Techne's PDF-metadata date. Omitted schedules remain unavailable.
 3. In **Evidence**, search `parent_or_bidder`. The shared rules read legal names from each agreement's party introduction. They do not assume the company filing an 8-K is the acquisition target. Search `Agent source check` to find annotated model errors in a run carrying the broader batch.
 4. In **Ask DealLens**, ask Bio-Techne's consideration per share. Show the answer and its PDF citation. Turn on **Require human-verified evidence** and repeat: the system abstains because no human has approved the record.
 5. Select Uber and ask its consideration. The source comparison preserves the summary's EUR 41.50 and the agreement's **at least** EUR 41.50. It blocks a canonical answer. This is a qualification difference requiring reconciliation, not a claim that the documents necessarily contradict legally.
 6. In **Analytics**, select Bio-Techne and `rates_up_25`. Explain USD 2.6mm/bp DV01 and USD 65mm incremental financing-cost PV. Compare unhedged, forward payer swap, payer option and the synthetic deal-contingent swap. Show a failure scenario and explain why the ordinary swap may require an unwind payment.
-7. End with the current requirements audit. It distinguishes implemented controls from incomplete semantic coverage. Do not describe all 42 fields or all twelve questions as completely answered.
+7. Ask about award treatment with strict mode off. Expand the source sections to see continuation pages and reference context; explain why the answer remains partial. Open the Risk map tab and distinguish its analysis from source facts.
+8. End with the current requirements audit. It distinguishes implemented controls from incomplete semantic coverage. Do not describe all 42 fields or all twelve questions as completely answered.
 
 ## Calculations you should be able to explain
 
@@ -18,7 +19,7 @@ This guide helps explain the prototype without requiring you to certify legal in
 - The debt benchmark-plus-credit assumption is 4.25% + 1.00% = 5.25%. The separate 4.40% swap rate produces a 15bp swap spread. Adding that spread again to the debt coupon would double-count exposure.
 - A payer swap offsets the assumed benchmark DV01, but leaves issuer-credit risk and introduces swap-spread/basis exposure. Its protection is conditional on the simplified model assumptions.
 - Option premiums and contingent fees are explicit synthetic inputs. The ordinary option and synthetic deal-contingent swap have different failure payoffs. These are scenario illustrations, not market-valued hedge recommendations.
-- Validation funding sizes, fee grids and some timing assumptions are synthetic. The EUR bridge commitment is neither proof of drawdown nor a seven-year fixed-rate bond exposure.
+- Validation funding sizes and some timing assumptions are synthetic. The public bridge base pricing grid is now shown separately; step-up and other fee amounts are redacted. The EUR bridge commitment is neither proof of drawdown nor a seven-year fixed-rate bond exposure.
 
 ## Reproduce the checks
 
@@ -27,6 +28,7 @@ python -m unittest discover -s tests
 python tests/evaluate_sources.py
 PYTHONPATH=. python tests/evaluate_model.py
 PYTHONPATH=. python tests/evaluate_requirements.py
+PYTHONPATH=. python tests/evaluate_provisions.py
 PYTHONPATH=. python tests/check_runtime.py
 ```
 

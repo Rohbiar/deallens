@@ -18,6 +18,11 @@ def build():
     run = json.loads((ROOT/'outputs/latest.json').read_text())['run_id']
     if Path(run).name != run:
         raise ValueError('Invalid run ID')
+    for name in ['REQUIREMENTS_AUDIT.json','SOURCE_EVALUATION.json','PROVISION_EVALUATION.json','MODEL_EVALUATION.json']:
+        if json.loads((ROOT/'docs'/name).read_text()).get('run_id')!=run:
+            raise ValueError('Regenerate stale validation report: '+name)
+    if run not in (ROOT/'docs/SUBMISSION_STATUS.md').read_text():
+        raise ValueError('Regenerate submission status for the packaged run')
     dest = ROOT/'outputs/deliverables'
     dest.mkdir(exist_ok=True)
     archive = dest/'DealLens_review_package.zip'
@@ -37,7 +42,13 @@ def build():
                 source.backup(target)
     files = [p for p in ROOT.iterdir() if p.is_file() and p.name in
              {'README.md','EXECUTION_PLAN.md','AGENT_WORKFLOW.md','requirements.txt','requirements-tested.txt','pyproject.toml','.gitignore'}]
-    for folder in ['deallens','config','tests','docs','scripts','data/assessments','data/sources',f'outputs/{run}']:
+    run_manifest=json.loads((ROOT/'outputs'/run/'manifest.json').read_text())
+    lineage=sorted(set(run_manifest.get('parent_run_ids',[])) |
+                   set(run_manifest.get('source_runs',{}).values()) |
+                   ({run_manifest['parent_run_id']} if run_manifest.get('parent_run_id') else set()))
+    for ancestor in lineage:
+        if Path(ancestor).name != ancestor: raise ValueError('Invalid lineage run')
+    for folder in ['deallens','config','tests','docs','scripts','data/assessments','data/sources',f'outputs/{run}'] + [f'outputs/{ancestor}' for ancestor in lineage]:
         files += [p for p in (ROOT/folder).rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc']
     files += [ROOT/'outputs/latest.json']
     # Only include a packet tied to the packaged run; never reuse stale decisions.
@@ -53,7 +64,7 @@ def build():
     content['history.bundle'] = bundle.read_bytes()
     content['outputs/deallens.sqlite'] = (dest/'deallens.sqlite').read_bytes()
     content['RESTORE_HISTORY.txt'] = b'To restore the genuine repository history: git clone history.bundle deallens-history\nThe package contains latest run JSON plus SQLite history; older run JSON remains in the working repository.\n'
-    manifest = {'run_id':run,'status':'review candidate; v7 format and citation smoke passed; material semantic gaps remain; no expert legal review',
+    manifest = {'run_id':run,'status':'submission candidate with disclosed limitations; complete normalized complex semantics unresolved; section excerpts remain partial; no human verification',
                 'working_tree_changes':subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).splitlines(),
                 'git_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
                 'files':{name:hashlib.sha256(data).hexdigest() for name,data in sorted(content.items())}}

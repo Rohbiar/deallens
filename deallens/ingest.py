@@ -68,11 +68,14 @@ def ingest(path: Path, source: dict) -> dict:
         structure = "unresolved"
     # Filing date is not the date of earliest event or agreement/signature date.
     filing = source.get("filing_date")
-    warnings.append({"type":"completeness_unverified", "action":"No independent expected page inventory supplied; internal page continuity is not proof of completeness."})
+    if source.get("expected_page_count") is None or not source.get("inventory_source"):
+        warnings.append({"type":"completeness_unverified", "action":"No externally checked page inventory supplied; internal page continuity is not proof of completeness."})
+    else:
+        warnings.append({"type":"publisher_snapshot_checked", "action":"Page count and bytes checked against a fresh publisher download. This does not establish completeness of omitted schedules or incorporated documents."})
     if source.get("expected_page_count") is not None and source["expected_page_count"]!=len(pages):
         raise ValueError("Missing or extra pages relative to expected source inventory")
     warnings.append({"type":"source_freshness_unverified", "action":"Snapshot of supplied filing only; later amendments, deal status and market inputs have not been checked."})
-    if filing is None:
+    if filing is None or source.get('filing_date_status') == 'pdf_metadata_reported':
         warnings.append({"type":"filing_date_not_verified", "action":"Obtain filing index metadata; do not substitute event or signing date."})
     if not any(p["document_layer"]=="transaction-agreement" for p in pages):
         warnings.append({"type":"missing_agreement_exhibit"})
@@ -87,7 +90,7 @@ def ingest(path: Path, source: dict) -> dict:
                            "document_layer":page["document_layer"],"start":start,"end":end,
                            "text":page["text"][start:end]})
     return {**source,"sha256":checksum,"version":checksum,"file_name":path.name,
-            "filing_date":filing,"filing_date_status":"provided" if filing else "not_found",
+            "filing_date":filing,"filing_date_status":source.get('filing_date_status',"provided" if filing else "not_found"),
             "report_event_date_raw":report.group(1) if report else None,
             "ingested_at":datetime.now(timezone.utc).isoformat(),"page_count":len(pages),
             "transaction_type":structure,"document_type":"8-K with exhibits",

@@ -1,20 +1,12 @@
-Current result: [V7 typed-value evaluation](docs/TYPED_VALUE_EVALUATION.md) — five responses passed format/citation validation, but material semantic failures persist. No further identical smoke test is requested. 79 offline tests and 25 selected source fixtures pass; human approvals remain zero. Earlier results below are historical.
-
 # DealLens
 
-Latest: the v6 five-call citation smoke test had four retained candidates, zero citation failures and one nested-JSON rejection. Material semantic errors remain. See [CITATION_SMOKE_EVALUATION.md](docs/CITATION_SMOKE_EVALUATION.md). V7 removes model-generated nested JSON; 77 offline tests pass, but v7 live validation remains pending. Earlier evaluations below are historical.
+DealLens is a runnable Python/SQLite prototype for evidence-linked transaction research and preliminary financing and hedging analysis. One application processes the Bio-Techne, Organon and Uber / Delivery Hero source PDFs.
 
-DealLens is a runnable public-source research prototype for the Mizuho Derivatives Analytics & AI Solutions Engineer case. It connects original PDF pages to structured evidence, comparisons, timelines, a local question interface and reproducible financing sensitivities.
+The current implementation includes scalar extraction, full numbered source sections with cross-reference context, a read-only browser and CLI, scenario analysis, and an immutable audit trail. **Complex source excerpts are not complete legal interpretations.** See [current submission status](docs/SUBMISSION_STATUS.md) for measured coverage and remaining limitations.
 
-**This is an initial implementation for review, not a submission-ready claim of complete legal extraction.** The deterministic baseline supports a limited group of amounts, dates and explicit conditions. Complex provisions are retrieved as candidate evidence with null normalized values. They require an actual semantic extraction/review pass. The UI makes this distinction visible. No human verification or complete semantic extraction is claimed. A limited live model evaluation is documented below.
+## Run locally
 
-## Current validation status (2026-09-20)
-
-76 unit/control tests and 25 selected source fixtures pass. The focused v5 run `20260920T203028Z-779ed393` made 18 requests: six retained candidates, ten citation failures, one nested-JSON failure and one abstention. Agent source checks still found material interpretation errors. See [FOCUSED_RETEST.md](docs/FOCUSED_RETEST.md). Prompt v6 now uses source-passage IDs to avoid quotation-copying errors; it has offline tests only. All model candidates remain unverified and full semantic accuracy is unmeasured.
-
-## Start locally
-
-Python 3.11 or later is required. From the extracted project directory:
+Python 3.11 or later:
 
 ```bash
 python3 -m venv .venv
@@ -23,85 +15,61 @@ python -m pip install -r requirements-tested.txt
 python -m deallens.cli serve
 ```
 
-Open **http://127.0.0.1:8765**. The package includes original PDFs and precomputed outputs, so serving does not need network access. On Windows, activate with `.venv\Scripts\activate`.
-
-To reproduce the pipeline and tests:
+Open http://127.0.0.1:8765. On Windows, activate with `.venv\Scripts\activate`. Original PDFs and precomputed results are included in the review archive, so serving requires no network or API key.
 
 ```bash
-python -m deallens.cli run
-python -m unittest discover -s tests -v
-python tests/evaluate_sources.py
-PYTHONPATH=. python tests/evaluate_model.py
 python -m deallens.cli ask bio_techne "What is the consideration per share?"
-python -m deallens.cli ask organon "Is there a financing condition?"
+python -m deallens.cli ask organon "How may the outside date be extended?"
 python -m deallens.cli ask uber_delivery_hero "What financing arrangements are disclosed?"
+python -m deallens.cli refresh
 ```
 
-`--strict` on `ask` requires human-verified records. The shipped run has none, so strict mode deliberately abstains. `run --threshold 0.99` blocks the current 0.97-score scalar rules. Confidence scores are heuristic scores, not calibrated probabilities. Use `--root /path/to/project` before the subcommand when running outside the project directory.
+`refresh` reingests the unchanged source bytes with current metadata and extraction rules, preserves historical model proposals, and creates a new run without provider calls. `run` starts a new deterministic baseline. `--strict` on `ask` requires human-verified values; the supplied run has none and deliberately abstains. Put `--root /path/to/project` before the subcommand when running elsewhere.
 
-## What is included
+## What the outputs mean
 
-| Area | Implementation | Material limitation |
-|---|---|---|
-| Ingestion | Original PDF bytes, SHA-256, timestamp, page text hashes, exhibit boundaries, OCR/sparse-page flags | External page completeness and actual filing dates unverified; no OCR engine |
-| Extraction | Shared 42-field catalog; deterministic scalar rules; complex-clause candidate retrieval; exact page character locators | Only a subset has normalized supported values; confidence is uncalibrated |
-| Comparison | Both layers preserved; exact/normalized comparison; conflicts block canonical values | Narrative equivalence unresolved; not-applicable is not inferred from absence |
-| Timeline and risk | Evidence-linked events, date kinds and ten risk categories | Conditional/cross-page legal interpretations need review |
-| Analytics | USD Bio-Techne case; local-currency validation slices; EUR bridge/FX sensitivity; four hedge strategies | Synthetic assumptions, constant DV01 and expiry payoffs; no live market pricing |
-| QA | Twelve question categories; direct supported values or exact unsupported response | Does not turn keyword matches into legal answers |
-| AI controls | Optional bounded Responses API extraction, strict schema, citation checks, request/usage audit, no tools or self-approval | Broader 15-field live test; complete semantic quality and retrieval recall unmeasured |
-| Audit | Versioned review decisions, immutable run folders, SQLite history and regenerated downstream outputs | Reviewer identity is locally self-attested, not authenticated |
+- `supported`: a deterministic normalized value, or an explicitly reviewed value. Machine support is not human verification. Rule confidence is heuristic, not calibrated probability.
+- `source_excerpt`: complete numbered sections with exact page spans and available reference/definition context. Normalized values remain null and QA stays partial. Nested references, omitted schedules and interpretation can remain unresolved.
+- `requires_review`, `not_found`, `low_confidence`, `conflict`: no supported normalized answer. Conflicts block canonical values; absence is not a zero fee or “not applicable.”
 
-## Architecture and source hierarchy
+Each immutable run contains document metadata, extraction records, comparisons, timeline, risk map, analytics, QA, exceptions, metrics and scenario CSVs. SQLite preserves history. The browser shows original PDFs, evidence, comparisons, contractual clocks, risk implications, analytics and QA. Source changes block answers and PDF viewing against stale runs.
 
-`ingest.py` creates canonical normalized page text and stable checksum/page/character locators. `extract.py` applies the same catalog and rules to each source, validates evidence, compares filing and agreement layers, and produces timeline events. `risk.py` attaches general analytical implications without treating candidates as established contract terms. `analytics.py` reads versioned assumptions and available source anchors. `qa.py` routes questions to evidence; it does not contain transaction answers. `storage.py` persists run lineage in SQLite. `server.py` serves a read-only loopback interface.
+## Source and extraction controls
 
-Relevant executed transaction or financing agreement takes precedence over the filing summary, followed by other exhibits. A hierarchy never deletes a conflict. Candidates with different wording remain unresolved until reviewed. Page numbers are physical PDF pages, starting at one. Section titles can be unresolved; exact page/character locators remain available. Whitespace is normalized before offsets are assigned; original PDFs are retained.
+All three stored PDFs match fresh publisher downloads and have pinned hashes and page counts. Organon and Uber filing dates were checked against SEC filing indexes. Bio-Techne's date is explicitly PDF-metadata-reported; its filing index was inaccessible. Matching a publisher PDF does not establish that omitted schedules or incorporated documents are available.
 
-## Files and outputs
-
-- `config/sources.json`: source URLs and development/validation roles; no extracted deal terms.
-- `config/assumptions.json`: all financing, market, premium and scenario assumptions with origin descriptions.
-- `data/sources/`: the three original supplied-source PDFs.
-- `outputs/latest.json`: identifies the latest immutable run folder.
-- Each run contains a manifest and per-deal `document.json`, `extractions.json`, `comparisons.json`, `timeline.json`, `risk_map.json`, `analytics.json`, `qa.json`, `exceptions.json`, `metrics.json` and `scenarios.csv`.
-- `outputs/deallens.sqlite`: queryable run history. SQL examples are in `docs/audit_queries.sql`.
-- `docs/TECHNICAL_MEMO.pdf`: three-page technical memo.
-- `docs/CASE_REVIEW.md`: source-specific findings and review priorities.
-- `docs/GENERALIZATION.md`, `docs/KNOWN_ISSUES.md`, `EXECUTION_PLAN.md`, `AGENT_WORKFLOW.md`: scope, evidence and implementation decisions.
+A shared 42-field catalog drives the same rules across all cases. Section-aware extraction preserves continuation pages, locates same-instrument section references and selected defined terms, and labels missing or bounded context. It does not collapse different legal language into a claimed equivalence. Human review uses versioned CLI decisions; local reviewer identity is self-attested. Agent annotations never grant human approval.
 
 ## Financial conventions
 
-For USD 4bn and supplied DV01 of USD 65,000 per USD 100mm, portfolio DV01 is USD 2.6mm/bp. A +25bp benchmark shock increases the first-order PV of financing cost by USD 65mm and annual coupon cost by USD 10mm. These are different measures and are never added together.
+The assignment's USD 4bn issue and USD 65,000 DV01 per USD 100mm imply USD 2.6mm/bp portfolio DV01. A +25bp benchmark move increases first-order financing cost PV by USD 65mm and annual coupon cost by USD 10mm. Those measures are never added together.
 
-Debt is assumed priced at Treasury/benchmark plus issuer spread: 4.25% + 1.00% = 5.25% for the development case. The 4.40% swap rate implies a 15bp initial swap spread; adding it again to the debt coupon would double-count benchmark exposure. Payer swap receipts equal DV01 times the change in swap rate, which includes benchmark and swap-spread moves. Issuer spread remains unhedged. Assuming credit DV01 equals benchmark DV01 is explicit.
+Debt is assumed priced at benchmark plus issuer spread: 4.25% + 1.00% = 5.25%. The 4.40% swap rate implies a 15bp initial swap spread; adding it again to the debt coupon would double-count exposure. A payer swap follows benchmark plus swap-spread movements, leaving issuer credit spread unhedged. Equal benchmark and credit DV01 is an explicit assumption.
 
-Positive net incremental cost is worse for the issuer. Option premiums and contingent fees are assumed upfront charges, not market quotes. An ordinary payer option can retain a payoff after deal failure; a synthetic deal-contingent swap cancels on failure with the fee retained. Actual documentation can differ. Delay scenarios use illustrative rolls/renewals, not repriced forward curves. Outcome-weighted costs use an explicitly specified joint rate/completion scenario and are not forecasts or recommendations.
+Four strategies cover unhedged debt, a forward-starting payer swap, a payer option and a synthetic deal-contingent payer swap. Premiums, contingent fees and roll costs are assumptions. Option results are expiry payoffs, not market valuations. Positive net incremental cost is worse for the issuer. Deal termination fees are not automatically offset against hedge losses.
 
-## Adding another deal or a model
+Validation cases use explicitly synthetic USD/EUR financing slices. Uber also has a source-backed six-level bridge pricing grid, separated from assumed draw and EURIBOR. Public step-up amounts, funding fees and duration fees are redacted; illustrative values are never represented as extracted terms. The bridge sensitivity is separate from the seven-year refinancing DV01.
 
-Add a document ID and HTTPS URL to the source configuration, or supply its PDF with that ID as its filename. Run the same pipeline. There are no company-specific answer branches in extraction or QA. The development role selects the assignment's required Bio-Techne synthetic inputs; all validation cases use the common template and supported currency.
+## Validate and package
 
-The optional `run --model YOUR_MODEL_ID` path uses bounded clause retrieval and schema-constrained proposals. Configure `OPENAI_API_KEY` privately in your local environment; do not put it in source code or chat. Model proposals remain unverified until explicitly reviewed. The provider transport has been exercised live on 15 complex fields plus the earlier two-field test; the review lifecycle is tested with synthetic fixtures only. See [MODEL_AND_REVIEW.md](docs/MODEL_AND_REVIEW.md) for commands, limits and review instructions.
+```bash
+python -m unittest discover -s tests -v
+python tests/evaluate_sources.py
+PYTHONPATH=. python tests/evaluate_provisions.py
+PYTHONPATH=. python tests/evaluate_requirements.py
+PYTHONPATH=. python tests/check_runtime.py
+python docs/build_status.py
+python docs/package_deliverables.py
+```
 
-## Demonstration and ownership
+The runtime check opens a temporary loopback HTTP server. Tests cover selected source fixtures and engineering controls; they do not measure contract-wide semantic precision or recall. See [PROVISION_EVALUATION.json](docs/PROVISION_EVALUATION.json), [SOURCE_EVALUATION.json](docs/SOURCE_EVALUATION.json) and [TEST_RESULTS.txt](docs/TEST_RESULTS.txt).
 
-Read [DEMO_GUIDE.md](docs/DEMO_GUIDE.md) for a five-minute walkthrough and the calculations to explain. [REQUIREMENTS_AUDIT.json](docs/REQUIREMENTS_AUDIT.json) records coverage and remaining gaps. Agent source annotations are displayed separately from human verification; no legal attestation is expected from a nonexpert user.
+The archive contains code, sources, the current run, selected ancestor runs, SQLite history, a review packet, the three-page memo and genuine Git history. Its manifest hashes every included file. Credentials and virtual environments are excluded. This is a review/submission candidate with disclosed limitations, not an assertion of complete semantic coverage.
 
-## Before submitting
+## Optional model extraction
 
-Read the technical memo and known issues. Run and evaluate semantic extraction, independently inspect the important source pages, all calculations and retained code, disclose unresolved fee/award completeness, and revise the agent log to include your actual work. A small fixture pass must not be presented as accuracy across the whole contract. If a qualified reviewer later verifies complete fields, record their actual decisions; do not create nominal approvals. The repository includes genuine implementation commits; do not invent human decisions or inflate time spent.
+`run --model YOUR_MODEL_ID` supports bounded schema-constrained proposals with audited requests and exact citations. An API key must be configured privately. No new paid run was made during the section-aware continuation. The existing local budget ledger is preserved; see [MODEL_AND_REVIEW.md](docs/MODEL_AND_REVIEW.md) for historical evaluations and the review protocol. Model proposals cannot approve themselves.
 
-## Review package
+## Ownership and scope
 
-`python docs/package_deliverables.py` creates `outputs/deliverables/DealLens_review_package.zip` with source, original PDFs, latest run JSON/CSV, SQLite history, matching review packet, memo, verification reports and a genuine Git history bundle. The package manifest hashes every included file. Credentials, virtual environments and unrelated files are excluded by explicit input selection. This is a review candidate while complete semantic validation and human review remain outstanding.
-
-## Budget-controlled semantic batch
-
-The user authorized $10 for further testing. Run `bash scripts/run_semantic_batch.sh` from the project in the terminal containing your exported API key. It expands to 15 unresolved fields across all sources. CLI calls share a persistent $10 local reservation ledger, including a $1 historical buffer; retries and uncertain failures consume reservations. See `docs/BATCH_PLAN.json` and `docs/MODEL_AND_REVIEW.md`. This controls this application only, not account-wide billing. The review archive includes the latest batch findings; live verification of prompt v5 remains outstanding.
-
-## Refresh and focused retest
-
-`python -m deallens.cli refresh` reruns offline rules while retaining historical model proposals and audits. It makes no API calls and creates a new immutable run. The browser now reads the latest completed run when refreshed, pins QA/review exports to the displayed run and blocks changed source bytes. Restart a server launched before this code update once.
-
-The focused v5 test is complete and did not establish improvement. Next use `bash scripts/run_citation_smoke.sh` in the terminal containing the API key. It checks the v6 citation protocol with five remedy requests under the existing guard. See docs/FOCUSED_RETEST.md before any broader rerun.
+[EXECUTION_PLAN.md](EXECUTION_PLAN.md) and [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md) document actual agent work, retained changes and corrections. [KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md) distinguishes assignment gaps from production work. Review the calculations, sources, code and limitations before submitting; no human verification or time savings are invented. For a walkthrough use [DEMO_GUIDE.md](docs/DEMO_GUIDE.md).

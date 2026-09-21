@@ -1,14 +1,24 @@
 {
-  "date": "2026-09-20",
-  "method": "Codex in-app browser via computer-use tools; agent inspection, not human acceptance",
-  "inspected_run_id": "20260920T152044Z-2d7e3dad",
+  "checked_at": "2026-09-21T15:27:40.049407+00:00",
+  "run_id": "20260921T143643Z-d6d716ee",
+  "method": "Actual Codex in-app browser interactions and screenshot inspection",
   "checks": [
-    "Dashboard rendered with 9/42 supported fields and zero human verified records",
-    "Bio-Techne consideration returned 73.0 USD with source layers",
-    "Require human-verified evidence caused exact unsupported response",
-    "Changing transaction to Uber worked",
-    "Uber consideration returned conflict and exact unsupported response"
+    {
+      "view": "Overview",
+      "result": "Source excerpt count, pinned source and PDF metadata date displayed separately from supported fields"
+    },
+    {
+      "view": "Bio-Techne awards QA",
+      "result": "Partial result expanded to full Section 2.03 across PDF pages 16-19, with Section 2.05 reference link"
+    },
+    {
+      "view": "Strict awards QA",
+      "result": "Exact unsupported response; no human approval inferred"
+    },
+    {
+      "view": "Risk map",
+      "result": "Ten risk categories displayed with evidence and source status"
+    }
   ],
-  "visual_scope": "Dashboard screenshot at current app viewport; not exhaustive responsive/accessibility testing",
-  "latest_baseline_run_id": "20260920T152546Z-68a6dde3"
+  "scope": "Selected browser flows, not exhaustive accessibility or visual testing. Final regeneration changes run identifiers but retains the tested UI code."
 }

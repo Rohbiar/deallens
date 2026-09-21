@@ -1,0 +1,136 @@
+{
+  "run_id": "20260921T150631Z-5c182147",
+  "scope": "Agent-curated source passage and qualifier retention fixtures; not independent semantic precision or recall.",
+  "passed": 18,
+  "total": 18,
+  "all_context_citations_valid": true,
+  "disclosed_pricing_and_redaction_check": true,
+  "results": [
+    {
+      "document": "bio_techne",
+      "field": "rsus",
+      "section": "2.03",
+      "required_text": "service-based vesting",
+      "passed": true
+    },
+    {
+      "document": "bio_techne",
+      "field": "psus",
+      "section": "2.03",
+      "required_text": "maximum performance",
+      "passed": true
+    },
+    {
+      "document": "bio_techne",
+      "field": "unvested_options",
+      "section": "2.03",
+      "required_text": "target performance",
+      "passed": true
+    },
+    {
+      "document": "bio_techne",
+      "field": "fee_triggers_and_tails",
+      "section": "7.02",
+      "required_text": "within 12 months",
+      "passed": true
+    },
+    {
+      "document": "bio_techne",
+      "field": "extension_dates_and_conditions",
+      "section": "7.01",
+      "required_text": "shall automatically extend to June 25, 2027",
+      "passed": true
+    },
+    {
+      "document": "bio_techne",
+      "field": "extension_dates_and_conditions",
+      "section": "7.01",
+      "required_text": "September 25, 2027",
+      "passed": true
+    },
+    {
+      "document": "organon",
+      "field": "rsus",
+      "section": "4.3",
+      "required_text": "Pre-2026 Company RSU",
+      "passed": true
+    },
+    {
+      "document": "organon",
+      "field": "rsus",
+      "section": "4.3",
+      "required_text": "Other Company RSU",
+      "passed": true
+    },
+    {
+      "document": "organon",
+      "field": "psus",
+      "section": "4.3",
+      "required_text": "target performance",
+      "passed": true
+    },
+    {
+      "document": "organon",
+      "field": "extension_dates_and_conditions",
+      "section": "9.2",
+      "required_text": "capable of being satisfied at the Closing",
+      "passed": true
+    },
+    {
+      "document": "organon",
+      "field": "extension_dates_and_conditions",
+      "section": "9.2",
+      "required_text": "irrevocably waived",
+      "passed": true
+    },
+    {
+      "document": "organon",
+      "field": "fee_triggers_and_tails",
+      "section": "9.5",
+      "required_text": "within nine months",
+      "passed": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "field": "remedy_limitations",
+      "section": "4.5",
+      "required_text": "not conditioned on the occurrence of the Offer Completion",
+      "passed": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "field": "fee_triggers_and_tails",
+      "section": "13.4",
+      "required_text": "fraudulently or willfully breached",
+      "passed": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "field": "financing_conditions",
+      "section": "4.02",
+      "required_text": "requested by BaFin",
+      "passed": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "field": "financing_conditions",
+      "section": "4.03",
+      "required_text": "Major Event of Default",
+      "passed": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "field": "financing_conditions",
+      "section": "4.04",
+      "required_text": "unless a Major Event of Default",
+      "passed": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "field": "financing_fees_and_stepups",
+      "section": "2.09",
+      "required_text": "commencing 120 days after the Effective Date",
+      "passed": true
+    }
+  ]
+}

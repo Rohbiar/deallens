@@ -10,11 +10,11 @@ from .citations import source_id_request, resolve_citations, PROTOCOL, VALUE_PRO
 
 SCHEMA = {
     "type": "object", "additionalProperties": False,
-    "properties": {"proposals": {"type": "array", "items": {
+    "properties": {"proposals": {"type": "array", "maxItems": 20, "items": {
         "type": "object", "additionalProperties": False,
         "properties": {
             "field_name": {"type": "string"},
-            "citations": {"type": "array", "items": {
+            "citations": {"type": "array", "minItems": 1, "maxItems": 12, "items": {
                 "type": "object", "additionalProperties": False,
                 "properties": {"chunk_id": {"type": "string"}, "evidence": {"type": "string"}},
                 "required": ["chunk_id", "evidence"]}},
@@ -29,6 +29,21 @@ SCHEMA = {
 
 class ProviderError(RuntimeError):
     """Safe-to-log transport error; excludes response body and credentials."""
+
+GPT55_MODELS = {'gpt-5.5', 'gpt-5.5-2026-04-23'}
+
+
+def build_request_body(request):
+    """Shared transport and offline budget planning; never includes credentials."""
+    payload, schema, passages, catalog_hash = source_id_request(request, SCHEMA)
+    body = {"model": request["model"], "store": False,
+            "instructions": request["system"],
+            "input": json.dumps(payload, ensure_ascii=False),
+            "max_output_tokens": 6000,
+            "text": {"format": {"type": "json_schema", "name": "transaction_evidence", "strict": True, "schema": schema}}}
+    if request["model"] in GPT55_MODELS:
+        body["reasoning"] = {"effort": "medium"}
+    return body, passages, catalog_hash
 
 class OpenAIProvider:
     endpoint = "https://api.openai.com/v1/responses"
@@ -54,14 +69,11 @@ class OpenAIProvider:
 
     def __call__(self, request):
         self.last_metadata = {}
-        payload,schema,passages,catalog_hash=source_id_request(request,SCHEMA)
-        body = {"model": request["model"], "store": False,
-                "instructions": request["system"],
-                "input": json.dumps(payload, ensure_ascii=False),
-                "max_output_tokens": 6000,
-                "text": {"format": {"type": "json_schema", "name": "transaction_evidence", "strict": True, "schema": schema}}}
+        body, passages, catalog_hash = build_request_body(request)
+        # A bounded comparison should not multiply flagship costs on HTTP retries.
+        attempts = 1 if request["model"] in GPT55_MODELS else 3
         encoded = json.dumps(body).encode()
-        for attempt in range(3):
+        for attempt in range(attempts):
             reservation_id = self.budget.reserve(body) if self.budget else None
             req = urllib.request.Request(self.endpoint, data=encoded, headers={
                 "Authorization": "Bearer " + self._key, "Content-Type": "application/json"}, method="POST")
@@ -75,7 +87,7 @@ class OpenAIProvider:
                     self.budget.record_usage(reservation_id, data.get('usage'))
                 break
             except urllib.error.HTTPError as exc:
-                if exc.code in {429, 500, 502, 503, 504} and attempt < 2:
+                if exc.code in {429, 500, 502, 503, 504} and attempt < attempts - 1:
                     self.sleeper(2 ** attempt)
                     continue
                 raise ProviderError(f"Model provider returned HTTP {exc.code}; check configuration or quota locally.") from None
@@ -91,7 +103,7 @@ class OpenAIProvider:
         if not isinstance(data, dict):
             raise ProviderError("Provider returned an invalid response envelope")
         self.last_metadata = {"response_id": data.get("id"), "model": data.get("model"), "usage": data.get("usage"), "attempts": attempt + 1}
-        self.last_metadata.update(citation_protocol=PROTOCOL, value_protocol=VALUE_PROTOCOL, passage_catalog_sha256=catalog_hash, passage_count=len(passages))
+        self.last_metadata.update(citation_protocol=PROTOCOL, value_protocol=VALUE_PROTOCOL, passage_catalog_sha256=catalog_hash, passage_count=len(passages), reasoning=body.get("reasoning"), max_output_tokens=6000, attempt_limit=attempts)
         if self.budget:
             self.last_metadata['budget'] = self.budget.summary()
         if data.get("status") != "completed":

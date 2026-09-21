@@ -1,10 +1,8 @@
-Current result: [V7 typed-value evaluation](TYPED_VALUE_EVALUATION.md) — five responses passed format/citation validation, but material semantic failures persist. No further identical smoke test is requested. 79 offline tests and 25 selected source fixtures pass; human approvals remain zero. Earlier results below are historical.
+Current offline continuation: see [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md). No new paid requests were made. Model proposals remain unverified. Reports below describe historical runs and the available protocol.
 
 # Model extraction and attributed review
 
-Latest: the v6 five-call citation smoke test had four retained candidates, zero citation failures and one nested-JSON rejection. Material semantic errors remain. See [CITATION_SMOKE_EVALUATION.md](CITATION_SMOKE_EVALUATION.md). V7 removes model-generated nested JSON; 77 offline tests pass, but v7 live validation remains pending. Earlier evaluations below are historical.
 
-Latest v5 evaluation: 18 responses, six candidates, eleven validation failures and one abstention; material semantic errors persist. See [FOCUSED_RETEST.md](FOCUSED_RETEST.md). V6 replaces model-written quotations with IDs selected from a request-specific source catalogue. The adapter reconstructs exact evidence and retains the existing integrity checks. This protocol passes offline tests but has not been evaluated live. No human approval is implied.
 
 ## Bounded model run
 

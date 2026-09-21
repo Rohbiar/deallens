@@ -33,6 +33,7 @@ def derive_bundle(doc, records, assumptions, elapsed=0, model_audit=None, review
     supported={r["field_name"] for r in active if r["status"]=="supported"}
     b["metrics"]={"elapsed_seconds":round(elapsed,3),"page_count":doc["page_count"],"catalog_fields":len(FIELDS),
                   "machine_supported_fields":len(supported),
+                  "source_excerpt_fields":len({r['field_name'] for r in active if r['status']=='source_excerpt'}),
                   "candidate_only_fields":len({r["field_name"] for r in active if r["status"]=="requires_review"}-supported),
                   "records":len(records),"evidence_exact_match_count":sum(bool(r.get("evidence")) for r in records),
                   "human_verified_records":sum(r["review_status"]=="verified" and r["status"]=="supported" for r in records),
@@ -129,8 +130,9 @@ def run(root,ids=None,threshold=0.9,model=None,model_fields=None,max_model_calls
                     print(f"WARNING {source['document_id']}: {entry['error']} Offline results will still be saved; this is not successful live extraction.")
         from .assessments import annotate
         records=annotate(root,identify(records))
+        from .provisions import all_evidence
         for r in records:
-            if r.get("evidence") and not validate_evidence(r,doc):raise ValueError("Internal evidence mismatch")
+            if r.get("evidence") and not all(validate_evidence(s,doc) for s in all_evidence(r)):raise ValueError("Internal evidence mismatch")
         b=derive_bundle(doc,records,assumptions,time.perf_counter()-start,model_audit=model_audit)
         bundles.append(b)
         print(source["document_id"],json.dumps(b["metrics"]))

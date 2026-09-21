@@ -1,4 +1,4 @@
 # Exact app dependency version used for the recorded run.
-# Runtime: Python 3.12.14. Other platforms may require a different compatible wheel.
+# Runtime verified in this continuation: Python 3.11.5. Other platforms may require a different compatible wheel.
 PyMuPDF==1.26.6
 certifi==2026.7.22

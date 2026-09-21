@@ -64,3 +64,20 @@ class BudgetTests(unittest.TestCase):
         provider=OpenAIProvider('synthetic',opener=lambda *a,**k:calls.append(1),budget=self.ledger)
         with self.assertRaises(ProviderError):provider({'model':'gpt-4.1-mini','system':'test','chunks':[]})
         self.assertEqual(calls,[])
+
+    def test_gpt55_price_bound_and_single_attempt(self):
+        body = {**self.body, 'model':'gpt-5.5-2026-04-23'}
+        size = len(json.dumps(body, ensure_ascii=False).encode()) + 8192
+        self.assertEqual(self.ledger.estimate_micro_usd(body), 2*(size*5+6000*30))
+        calls=[]
+        def opener(req, **kwargs):
+            sent=json.loads(req.data)
+            self.assertEqual(sent['reasoning'], {'effort':'medium'})
+            self.assertEqual(sent['max_output_tokens'], 6000)
+            calls.append(1)
+            raise HTTPError('https://example.invalid',429,'test',{},None)
+        provider=OpenAIProvider('synthetic',opener=opener,sleeper=lambda _:self.fail('No retry'),budget=self.ledger)
+        with self.assertRaises(ProviderError):
+            provider({'model':body['model'],'system':'test','chunks':[]})
+        self.assertEqual(calls,[1])
+        self.assertEqual(self.ledger.summary()['attempts'],1)

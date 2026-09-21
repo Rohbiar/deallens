@@ -25,3 +25,9 @@ Test the financial identities against independently calculated expected results,
 ## Risks and fallback
 
 Complex cross-references cannot safely be reduced to a keyword match. Keep candidates and original clauses, with unresolved normalized outputs. Page hashes detect duplicates but cannot prove no original pages were omitted; mark completeness unknown unless an external expected manifest exists. If OCR is required, block extraction pending OCR rather than inventing text. If a model endpoint is unavailable, use deterministic evidence retrieval and explicitly report its limited semantic coverage. Never claim calibrated confidence, live model evaluation, human verification, or execution time that was not measured.
+
+## Current continuation status
+
+The 2026-09-21 continuation adds full numbered sections, explicit reference/definition context, improved source metadata, a disclosed bridge grid, partial extractive QA and browser risk-map access. Current acceptance results are generated in docs/SUBMISSION_STATUS.md from the latest run. Historical model proposals and budget ledger are preserved; no new provider calls were made.
+
+Remaining work is complete normalized complex-clause interpretation, independent semantic evaluation and candidate ownership of the final submission. Redacted public-source values cannot be supplied by inference. Production authentication and live derivative pricing remain outside the required prototype finish line.

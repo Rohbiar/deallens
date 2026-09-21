@@ -1,4 +1,6 @@
-Current live evaluation: [FOCUSED_RETEST.md](FOCUSED_RETEST.md) records the v5 focused run and persistent semantic/citation failures. V6 source-passage citation IDs are implemented but not yet tested live. Earlier run descriptions below are historical.
+# Current generalization update
+
+See [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) for current counts. Shared section parsing now supports all three source styles, including cross-page clauses, references and selected definitions. These produce explicitly partial extractive answers, not full semantic accuracy. A source-backed bridge grid is separately adapted to synthetic utilization and benchmark scenarios. No transaction names, dates or fee answers were added to extraction rules.
 
 # Generalization assessment
 
@@ -6,7 +8,7 @@ Current live evaluation: [FOCUSED_RETEST.md](FOCUSED_RETEST.md) records the v5 f
 
 One Python/SQLite application processes all three PDFs. Bio-Techne was the first executed development run. All three sources were briefly inspected before that run to understand the assignment's required structures, so the validation sources were not a pristine unseen holdout. After the first three-document run, common rules were extended for consideration definitions, explicit financing-condition language, fee terminology, thresholds and exact/minimum qualifiers. Results after those changes are adapted validation results, not untouched out-of-sample accuracy.
 
-## Results
+## Historical baseline results
 
 | Document | PDF pages | Supported field types | Total catalog fields | Human verified records |
 |---|---:|---:|---:|---:|
@@ -51,6 +53,6 @@ The model retriever initially missed Uber’s agreement price floor because its 
 
 Latest live follow-up: prompt v4 produced seven retained candidates from twelve responses, including one null and an unsupported Uber financing inference. Full legal extraction accuracy remains unmeasured. See LIVE_EVALUATION.md for the current result; earlier counts above are historical.
 
-## Current continuation
+## Earlier continuation
 
 The broader 76-response live batch is documented in BROAD_BATCH_REVIEW.md. Shared introductory-party rules now support nine additional field/document identities without source-specific names in code. Retrieval prioritizes operative party and borrowing headings. Agent annotations identify ten historical candidate errors without applying human decisions. The current 73 tests and 25 fixtures concern controls and selected values, not full semantic accuracy. Earlier counts above record prior development stages.

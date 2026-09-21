@@ -44,3 +44,18 @@ class CitationProtocolTests(unittest.TestCase):
             self.assertEqual(json.loads(typed_value(value)),value)
         for value in [float('nan'),{'unknown':'shape'},{'summary':'x','details':[{'label':'x','value':{'nested':'object'}}]}]:
             with self.assertRaises(ValueError):typed_value(value)
+
+    def test_transport_bounds_match_local_citation_validation(self):
+        from deallens.provider import build_request_body
+        doc, request, proposal = fixture()
+        request['system'] = 'Synthetic test'
+        body, _, _ = build_request_body(request)
+        proposals = body['text']['format']['schema']['properties']['proposals']
+        self.assertEqual(proposals['maxItems'], 20)
+        citations = proposals['items']['properties']['citations']
+        self.assertEqual((citations['minItems'], citations['maxItems']), (1, 12))
+        for count in (0, 13):
+            candidate = copy.deepcopy(proposal)
+            candidate['citations'] = candidate['citations'] * count
+            with self.assertRaisesRegex(ValueError, 'bounded citations'):
+                validate_proposals({'proposals':[candidate]}, request, doc, 'test', .9)

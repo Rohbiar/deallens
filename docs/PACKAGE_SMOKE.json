@@ -1,0 +1,26 @@
+{
+  "scope": "Clean archive extraction, same installed pinned dependencies; source/test code unchanged in final repackaging. Not a fresh dependency installation.",
+  "unit_tests_exit_code": 0,
+  "unit_tests": 97,
+  "cli_checks": [
+    {
+      "document": "bio_techne",
+      "question": "consideration",
+      "status": "supported",
+      "has_source_sections": false
+    },
+    {
+      "document": "organon",
+      "question": "extensions",
+      "status": "partial",
+      "has_source_sections": true
+    },
+    {
+      "document": "uber_delivery_hero",
+      "question": "financing",
+      "status": "partial",
+      "has_source_sections": true
+    }
+  ],
+  "credentials_pattern_scan": "No provider-token/private-key patterns in retained source, tests or documents."
+}

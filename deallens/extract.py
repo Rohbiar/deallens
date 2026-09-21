@@ -13,7 +13,7 @@ DATE = r'(?:January|February|March|April|May|June|July|August|September|October|
 MONEY = r'(?:\$|€|EUR\s*|USD\s*)(\d[\d,]*(?:\.\d+)?)\s*(million|billion)?'
 SCALARS = {"consideration_per_share", "agreement_date", "outside_or_long_stop_date", "bridge_amount",
            "target", "parent_or_bidder", "acquisition_vehicle", "transaction_type", "consideration_type", "financing_condition", "financing_maturity",
-           "target_termination_fee", "parent_termination_fee", "approval_or_tender_threshold", "committed_financing_minimum"}
+           "target_termination_fee", "parent_termination_fee", "approval_or_tender_threshold", "committed_financing_minimum", "expected_closing_timing"}
 
 def date_iso(raw):
     for fmt in ("%B %d, %Y", "%B %d %Y", "%d %B %Y"):
@@ -113,6 +113,13 @@ def scalar_matches(field, text):
         pattern=r'(?:mature on the date that is|Maturity Date[”\"]? means.{0,70}?)\s*(\d+) days after the (Closing Date)'
         for m in re.finditer(pattern,text,re.I):
             yield m.start(),m.end(),{"offset":int(m.group(1)),"unit":"calendar_days","anchor":m.group(2)},None,m.group()
+    elif field == "expected_closing_timing":
+        # Preserve the entire sentence and every stated qualification. This is an
+        # estimate, never a calendar deadline or evidence that closing occurred.
+        pattern = r'(?:The )?(?:Merger|Offer|transaction) is expected to (?:be completed|close|be consummated)[^.]{0,1500}\.'
+        for m in re.finditer(pattern, text, re.I):
+            if re.search(r'\b20\d\d\b', m.group()):
+                yield m.start(),m.end(),{"kind":"non_binding_estimate","source_statement":m.group()},None,m.group()
     elif field in {"target_termination_fee","parent_termination_fee"}:
         role = 'Company' if field=='target_termination_fee' else '(?:Parent|Bidder)'
         label = 'Company Termination Fee' if field=='target_termination_fee' else 'Parent Termination Fee'
@@ -179,6 +186,8 @@ def extract(doc, run_id, threshold=0.9):
                                     "section":None,"evidence":None,"extraction_method":"deterministic",
                                     "confidence":0,"review_status":"exception","status":"not_found",
                                     "designation":"candidate_evidence","run_id":run_id})
+    from .provisions import provision_records
+    records.extend(provision_records(doc, run_id, threshold))
     return records
 
 def validate_evidence(record, doc):
@@ -229,7 +238,7 @@ def timeline(doc,records):
     for r in records:
         if r.get("status") in {"superseded","rejected"}:continue
         if r["field_name"] not in fields or not r.get("evidence"):continue
-        text=r["evidence"]
+        text=" ".join(s['evidence'] for s in r.get('evidence_sources',[r]))
         if r["field_name"]=="expected_closing_timing":kind="non_binding_estimate"
         elif re.search(r'automatic(?:ally)? extend',text,re.I):kind="automatic_conditional_extension"
         elif re.search(r'elect to extend|may.{0,100}extend|authorized by BaFin',text,re.I):kind="party_or_regulator_election"
@@ -237,10 +246,19 @@ def timeline(doc,records):
         elif re.search(r'if|provided|subject to',text,re.I):kind="conditional"
         else:kind="fixed_date" if r["status"]=="supported" else "unresolved"
         dates=[{"raw":m.group(),"iso":date_iso(m.group())} for m in re.finditer(DATE,text)]
+        relative=[]
+        for m in re.finditer(r'(\d+)(?:st|nd|rd|th)?\)?\s+(Business\s+)?days?\s+(after|following|before|prior to)\s+(?:the\s+)?((?:Closing|Effective|Long[- ]Stop|Outside|Funding) Date)',text,re.I):
+            relative.append({'raw':m.group(),'offset':int(m.group(1)),
+                             'unit':'business_days' if m.group(2) else 'calendar_days',
+                             'relation':m.group(3),'anchor':m.group(4),
+                             'resolved_date':None,'status':'source_expression',
+                             'note':'Requires its contractual anchor, conditions and applicable business-day calendar; not an executable deadline.'})
+        if r.get('status')=='source_excerpt':kind='multiple_source_clocks'
         key=(r["field_name"],r["page"],r.get("start"))
         if key in seen:continue
         seen.add(key)
         events.append({"event":r["field_name"],"date_type":kind,"candidate_dates":dates,
+                       "relative_expressions":relative,
                        "resolved_date":r["normalized_value"] if r["status"]=="supported" and r["field_name"] in {"agreement_date","outside_or_long_stop_date"} else None,
                        "status":r["status"],"note":"Dates in supporting text are candidates; do not schedule from them without resolving conditions and cross-references.","source":r})
     return events

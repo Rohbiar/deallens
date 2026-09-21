@@ -1,14 +1,14 @@
 {
-  "run_id": "20260920T224132Z-18bd66d3",
+  "run_id": "20260921T150631Z-5c182147",
   "audit_type": "machine artifact/control checks plus disclosed coverage; not expert approval",
   "all_machine_checks_pass": true,
   "all_required_bio_scenarios_present": true,
   "complete_semantic_extraction": false,
   "expert_legal_review_performed": false,
   "remaining_requirements": [
-    "Complete cross-referenced complex extraction and QA coverage",
-    "Live evaluation of current prompt and retrieval changes",
-    "Verified filing-index dates and independent page inventory",
+    "Complete normalized complex extraction and direct QA coverage; source sections are not semantic completion",
+    "Broader semantic evaluation beyond selected fixtures",
+    "Bio-Techne filing-index date verification (PDF metadata reported); omitted schedules and redacted terms unavailable",
     "Independent semantic gold set; precision and recall",
     "Candidate technical ownership and final submission decision"
   ],
@@ -25,24 +25,27 @@
         "strict_qa_abstains_without_human_approval": true
       },
       "machine_supported_fields": 12,
+      "source_excerpt_fields": 21,
+      "filing_date_status": "pdf_metadata_reported",
       "qa_statuses": {
         "consideration": "supported",
         "approval": "supported",
         "outside_date": "supported",
-        "extensions": "requires_review",
+        "extensions": "partial",
         "fees": "supported",
-        "fee_triggers": "requires_review",
-        "awards": "requires_review",
-        "regulatory": "requires_review",
+        "fee_triggers": "partial",
+        "awards": "partial",
+        "regulatory": "partial",
         "financing_condition": "supported",
-        "financing": "requires_review",
-        "remedies": "requires_review",
+        "financing": "partial",
+        "remedies": "partial",
         "deal_contingent_hedge": "partial"
       },
       "field_coverage": [
         {
           "field_name": "target",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -65,6 +68,7 @@
         {
           "field_name": "parent_or_bidder",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -88,6 +92,7 @@
         {
           "field_name": "acquisition_vehicle",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -110,6 +115,7 @@
         {
           "field_name": "guarantors_or_covered_parties",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -135,6 +141,7 @@
         {
           "field_name": "agreement_date",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -157,6 +164,7 @@
         {
           "field_name": "transaction_type",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "normalized match",
           "layers": {
             "8-k-summary": [
@@ -179,6 +187,7 @@
         {
           "field_name": "consideration_per_share",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -200,6 +209,7 @@
         {
           "field_name": "consideration_type",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -221,6 +231,7 @@
         {
           "field_name": "expected_closing_timing",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -242,6 +253,7 @@
         {
           "field_name": "outside_or_long_stop_date",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -263,13 +275,15 @@
         {
           "field_name": "extension_dates_and_conditions",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -286,6 +300,7 @@
         {
           "field_name": "offer_or_acceptance_period",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -304,29 +319,30 @@
         {
           "field_name": "cure_periods",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
             ]
           },
           "source_pages": [
-            73,
-            88,
-            89,
-            94
+            71,
+            73
           ],
           "complete_legal_interpretation_verified": false
         },
         {
           "field_name": "approval_or_tender_threshold",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -348,13 +364,15 @@
         {
           "field_name": "regulatory_approvals",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -362,6 +380,7 @@
           },
           "source_pages": [
             2,
+            69,
             70,
             71,
             90,
@@ -372,13 +391,15 @@
         {
           "field_name": "no_injunction_condition",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -388,6 +409,7 @@
             2,
             33,
             59,
+            69,
             70
           ],
           "complete_legal_interpretation_verified": false
@@ -395,13 +417,15 @@
         {
           "field_name": "material_adverse_effect",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -419,13 +443,16 @@
         {
           "field_name": "remedy_limitations",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
+              "low_confidence",
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -434,6 +461,7 @@
           "source_pages": [
             2,
             3,
+            58,
             60,
             71,
             95
@@ -443,6 +471,7 @@
         {
           "field_name": "financing_condition",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -464,6 +493,7 @@
         {
           "field_name": "target_termination_fee",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -485,6 +515,7 @@
         {
           "field_name": "parent_termination_fee",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -506,13 +537,15 @@
         {
           "field_name": "fee_triggers_and_tails",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -520,6 +553,7 @@
           },
           "source_pages": [
             3,
+            71,
             74,
             75,
             76,
@@ -530,13 +564,15 @@
         {
           "field_name": "superior_or_competing_proposals",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -545,6 +581,7 @@
           "source_pages": [
             3,
             4,
+            52,
             53,
             55,
             58,
@@ -555,13 +592,15 @@
         {
           "field_name": "board_recommendation",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -569,6 +608,7 @@
           },
           "source_pages": [
             3,
+            52,
             55,
             56,
             57,
@@ -579,19 +619,22 @@
         {
           "field_name": "matching_rights",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
             ]
           },
           "source_pages": [
+            52,
             54,
             55,
             77
@@ -601,13 +644,15 @@
         {
           "field_name": "termination_rights",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -625,13 +670,15 @@
         {
           "field_name": "funding_sources",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -646,6 +693,7 @@
         {
           "field_name": "bridge_amount",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -664,6 +712,7 @@
         {
           "field_name": "committed_financing_minimum",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -682,6 +731,7 @@
         {
           "field_name": "financing_maturity",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -700,6 +750,7 @@
         {
           "field_name": "interest_basis",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -718,6 +769,7 @@
         {
           "field_name": "financing_fees_and_stepups",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -736,13 +788,15 @@
         {
           "field_name": "refinancing_requirements",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -758,6 +812,7 @@
         {
           "field_name": "financing_conditions",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -776,13 +831,15 @@
         {
           "field_name": "common_shares",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -798,13 +855,15 @@
         {
           "field_name": "vested_options",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -820,13 +879,15 @@
         {
           "field_name": "unvested_options",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -843,40 +904,40 @@
         {
           "field_name": "rsus",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
             ]
           },
           "source_pages": [
-            1,
             2,
-            4,
-            14,
+            16,
             17,
-            19,
-            58,
-            78
+            88
           ],
           "complete_legal_interpretation_verified": false
         },
         {
           "field_name": "psus",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -884,6 +945,7 @@
           },
           "source_pages": [
             2,
+            16,
             17,
             22,
             88,
@@ -894,13 +956,15 @@
         {
           "field_name": "restricted_stock",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -910,6 +974,7 @@
             1,
             2,
             12,
+            16,
             18,
             84,
             88
@@ -919,13 +984,15 @@
         {
           "field_name": "employee_stock_purchase_plan",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -944,13 +1011,15 @@
         {
           "field_name": "award_cohort_differences",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -997,24 +1066,27 @@
         "strict_qa_abstains_without_human_approval": true
       },
       "machine_supported_fields": 11,
+      "source_excerpt_fields": 18,
+      "filing_date_status": "sec_index_verified",
       "qa_statuses": {
         "consideration": "supported",
         "approval": "supported",
         "outside_date": "supported",
-        "extensions": "requires_review",
+        "extensions": "partial",
         "fees": "partial",
-        "fee_triggers": "requires_review",
-        "awards": "requires_review",
-        "regulatory": "requires_review",
+        "fee_triggers": "partial",
+        "awards": "partial",
+        "regulatory": "partial",
         "financing_condition": "supported",
-        "financing": "requires_review",
-        "remedies": "requires_review",
+        "financing": "partial",
+        "remedies": "partial",
         "deal_contingent_hedge": "partial"
       },
       "field_coverage": [
         {
           "field_name": "target",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1037,6 +1109,7 @@
         {
           "field_name": "parent_or_bidder",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1060,6 +1133,7 @@
         {
           "field_name": "acquisition_vehicle",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1083,6 +1157,7 @@
         {
           "field_name": "guarantors_or_covered_parties",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1110,6 +1185,7 @@
         {
           "field_name": "agreement_date",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -1132,6 +1208,7 @@
         {
           "field_name": "transaction_type",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "normalized match",
           "layers": {
             "8-k-summary": [
@@ -1154,6 +1231,7 @@
         {
           "field_name": "consideration_per_share",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -1175,6 +1253,7 @@
         {
           "field_name": "consideration_type",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "summary only",
           "layers": {
             "8-k-summary": [
@@ -1195,6 +1274,7 @@
         {
           "field_name": "expected_closing_timing",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1221,6 +1301,7 @@
         {
           "field_name": "outside_or_long_stop_date",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "agreement only",
           "layers": {
             "8-k-summary": [
@@ -1241,19 +1322,22 @@
         {
           "field_name": "extension_dates_and_conditions",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
             ]
           },
           "source_pages": [
+            86,
             87,
             93
           ],
@@ -1262,6 +1346,7 @@
         {
           "field_name": "offer_or_acceptance_period",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1280,21 +1365,23 @@
         {
           "field_name": "cure_periods",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
             ]
           },
           "source_pages": [
-            14,
-            16,
+            40,
+            42,
             84,
             86,
             87,
@@ -1305,6 +1392,7 @@
         {
           "field_name": "approval_or_tender_threshold",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -1326,13 +1414,15 @@
         {
           "field_name": "regulatory_approvals",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1340,15 +1430,21 @@
           },
           "source_pages": [
             3,
+            6,
             15,
             20,
-            21
+            27,
+            69,
+            85,
+            86,
+            92
           ],
           "complete_legal_interpretation_verified": false
         },
         {
           "field_name": "no_injunction_condition",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1370,13 +1466,15 @@
         {
           "field_name": "material_adverse_effect",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1395,13 +1493,17 @@
         {
           "field_name": "remedy_limitations",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
+              "low_confidence",
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "low_confidence",
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1410,6 +1512,7 @@
           "source_pages": [
             3,
             28,
+            69,
             71,
             72,
             86,
@@ -1420,6 +1523,7 @@
         {
           "field_name": "financing_condition",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "agreement only",
           "layers": {
             "8-k-summary": [
@@ -1440,6 +1544,7 @@
         {
           "field_name": "target_termination_fee",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1466,6 +1571,7 @@
         {
           "field_name": "parent_termination_fee",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1492,13 +1598,15 @@
         {
           "field_name": "fee_triggers_and_tails",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1516,13 +1624,15 @@
         {
           "field_name": "superior_or_competing_proposals",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1533,6 +1643,7 @@
             4,
             6,
             15,
+            65,
             66,
             67,
             68,
@@ -1544,13 +1655,15 @@
         {
           "field_name": "board_recommendation",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1560,6 +1673,7 @@
             3,
             4,
             15,
+            65,
             66,
             68,
             69,
@@ -1570,13 +1684,15 @@
         {
           "field_name": "matching_rights",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1585,6 +1701,7 @@
           "source_pages": [
             3,
             24,
+            65,
             67,
             68,
             95
@@ -1594,13 +1711,15 @@
         {
           "field_name": "termination_rights",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1617,13 +1736,15 @@
         {
           "field_name": "funding_sources",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1631,6 +1752,7 @@
           },
           "source_pages": [
             2,
+            59,
             60,
             79,
             80,
@@ -1641,6 +1763,7 @@
         {
           "field_name": "bridge_amount",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1659,6 +1782,7 @@
         {
           "field_name": "committed_financing_minimum",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1677,6 +1801,7 @@
         {
           "field_name": "financing_maturity",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1695,6 +1820,7 @@
         {
           "field_name": "interest_basis",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1713,6 +1839,7 @@
         {
           "field_name": "financing_fees_and_stepups",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1731,13 +1858,15 @@
         {
           "field_name": "refinancing_requirements",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1745,6 +1874,7 @@
           },
           "source_pages": [
             2,
+            59,
             60
           ],
           "complete_legal_interpretation_verified": false
@@ -1752,13 +1882,15 @@
         {
           "field_name": "financing_conditions",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1766,6 +1898,7 @@
           },
           "source_pages": [
             19,
+            59,
             79,
             80,
             84,
@@ -1776,6 +1909,7 @@
         {
           "field_name": "common_shares",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1797,13 +1931,15 @@
         {
           "field_name": "vested_options",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1820,13 +1956,15 @@
         {
           "field_name": "unvested_options",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1842,24 +1980,25 @@
         {
           "field_name": "rsus",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
             ]
           },
           "source_pages": [
-            1,
             2,
-            3,
+            16,
             18,
-            32,
+            35,
             36
           ],
           "complete_legal_interpretation_verified": false
@@ -1867,13 +2006,15 @@
         {
           "field_name": "psus",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1883,6 +2024,7 @@
             2,
             3,
             18,
+            35,
             36,
             37
           ],
@@ -1891,6 +2033,7 @@
         {
           "field_name": "restricted_stock",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1909,6 +2052,7 @@
         {
           "field_name": "employee_stock_purchase_plan",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -1927,13 +2071,15 @@
         {
           "field_name": "award_cohort_differences",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -1943,6 +2089,7 @@
             2,
             3,
             18,
+            35,
             36
           ],
           "complete_legal_interpretation_verified": false
@@ -1979,25 +2126,28 @@
         "model_candidates_never_promoted": true,
         "strict_qa_abstains_without_human_approval": true
       },
-      "machine_supported_fields": 14,
+      "machine_supported_fields": 15,
+      "source_excerpt_fields": 20,
+      "filing_date_status": "sec_index_verified",
       "qa_statuses": {
         "consideration": "conflict",
         "approval": "supported",
         "outside_date": "supported",
-        "extensions": "requires_review",
+        "extensions": "partial",
         "fees": "supported",
-        "fee_triggers": "requires_review",
-        "awards": "requires_review",
-        "regulatory": "requires_review",
+        "fee_triggers": "partial",
+        "awards": "partial",
+        "regulatory": "partial",
         "financing_condition": "requires_review",
         "financing": "partial",
-        "remedies": "requires_review",
+        "remedies": "partial",
         "deal_contingent_hedge": "partial"
       },
       "field_coverage": [
         {
           "field_name": "target",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2027,6 +2177,7 @@
         {
           "field_name": "parent_or_bidder",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2053,6 +2204,7 @@
         {
           "field_name": "acquisition_vehicle",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2076,13 +2228,15 @@
         {
           "field_name": "guarantors_or_covered_parties",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "requires_review"
@@ -2101,6 +2255,7 @@
         {
           "field_name": "agreement_date",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "summary only",
           "layers": {
             "8-k-summary": [
@@ -2126,6 +2281,7 @@
         {
           "field_name": "transaction_type",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -2148,6 +2304,7 @@
         {
           "field_name": "consideration_per_share",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "conflict",
           "layers": {
             "8-k-summary": [
@@ -2169,6 +2326,7 @@
         {
           "field_name": "consideration_type",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "match",
           "layers": {
             "8-k-summary": [
@@ -2191,11 +2349,12 @@
         },
         {
           "field_name": "expected_closing_timing",
-          "has_machine_supported_value": false,
+          "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
-              "requires_review"
+              "supported"
             ],
             "transaction-agreement": [
               "requires_review"
@@ -2206,7 +2365,6 @@
           },
           "source_pages": [
             2,
-            5,
             18,
             21,
             24,
@@ -2218,6 +2376,7 @@
         {
           "field_name": "outside_or_long_stop_date",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "agreement only",
           "layers": {
             "8-k-summary": [
@@ -2240,19 +2399,22 @@
         {
           "field_name": "extension_dates_and_conditions",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
             ]
           },
           "source_pages": [
+            12,
             13
           ],
           "complete_legal_interpretation_verified": false
@@ -2260,13 +2422,15 @@
         {
           "field_name": "offer_or_acceptance_period",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "requires_review"
@@ -2289,31 +2453,26 @@
         {
           "field_name": "cure_periods",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "requires_review"
             ]
           },
           "source_pages": [
-            2,
             3,
             4,
-            16,
-            17,
-            27,
-            28,
-            56,
-            64,
-            67,
+            33,
+            34,
             81,
-            99,
             109
           ],
           "complete_legal_interpretation_verified": false
@@ -2321,6 +2480,7 @@
         {
           "field_name": "approval_or_tender_threshold",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2344,13 +2504,15 @@
         {
           "field_name": "regulatory_approvals",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -2358,6 +2520,8 @@
           },
           "source_pages": [
             3,
+            5,
+            12,
             13,
             14
           ],
@@ -2366,6 +2530,7 @@
         {
           "field_name": "no_injunction_condition",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2384,13 +2549,15 @@
         {
           "field_name": "material_adverse_effect",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "requires_review"
@@ -2410,13 +2577,15 @@
         {
           "field_name": "remedy_limitations",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -2430,6 +2599,7 @@
         {
           "field_name": "financing_condition",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2458,6 +2628,7 @@
         {
           "field_name": "target_termination_fee",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2480,6 +2651,7 @@
         {
           "field_name": "parent_termination_fee",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "normalized match",
           "layers": {
             "8-k-summary": [
@@ -2501,13 +2673,15 @@
         {
           "field_name": "fee_triggers_and_tails",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "requires_review"
@@ -2515,6 +2689,7 @@
           },
           "source_pages": [
             3,
+            34,
             35,
             66,
             68
@@ -2524,13 +2699,15 @@
         {
           "field_name": "superior_or_competing_proposals",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -2548,13 +2725,15 @@
         {
           "field_name": "board_recommendation",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -2569,19 +2748,22 @@
         {
           "field_name": "matching_rights",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "requires_review"
             ]
           },
           "source_pages": [
+            11,
             12,
             16,
             17,
@@ -2596,13 +2778,15 @@
         {
           "field_name": "termination_rights",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "requires_review"
@@ -2623,13 +2807,15 @@
         {
           "field_name": "funding_sources",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "requires_review"
@@ -2637,6 +2823,7 @@
           },
           "source_pages": [
             2,
+            15,
             38,
             69,
             74,
@@ -2648,6 +2835,7 @@
         {
           "field_name": "bridge_amount",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2674,6 +2862,7 @@
         {
           "field_name": "committed_financing_minimum",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "agreement only",
           "layers": {
             "8-k-summary": [
@@ -2694,6 +2883,7 @@
         {
           "field_name": "financing_maturity",
           "has_machine_supported_value": true,
+          "has_source_section_excerpt": false,
           "comparison": "normalized match",
           "layers": {
             "8-k-summary": [
@@ -2715,6 +2905,7 @@
         {
           "field_name": "interest_basis",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2724,13 +2915,15 @@
               "not_found"
             ],
             "financing-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ]
           },
           "source_pages": [
             4,
             59,
             62,
+            76,
             77,
             85
           ],
@@ -2739,6 +2932,7 @@
         {
           "field_name": "financing_fees_and_stepups",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2748,7 +2942,8 @@
               "not_found"
             ],
             "financing-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ]
           },
           "source_pages": [
@@ -2763,6 +2958,7 @@
         {
           "field_name": "refinancing_requirements",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2772,7 +2968,8 @@
               "requires_review"
             ],
             "financing-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ]
           },
           "source_pages": [
@@ -2789,6 +2986,7 @@
         {
           "field_name": "financing_conditions",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2798,7 +2996,8 @@
               "not_found"
             ],
             "financing-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ]
           },
           "source_pages": [
@@ -2814,13 +3013,15 @@
         {
           "field_name": "common_shares",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "requires_review"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -2836,6 +3037,7 @@
         {
           "field_name": "vested_options",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2854,6 +3056,7 @@
         {
           "field_name": "unvested_options",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2872,47 +3075,37 @@
         {
           "field_name": "rsus",
           "has_machine_supported_value": false,
-          "comparison": "unresolved",
-          "layers": {
-            "8-k-summary": [
-              "requires_review"
-            ],
-            "transaction-agreement": [
-              "requires_review"
-            ],
-            "financing-agreement": [
-              "requires_review"
-            ]
-          },
-          "source_pages": [
-            1,
-            2,
-            6,
-            7,
-            12,
-            16,
-            24,
-            28,
-            35,
-            49,
-            56,
-            57,
-            60,
-            114,
-            115
-          ],
-          "complete_legal_interpretation_verified": false
-        },
-        {
-          "field_name": "psus",
-          "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "requires_review"
+              "requires_review",
+              "source_excerpt"
+            ],
+            "financing-agreement": [
+              "not_found"
+            ]
+          },
+          "source_pages": [
+            24
+          ],
+          "complete_legal_interpretation_verified": false
+        },
+        {
+          "field_name": "psus",
+          "has_machine_supported_value": false,
+          "has_source_section_excerpt": true,
+          "comparison": "unresolved",
+          "layers": {
+            "8-k-summary": [
+              "not_found"
+            ],
+            "transaction-agreement": [
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
@@ -2926,6 +3119,7 @@
         {
           "field_name": "restricted_stock",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2944,6 +3138,7 @@
         {
           "field_name": "employee_stock_purchase_plan",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
@@ -2962,6 +3157,7 @@
         {
           "field_name": "award_cohort_differences",
           "has_machine_supported_value": false,
+          "has_source_section_excerpt": false,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
