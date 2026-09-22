@@ -6,13 +6,17 @@ No transaction names, amounts, dates or document-specific section numbers live h
 import re
 from .ingest import normalize
 from .catalog import FIELDS
+from .retrieval_context import build_context_bundle
 
-VERSION = "source-provisions-1"
+VERSION = "source-provisions-2"
 LAYERS = ("transaction-agreement", "financing-agreement")
 
 
 def all_evidence(record):
     """Every attached source, including context, must pass the same byte checks."""
+    if record.get('context_bundle'):
+        yield from record['context_bundle']['sources']
+        return
     yield from record.get('evidence_sources', [record])
     for key in ('reference_context','definition_context'):
         for item in record.get(key,[]):
@@ -120,27 +124,53 @@ def section_index(doc):
                     title = "Clause " + m.group(1)
                 untitled = layer == "transaction-agreement" and not m.group().lstrip().startswith("Section") and not re.match(r"\s*\d+\.\d+\.", m.group())
                 starts.append((i, offset, m.group(1), title, untitled))
+        occurrences = {}
         for j, (i, start, number, title, untitled) in enumerate(starts):
             end_i, end = starts[j+1][:2] if j+1 < len(starts) else (len(pages)-1, len(pages[-1]["text"]))
+            occurrence = occurrences.get(number, 0) + 1
+            occurrences[number] = occurrence
+            section_id = f"{layer}:{number}:{occurrence}"
             spans = []
             for k in range(i, end_i+1):
                 p = pages[k]; a = start if k == i else 0; b = end if k == end_i else len(p["text"])
                 if b > a:
-                    spans.append(source_span(doc, p, a, b, f"Section {number} {title}"))
+                    span = source_span(doc, p, a, b, f"Section {number} {title}")
+                    span["section_id"] = section_id
+                    span["source_id"] = (
+                        f"source:{doc['sha256'][:16]}:{p['page']}:{a}-{b}:"
+                        f"{section_id}"
+                    )
+                    spans.append(span)
             if spans:
-                result.append({"number": number, "title": title, "layer": layer,
+                result.append({"section_id": section_id, "number": number, "title": title, "layer": layer,
                                "sources": spans, "text": " ".join(s["evidence"] for s in spans),
                                "untitled": untitled,
                                "boundary": "next_section" if j+1 < len(starts) else "layer_end"})
     return result
 
 
-def reference_context(sections, selected, max_chars=60000):
+def reference_context(sections, selected, max_chars=60000, doc=None):
     """Resolve explicit section references within the same instrument, one hop.
 
     Resolving a reference's location is not proof its legal effect is understood.
     The caller retains nested references as unresolved context, never drops them.
     """
+    if doc is not None:
+        bundle = build_context_bundle(doc, sections, selected, max_depth=1,
+                                      max_chars=max_chars, max_nodes=64)
+        result = []
+        sources = {s["source_id"]: s for s in bundle["sources"]}
+        for edge in bundle["edges"]:
+            if edge["kind"] != "reference" or edge["from_section_id"] not in bundle["root_section_ids"]:
+                continue
+            status = {"resolved": "located", "budget_exhausted": "context_limit"}.get(edge["status"], edge["status"])
+            result.append({"reference": edge["expression"],
+                           "document_layer": edge["target"].get("document_layer"),
+                           "section_number": edge["target"].get("section_number"),
+                           "status": status,
+                           "sources": [sources[i] for i in edge["source_ids"]],
+                           "nested_references": []})
+        return result
     lookup = {}
     for s in sections:
         lookup.setdefault((s["layer"], s["number"]), []).append(s)
@@ -198,20 +228,31 @@ def provision_records(doc, run_id, threshold=.9):
                 continue
             # Never silently truncate a long answer or rank away an exception.
             sources = [x for s in candidates for x in s["sources"]]
-            refs = reference_context(sections, candidates)
             terms=DEFINITION_TERMS.get(field,[])
-            definition_context=definitions(sections,layer,terms)
+            context_bundle = build_context_bundle(doc, sections, candidates,
+                                                   definition_terms=terms)
+            refs = reference_context(sections, candidates, doc=doc)
+            bundle_sources = {s['source_id']:s for s in context_bundle['sources']}
+            definition_context=[]
+            for term in terms:
+                edges=[e for e in context_bundle['edges'] if e['kind']=='definition' and e['expression']==term]
+                edge=edges[0] if edges else None
+                definition_context.append({
+                    'term':term,
+                    'status':'located' if edge and edge['status']=='resolved' else 'ambiguous' if edge and edge['status']=='ambiguous' else 'missing',
+                    'sources':[bundle_sources[i] for i in edge['source_ids']] if edge else []})
             primary = dict(sources[0])
             primary.update(field_name=field, normalized_value=None, currency=None, raw_value=None,
                 candidate_value={"kind": "source_provisions", "sections": [s["number"] for s in candidates]},
                 evidence_sources=sources, reference_context=refs,
                 definition_context=definition_context,
+                context_bundle=context_bundle,
                 extraction_method="deterministic", rule_version=VERSION, run_id=run_id,
                 confidence=.97, confidence_basis="Exact section extraction; not confidence in legal interpretation",
                 status="source_excerpt" if threshold <= .97 else "low_confidence",
                 review_status="unreviewed", designation="source_excerpt",
                 completeness="not_established",
                 limitations=["Verbatim provisions; no complete normalized legal interpretation is asserted.",
-                             "Cross-reference lookup is one hop and instrument-local. Defined terms, schedules and nested references may remain unresolved."])
+                             "Reference and definition expansion is recursive, instrument-local and bounded; unresolved dependencies are explicit."])
             records.append(primary)
     return records

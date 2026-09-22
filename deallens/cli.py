@@ -15,6 +15,10 @@ from .catalog import FIELDS,QUESTIONS
 from .storage import save
 from .risk import risk_map
 from .semantic import extract_semantic,identify
+from .structured_terms import INTERPRETED_FIELDS, interpret_term
+from .term_validation import validate_term
+from .term_comparison import compare_structured_terms
+from .term_timeline import structured_term_timeline
 
 def write_json(path,obj):
     path.write_text(json.dumps(obj,indent=2,ensure_ascii=False)+"\n")
@@ -22,12 +26,36 @@ def write_json(path,obj):
 def new_run_id():
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")+"-"+uuid.uuid4().hex[:8]
 
+def build_structured_terms(records):
+    """Build current deterministic candidates from source-bound context graphs."""
+    terms=[];seen=set()
+    for record in records:
+        if (record.get("status") in {"superseded","rejected"}
+                or record.get("field_name") not in INTERPRETED_FIELDS
+                or not record.get("context_bundle")):
+            continue
+        term=interpret_term(record["field_name"],record["context_bundle"])
+        validation=validate_term(term,record["context_bundle"])
+        if not validation["valid"]:
+            raise ValueError("Generated structured term failed schema or provenance validation")
+        if term["term_id"] not in seen:
+            terms.append(term);seen.add(term["term_id"])
+    return terms
+
 def derive_bundle(doc, records, assumptions, elapsed=0, model_audit=None, review_events=None):
     comparisons=comparison(records)
+    terms=build_structured_terms(records)
+    structured_comparisons=compare_structured_terms(terms)
+    structured_timeline=structured_term_timeline(terms)
+    supported_terms=[term for term in terms if term.get("status") in {"machine_supported","human_verified"}]
     b={"document":doc,"extractions":records,"comparisons":comparisons,"timeline":timeline(doc,records),
-       "analytics":run_analytics(doc,records,comparisons,assumptions),"risk_map":risk_map(records),
-       "qa":{k:answer(k,records,comparisons) for k in QUESTIONS},
+       "structured_terms":terms,"structured_comparisons":structured_comparisons,
+       "structured_timeline":structured_timeline,
+       "analytics":run_analytics(doc,records,comparisons,assumptions,structured_terms=supported_terms),
+       "risk_map":risk_map(records,terms),
+       "qa":{k:answer(k,records,comparisons,structured_terms=terms) for k in QUESTIONS},
        "exceptions":[r for r in records if r["review_status"]!="verified" and r["status"] not in {"superseded","rejected"}],
+       "structured_exceptions":[term for term in terms if term.get("status")!="human_verified"],
        "model_audit":model_audit or [],"review_events":review_events or []}
     active=[r for r in records if r["status"] not in {"superseded","rejected"}]
     supported={r["field_name"] for r in active if r["status"]=="supported"}
@@ -38,6 +66,8 @@ def derive_bundle(doc, records, assumptions, elapsed=0, model_audit=None, review
                   "records":len(records),"evidence_exact_match_count":sum(bool(r.get("evidence")) for r in records),
                   "human_verified_records":sum(r["review_status"]=="verified" and r["status"]=="supported" for r in records),
                   "model_proposal_records":sum(r["extraction_method"]=="llm" for r in records),
+                  "structured_candidate_terms":sum(t["status"]=="candidate" for t in terms),
+                  "structured_supported_terms":sum(t["status"] in {"machine_supported","human_verified"} for t in terms),
                   "semantic_accuracy":None,"accuracy_note":"Citation substring validation is not extraction accuracy. No exhaustive human gold set."}
     return b
 
@@ -177,6 +207,12 @@ def main():
         manifest=json.loads((root/"outputs"/latest/"manifest.json").read_text())
         if args.document not in {d["document_id"] for d in manifest["documents"]}:p.error("Unknown document")
         path=root/"outputs"/latest/args.document
-        print(json.dumps(answer(args.question,json.loads((path/"extractions.json").read_text()),json.loads((path/"comparisons.json").read_text()),args.strict),indent=2,ensure_ascii=False))
+        structured=(json.loads((path/"structured_terms.json").read_text())
+                    if (path/"structured_terms.json").exists() else [])
+        print(json.dumps(answer(args.question,
+                                json.loads((path/"extractions.json").read_text()),
+                                json.loads((path/"comparisons.json").read_text()),
+                                args.strict,structured_terms=structured),
+                         indent=2,ensure_ascii=False))
 
 if __name__=="__main__":main()

@@ -1,5 +1,6 @@
 import unittest
-from deallens.financing import disclosed_pricing
+import math
+from deallens.financing import disclosed_pricing, pricing_scenario_inputs
 from test_provisions import document
 
 
@@ -25,3 +26,29 @@ class DisclosedFinancingTests(unittest.TestCase):
         for key in ['raw_text','text']:
             d['pages'][0][key]=d['pages'][0][key].replace('2 BBB','3 BBB')
         self.assertEqual(disclosed_pricing(d)['pricing_grid'],[])
+
+    def test_scenario_inputs_do_not_fill_redacted_terms(self):
+        disclosure=disclosed_pricing(self.fixture())
+        mapped=pricing_scenario_inputs(disclosure,pricing_level=2,
+                                       assumed_draw=500_000_000,
+                                       benchmark_rate=.025)
+        # 500mm * (2.50% benchmark + 1.00% disclosed level-2 margin).
+        self.assertEqual(mapped['calculation']['annualized_interest'],17_500_000)
+        self.assertEqual(mapped['calculation']['loan_margin_rate'],.01)
+        self.assertEqual(set(mapped['unavailable_contract_terms']),
+                         {'margin_stepup_amount','duration_fee_amount','funding_fee_amount'})
+        self.assertTrue(all(x['value'] is None for x in
+                            mapped['unavailable_contract_terms'].values()))
+
+    def test_scenario_mapping_requires_explicit_rating_draw_and_benchmark(self):
+        mapped=pricing_scenario_inputs(disclosed_pricing(self.fixture()))
+        self.assertIsNone(mapped['calculation'])
+        self.assertEqual(len(mapped['blocked_reasons']),3)
+
+    def test_nonfinite_scenario_inputs_are_blocked(self):
+        disclosure=disclosed_pricing(self.fixture())
+        mapped=pricing_scenario_inputs(disclosure,pricing_level=1,
+                                       assumed_draw=math.inf,
+                                       benchmark_rate=math.nan)
+        self.assertIsNone(mapped['calculation'])
+        self.assertEqual(len(mapped['blocked_reasons']),2)

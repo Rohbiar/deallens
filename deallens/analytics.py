@@ -6,6 +6,174 @@ import math
 from .extract import DATE, date_iso
 
 STRATEGIES=("unhedged","forward_starting_payer_swap","payer_option","deal_contingent_payer_swap")
+TERM_SCENARIO_MAPPING_VERSION = "term-scenario-mapping/v1"
+SUPPORTED_TERM_STATUSES = {"machine_supported", "human_verified"}
+
+
+def _iso_date(value):
+    """Return a strict ISO date or ``None`` without repairing source facts."""
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = date.fromisoformat(value)
+    except ValueError:
+        return None
+    return value if parsed.isoformat() == value else None
+
+
+def map_structured_terms_to_scenario_inputs(terms, assumptions):
+    """Map supported structured timing/funding facts to hypothetical scenarios.
+
+    Contract facts are copied with provenance. Elections, satisfaction of
+    conditions, completion outcomes, financing amounts and market shocks remain
+    explicitly designated assumptions. Candidate or materially unresolved
+    terms are visible but cannot drive a dated scenario.
+    """
+    issue_date = _iso_date(assumptions.get("issue_date"))
+    market_keys = ("benchmark_rate", "swap_rate", "issuer_credit_spread",
+                   "dv01_per_100mm")
+    financing_keys = ("notional", "currency", "tenor_years", "issue_date",
+                      "debt_fixed_rate")
+    result = {
+        "schema_version": TERM_SCENARIO_MAPPING_VERSION,
+        "contractual_facts": {"extension_dates": [], "funding_conditions": []},
+        "hypothetical_elections": [],
+        "market_inputs": {key: assumptions.get(key) for key in market_keys},
+        "scenario_assumptions": [
+            {"assumption_id": f"synthetic-{key}", "name": key,
+             "value": assumptions.get(key), "designation": "assumption"}
+            for key in financing_keys
+        ],
+        "scenario_inputs": [],
+        "blocked_scenarios": [],
+    }
+    usable_dates = {}
+    funding_fact_ids = []
+    for term in terms or ():
+        field = term.get("field_name")
+        if field not in {"extension_dates_and_conditions", "financing_conditions"}:
+            continue
+        unresolved = [item for item in term.get("unresolved", [])
+                      if item.get("materiality") != "non_material"]
+        term_usable = term.get("status") in SUPPORTED_TERM_STATUSES and not unresolved
+        for stmt in term.get("statements", []):
+            statement_unresolved = [item for item in stmt.get("unresolved", [])
+                                    if item.get("materiality") != "non_material"]
+            statement_usable = term_usable and not statement_unresolved
+            fact_id = stmt.get("statement_id")
+            common = {
+                "fact_id": fact_id,
+                "term_id": term.get("term_id"),
+                "term_status": term.get("status"),
+                "usable_for_scenarios": statement_usable,
+                "actor": stmt.get("actor"),
+                "action": stmt.get("action"),
+                "conditions": stmt.get("conditions", []),
+                "exceptions": stmt.get("exceptions", []),
+                "source_ids": [ref.get("source_id") for ref in stmt.get("evidence", [])],
+                "designation": "fact" if statement_usable else "candidate",
+            }
+            if field == "financing_conditions":
+                scope = stmt.get("business_scope") or {}
+                role = scope.get("scenario_role")
+                if role not in {"transaction_completion_condition",
+                                "lender_funding_condition", "funding_source"}:
+                    role = "unclassified_funding_fact"
+                fact = {**common, "scenario_role": role,
+                        "trigger": stmt.get("trigger")}
+                result["contractual_facts"]["funding_conditions"].append(fact)
+                if statement_usable:
+                    funding_fact_ids.append(fact_id)
+                continue
+
+            timing_value = stmt.get("timing") or {}
+            value = _iso_date(timing_value.get("value"))
+            clock_type = timing_value.get("clock_type")
+            date_usable = (statement_usable and value is not None and
+                           timing_value.get("unit") == "date" and
+                           clock_type in {"absolute", "fixed_date", "calendar_date"})
+            fact = {**common, "date": value, "clock_type": clock_type,
+                    "timing_conditions": timing_value.get("conditions", []),
+                    "modality": (stmt.get("action") or {}).get("modality"),
+                    "usable_for_scenarios": date_usable,
+                    "designation": "fact" if date_usable else "candidate"}
+            result["contractual_facts"]["extension_dates"].append(fact)
+            if date_usable:
+                usable_dates.setdefault(value, []).append(fact)
+
+    if not issue_date:
+        for scenario_id in ("first_extension", "final_extension"):
+            result["blocked_scenarios"].append({
+                "scenario": scenario_id, "status": "blocked",
+                "reason": "Synthetic issue date is missing or not a strict ISO date."})
+        return result
+    if not usable_dates:
+        for scenario_id in ("first_extension", "final_extension"):
+            result["blocked_scenarios"].append({
+                "scenario": scenario_id, "status": "blocked",
+                "reason": "No supported absolute extension date; candidate, relative, missing, or materially unresolved timing cannot drive the scenario."})
+        return result
+
+    ordered_dates = sorted(usable_dates)
+    selected = {"first_extension": ordered_dates[0],
+                "final_extension": ordered_dates[-1]}
+    for scenario_id, anchor in selected.items():
+        delay_days = (date.fromisoformat(anchor) - date.fromisoformat(issue_date)).days
+        if delay_days < 0:
+            result["blocked_scenarios"].append({
+                "scenario": scenario_id, "status": "blocked",
+                "reason": "Supported extension date precedes synthetic issue date.",
+                "anchor_date": anchor})
+            continue
+        fact_ids = [fact["fact_id"] for fact in usable_dates[anchor]]
+        assumption_ids = []
+        for fact in usable_dates[anchor]:
+            modality = fact.get("modality")
+            if modality != "automatic":
+                assumption_id = f"assume-election-{scenario_id}-{fact['fact_id']}"
+                result["hypothetical_elections"].append({
+                    "assumption_id": assumption_id,
+                    "scenario_id": scenario_id,
+                    "fact_id": fact["fact_id"],
+                    "actor": fact.get("actor"),
+                    "assumed": True,
+                    "designation": "assumption",
+                    "note": "Scenario election only; does not assert that a party exercised the contractual right."})
+                assumption_ids.append(assumption_id)
+            if (fact.get("conditions") or fact.get("timing_conditions") or
+                    modality == "conditional"):
+                assumption_id = f"assume-conditions-{scenario_id}-{fact['fact_id']}"
+                result["scenario_assumptions"].append({
+                    "assumption_id": assumption_id,
+                    "name": "extension_conditions_satisfied",
+                    "value": True,
+                    "fact_id": fact["fact_id"],
+                    "designation": "assumption",
+                    "note": "Hypothetical scenario condition; not a conclusion about actual satisfaction."})
+                assumption_ids.append(assumption_id)
+        completion_id = f"assume-completion-{scenario_id}"
+        result["scenario_assumptions"].append({
+            "assumption_id": completion_id, "name": "transaction_completed",
+            "value": True, "designation": "assumption",
+            "related_funding_fact_ids": funding_fact_ids,
+            "note": "Scenario outcome only. Lender funding conditions and transaction completion conditions are not deemed satisfied as contractual facts."})
+        assumption_ids.append(completion_id)
+        result["scenario_inputs"].append({
+            "scenario_id": scenario_id,
+            "benchmark_bp": 25,
+            "swap_spread_bp": 0,
+            "credit_bp": 0,
+            "completed": True,
+            "delay_days": delay_days,
+            "anchor_date": anchor,
+            "contractual_fact_ids": fact_ids,
+            "assumption_ids": assumption_ids,
+            "designation": "analysis",
+            "note": ("Single supported extension date serves as both first and final extension scenario."
+                     if len(ordered_dates) == 1 else
+                     "Dated hypothetical closing scenario; it does not assert an election, condition satisfaction, funding, or completion occurred."),
+        })
+    return result
 
 def validate(a):
     for key,value in a.items():
@@ -73,7 +241,7 @@ def extension_dates(records):
     return [{"date":d,"locator":anchors[d],"review_status":"unreviewed","designation":"assumption",
              "note":"Hypothetical closing scenario at an expressly stated extension date; does not assert that extension conditions have been satisfied."} for d in sorted(anchors)]
 
-def run_analytics(doc,records,comparisons,config):
+def run_analytics(doc,records,comparisons,config,structured_terms=()):
     supported_money=[r for r in records if r["field_name"]=="consideration_per_share" and r["status"]=="supported"]
     currencies={r["currency"] for r in supported_money}
     currency=next(iter(currencies)) if len(currencies)==1 else None
@@ -87,17 +255,29 @@ def run_analytics(doc,records,comparisons,config):
             ("rates_down_25",-25,0,0,True,0),("rates_up_50",50,0,0,True,0),
             ("rates_up_25_credit_wider_20",25,0,20,True,0),
             ("swap_spread_wider_10",0,10,0,True,0),
+            ("failure",0,0,0,False,0),
             ("failure_rates_down_25",-25,0,0,False,0),("failure_rates_up_25",25,0,0,False,0)]
-    anchors=extension_dates(records)
-    outside=[c["canonical_value"] for c in comparisons if c["field_name"]=="outside_or_long_stop_date" and c["canonical_value"]]
-    anchors=[x for x in anchors if not outside or x["date"]>outside[0]]
-    unresolved=[]
-    for label,anchor in [("first_extension",anchors[0] if anchors else None),("final_extension",anchors[-1] if anchors else None)]:
-        if anchor:
-            days=(date.fromisoformat(anchor["date"])-date.fromisoformat(a["issue_date"])).days
-            if days>=0:inputs.append((label,25,0,0,True,days))
-            else:unresolved.append({"scenario":label,"status":"blocked","reason":"Anchor precedes synthetic issue date"})
-        else:unresolved.append({"scenario":label,"status":"blocked","reason":"No safely normalized extension date; inspect timeline. No synthetic contract date substituted."})
+    term_mapping = map_structured_terms_to_scenario_inputs(structured_terms, a) if structured_terms else None
+    if term_mapping:
+        anchors = [{"date": row["anchor_date"], "locator": None,
+                    "review_status": "unreviewed", "designation": "fact",
+                    "note": row["note"]} for row in term_mapping["scenario_inputs"]]
+        unresolved = list(term_mapping["blocked_scenarios"])
+        for row in term_mapping["scenario_inputs"]:
+            inputs.append((row["scenario_id"], row["benchmark_bp"],
+                           row["swap_spread_bp"], row["credit_bp"],
+                           row["completed"], row["delay_days"]))
+    else:
+        anchors=extension_dates(records)
+        outside=[c["canonical_value"] for c in comparisons if c["field_name"]=="outside_or_long_stop_date" and c["canonical_value"]]
+        anchors=[x for x in anchors if not outside or x["date"]>outside[0]]
+        unresolved=[]
+        for label,anchor in [("first_extension",anchors[0] if anchors else None),("final_extension",anchors[-1] if anchors else None)]:
+            if anchor:
+                days=(date.fromisoformat(anchor["date"])-date.fromisoformat(a["issue_date"])).days
+                if days>=0:inputs.append((label,25,0,0,True,days))
+                else:unresolved.append({"scenario":label,"status":"blocked","reason":"Anchor precedes synthetic issue date"})
+            else:unresolved.append({"scenario":label,"status":"blocked","reason":"No safely normalized extension date; inspect timeline. No synthetic contract date substituted."})
     rows=[]
     for name,b,s,c,done,delay in inputs:
         for strategy in STRATEGIES:
@@ -140,6 +320,7 @@ def run_analytics(doc,records,comparisons,config):
                      'designation':'analysis','note':'Disclosed base margin; synthetic draw and EURIBOR. No rating selected, redacted step-ups or fees inferred.'}
                     for row in pricing['pricing_grid']]
     return {"status":"illustrative","assumptions":a,"rows":rows,"extension_anchors":anchors,
+            "term_scenario_mapping":term_mapping,
             "blocked_scenarios":unresolved,"expected_costs":expected,"adaptation":adaptation,
             "baseline_coupon":a["benchmark_rate"]+a["issuer_credit_spread"],
             "initial_swap_spread":a["swap_rate"]-a["benchmark_rate"],

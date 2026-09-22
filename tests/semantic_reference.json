@@ -1,0 +1,382 @@
+{
+  "schema_version": "1.0",
+  "reference_set_id": "deallens-semantic-reference-2026-09-21-v1",
+  "frozen_at": "2026-09-21",
+  "curation_status": "agent_curated_not_human_gold",
+  "scope": "Bounded, agent-curated semantic challenge set for four priority families across three supplied transactions; not contract-wide accuracy, legal advice, or human gold.",
+  "prediction_contract": {
+    "case_statuses": ["supported", "abstention", "unresolved"],
+    "matching": "Exact JSON equality by case_id and assertion_id after an implementation-specific adapter.",
+    "note": "Unsupported reference cases must remain unresolved; do not infer omitted schedules or redacted values."
+  },
+  "cases": [
+    {
+      "case_id": "bio_outside_date_extension",
+      "transaction": "bio_techne",
+      "family": "extension_dates_and_conditions",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/bio_techne.pdf",
+        "sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+        "document_layer": "transaction-agreement",
+        "section": "7.01(b)(i)",
+        "physical_pages": [71, 72],
+        "excerpts": [
+          {"physical_page": 71, "text": "if the Merger is not consummated on or before March 25, 2027 (as may be extended pursuant to the following proviso, the “Outside Date”)"},
+          {"physical_page": 72, "text": "the Outside Date shall automatically extend to June 25, 2027 (the “First Extended Outside Date”)"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "bio_extension_actor", "dimension": "actor", "expected": "automatic_by_contract"},
+        {"assertion_id": "bio_extension_obligation", "dimension": "obligation", "expected": "extend_outside_date"},
+        {"assertion_id": "bio_extension_trigger", "dimension": "trigger", "expected": {"all_other_closing_conditions_satisfied_waived_or_capable": true, "excluded_conditions": ["6.01(b)", "6.01(c)", "6.02(d)-regulatory-only"]}},
+        {"assertion_id": "bio_extension_exception", "dimension": "exception", "expected": {"termination_unavailable_if": ["terminating_party_breach_principal_cause", "other_party_enforcement_proceeding_pending"]}},
+        {"assertion_id": "bio_extension_timing", "dimension": "timing", "expected": {"initial": "2027-03-25", "first_automatic": "2027-06-25", "second_automatic": "2027-09-25"}},
+        {"assertion_id": "bio_extension_scope", "dimension": "scope", "expected": {"transaction": "Merger", "date_type": "Outside Date", "further_extension": "written_agreement_of_Parent_and_Company"}}
+      ]
+    },
+    {
+      "case_id": "bio_company_fee_tail",
+      "transaction": "bio_techne",
+      "family": "fee_triggers_and_tails",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/bio_techne.pdf",
+        "sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+        "document_layer": "transaction-agreement",
+        "section": "7.02(b)(i)",
+        "physical_pages": [74],
+        "excerpts": [
+          {"physical_page": 74, "text": "concurrently with or within 12 months after the date of any such termination, the Company or any Company Subsidiary enters into a definitive agreement to effect a Competing Proposal with any person and such Competing Proposal is subsequently consummated"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "bio_fee_actor", "dimension": "actor", "expected": "Company"},
+        {"assertion_id": "bio_fee_obligation", "dimension": "obligation", "expected": {"action": "pay_Company_Termination_Fee", "payee": "Parent_or_designee"}},
+        {"assertion_id": "bio_fee_trigger", "dimension": "trigger", "expected": {"termination_routes": ["7.01(b)(i)-Outside_Date", "7.01(b)(ii)-shareholder_vote_failure"], "additional_elements": ["qualifying_Competing_Proposal", "definitive_agreement", "subsequent_consummation"]}},
+        {"assertion_id": "bio_fee_exception", "dimension": "exception", "expected": {"proposal_not_withdrawn_without_qualification": true, "deemed_competing_proposal_threshold_percent": 50}},
+        {"assertion_id": "bio_fee_timing", "dimension": "timing", "expected": {"tail_amount": 12, "tail_unit": "months", "tail_anchor": "termination", "payment": "concurrent_with_competing_transaction_consummation"}},
+        {"assertion_id": "bio_fee_scope", "dimension": "scope", "expected": "Company_Termination_Fee_tail_for_qualifying_Competing_Proposal"}
+      ]
+    },
+    {
+      "case_id": "bio_remedy_limit",
+      "transaction": "bio_techne",
+      "family": "remedy_limitations",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/bio_techne.pdf",
+        "sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+        "document_layer": "transaction-agreement",
+        "section": "5.06(b)-(c)",
+        "physical_pages": [60],
+        "excerpts": [
+          {"physical_page": 60, "text": "nothing in this Agreement shall obligate or require Parent, Merger Sub or any of their respective Affiliates to take or cause to be taken any action"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "bio_remedy_actor", "dimension": "actor", "expected": ["Parent", "Merger Sub", "their_respective_Affiliates"]},
+        {"assertion_id": "bio_remedy_obligation", "dimension": "obligation", "expected": "not_required_to_accept_a_Burdensome_Condition"},
+        {"assertion_id": "bio_remedy_trigger", "dimension": "trigger", "expected": "remedy_otherwise_required_or_advisable_for_regulatory_clearance"},
+        {"assertion_id": "bio_remedy_exception", "dimension": "exception", "expected": ["remedy_outside_Parent_Life_Science_sector", "material_adverse_effect_under_contractual_benchmark", "future_transaction_notice_approval_or_monitor_requirement"]},
+        {"assertion_id": "bio_remedy_timing", "dimension": "timing", "expected": {"clearance_deadline": "before_Outside_Date", "remedy_effectiveness": "conditioned_on_transaction_consummation"}},
+        {"assertion_id": "bio_remedy_scope", "dimension": "scope", "expected": "regulatory_remedies_for_Parent_Merger_Sub_and_affiliates"}
+      ]
+    },
+    {
+      "case_id": "bio_psu_treatment",
+      "transaction": "bio_techne",
+      "family": "award_cohorts",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/bio_techne.pdf",
+        "sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+        "document_layer": "transaction-agreement",
+        "section": "2.03(c)",
+        "physical_pages": [17],
+        "excerpts": [
+          {"physical_page": 17, "text": "with respect to any portion of the PSU Award with a performance period that has not been completed as of such time, any applicable performance-based conditions shall be deemed to have been achieved at maximum performance"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "bio_psu_actor", "dimension": "actor", "expected": "automatic_without_holder_action"},
+        {"assertion_id": "bio_psu_obligation", "dimension": "obligation", "expected": "convert_PSU_Award_to_Parent_Cash-Based_RSU_Award"},
+        {"assertion_id": "bio_psu_trigger", "dimension": "trigger", "expected": "Effective_Time"},
+        {"assertion_id": "bio_psu_exception", "dimension": "exception", "expected": {"incomplete_performance_period": "maximum_performance", "tax_withholding": true}},
+        {"assertion_id": "bio_psu_timing", "dimension": "timing", "expected": "continues_service_based_and_accelerated_vesting_terms_after_Effective_Time"},
+        {"assertion_id": "bio_psu_scope", "dimension": "scope", "expected": {"award_type": "performance_based_restricted_stock_units", "vested_and_unvested": true, "performance_conditions_after_conversion": false}}
+      ]
+    },
+    {
+      "case_id": "organon_outside_date_extension",
+      "transaction": "organon",
+      "family": "extension_dates_and_conditions",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/organon.pdf",
+        "sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+        "document_layer": "transaction-agreement",
+        "section": "9.2(a)",
+        "physical_pages": [86, 87],
+        "excerpts": [
+          {"physical_page": 86, "text": "the transactions contemplated by this Agreement shall not have been consummated by 5:00 p.m. (New York time) on January 26, 2027 (the “Outside Date”)"},
+          {"physical_page": 87, "text": "either Parent or the Company may, by written notice to the other Party prior to 5:00 p.m. (New York Time) on the Outside Date, elect to extend the Outside Date until April 26, 2027"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "organon_extension_actor", "dimension": "actor", "expected": ["Parent", "Company"]},
+        {"assertion_id": "organon_extension_obligation", "dimension": "obligation", "expected": "elective_by_written_notice"},
+        {"assertion_id": "organon_extension_trigger", "dimension": "trigger", "expected": {"regulatory_conditions_unsatisfied": ["8.1(b)", "8.1(c)-related_to_8.1(b)"], "all_other_conditions_satisfied_or_waived_or_capable_at_closing": true}},
+        {"assertion_id": "organon_extension_exception", "dimension": "exception", "expected": {"if_Parent_elects": ["remedy_covenant_applies_without_Substantial_Detriment_limit", "Parent_irrevocably_waives_8.2(e)_Substantial_Detriment_condition"]}},
+        {"assertion_id": "organon_extension_timing", "dimension": "timing", "expected": {"initial": "2027-01-26T17:00:00-05:00", "extended": "2027-04-26", "notice_deadline": "before_initial_Outside_Date_at_17:00_New_York"}},
+        {"assertion_id": "organon_extension_scope", "dimension": "scope", "expected": {"transaction": "Merger", "date_type": "Outside Date"}}
+      ]
+    },
+    {
+      "case_id": "organon_company_fee_tail",
+      "transaction": "organon",
+      "family": "fee_triggers_and_tails",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/organon.pdf",
+        "sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+        "document_layer": "transaction-agreement",
+        "section": "9.5(b)(i)",
+        "physical_pages": [88, 89],
+        "excerpts": [
+          {"physical_page": 89, "text": "within nine months after any such termination and abandonment"},
+          {"physical_page": 89, "text": "then the Company shall pay or cause to be paid to Parent the Termination Fee by wire transfer of immediately available funds immediately prior to or concurrently with the occurrence of any of the events"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "organon_fee_actor", "dimension": "actor", "expected": "Company"},
+        {"assertion_id": "organon_fee_obligation", "dimension": "obligation", "expected": {"action": "pay_Termination_Fee", "payee": "Parent"}},
+        {"assertion_id": "organon_fee_trigger", "dimension": "trigger", "expected": {"qualifying_termination": true, "Acquisition_Proposal_before_termination": true, "post_termination_event": ["definitive_agreement_and_later_consummation", "board_approval_recommendation_or_nonopposition_and_later_consummation", "Acquisition_Proposal_consummated"]}},
+        {"assertion_id": "organon_fee_exception", "dimension": "exception", "expected": {"proposal_not_publicly_withdrawn": true, "deemed_Acquisition_Proposal_threshold_percent": 50}},
+        {"assertion_id": "organon_fee_timing", "dimension": "timing", "expected": {"amount": 9, "unit": "months", "anchor": "termination_and_abandonment", "payment": "immediately_before_or_concurrent_with_post_termination_event"}},
+        {"assertion_id": "organon_fee_scope", "dimension": "scope", "expected": "Company_Termination_Fee_tail_for_Acquisition_Proposal"}
+      ]
+    },
+    {
+      "case_id": "organon_remedy_limit",
+      "transaction": "organon",
+      "family": "remedy_limitations",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/organon.pdf",
+        "sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+        "document_layer": "transaction-agreement",
+        "section": "7.5(b)(ii)(D)",
+        "physical_pages": [71, 72],
+        "excerpts": [
+          {"physical_page": 71, "text": "proffer, agree to take and take any Remedial Action to the extent necessary to satisfy the condition set forth in Section 8.1(b)"},
+          {"physical_page": 72, "text": "Parent can compel the Company to (and to cause the Company’s Affiliates and Subsidiaries to) take any of the actions referred to in this Section 7.5(b)(ii)(D)"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "organon_remedy_actor", "dimension": "actor", "expected": ["Parent", "Company", "respective_Affiliates_and_Subsidiaries"]},
+        {"assertion_id": "organon_remedy_obligation", "dimension": "obligation", "expected": "take_Remedial_Action_unless_it_would_cause_Substantial_Detriment"},
+        {"assertion_id": "organon_remedy_trigger", "dimension": "trigger", "expected": "necessary_to_satisfy_Section_8.1(b)"},
+        {"assertion_id": "organon_remedy_exception", "dimension": "exception", "expected": {"Parent_may_compel_target_side_action_without_Substantial_Detriment_limit": true, "compelled_action_must_be_contingent_on_Merger": true, "Company_action_requires_Parent_prior_written_consent": true}},
+        {"assertion_id": "organon_remedy_timing", "dimension": "timing", "expected": "regulatory_clearance_process_before_Closing"},
+        {"assertion_id": "organon_remedy_scope", "dimension": "scope", "expected": "assets_operations_rights_product_lines_licenses_businesses_or_interests_of_combined_parties_and_affiliates"}
+      ]
+    },
+    {
+      "case_id": "organon_award_cohorts",
+      "transaction": "organon",
+      "family": "award_cohorts",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/organon.pdf",
+        "sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+        "document_layer": "transaction-agreement",
+        "section": "4.3(b)-(c)",
+        "physical_pages": [36, 37],
+        "excerpts": [
+          {"physical_page": 36, "text": "each outstanding restricted stock unit under the Stock Plan granted in calendar year 2026 or later (each, an “Other Company RSU”) shall not be subject to the acceleration or cancellation treatment described in the preceding sentence"},
+          {"physical_page": 36, "text": "each outstanding restricted stock unit under the Stock Plan granted prior to calendar year 2026 (each, a “Pre-2026 Company RSU”), whether vested or unvested, shall, automatically and without any required action on the part of the holder thereof, accelerate in full"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "organon_award_actor", "dimension": "actor", "expected": "automatic_and_Parent_assumption_for_2026_or_later_awards"},
+        {"assertion_id": "organon_award_obligation", "dimension": "obligation", "expected": {"pre_2026_RSU": "accelerate_cancel_and_cash_out", "2026_or_later_RSU": "assume_and_convert_to_cash_based_successor_award", "pre_2026_PSU": "accelerate_cancel_and_cash_out_at_target", "2026_or_later_PSU": "assume_and_convert_at_target_to_cash_based_award"}},
+        {"assertion_id": "organon_award_trigger", "dimension": "trigger", "expected": "Effective_Time"},
+        {"assertion_id": "organon_award_exception", "dimension": "exception", "expected": {"Section_409A_payment_delay": true, "Covered_Termination_acceleration_for_converted_awards": true}},
+        {"assertion_id": "organon_award_timing", "dimension": "timing", "expected": {"pre_2026_payment": "as_soon_as_practicable_and_no_later_than_3_Business_Days_after_Effective_Time", "converted_payment": "after_vesting"}},
+        {"assertion_id": "organon_award_scope", "dimension": "scope", "expected": {"cohort_boundary": "grant_calendar_year_2026", "award_types": ["RSU", "PSU"], "converted_PSU_performance_conditions": false}}
+      ]
+    },
+    {
+      "case_id": "uber_long_stop_condition",
+      "transaction": "uber_delivery_hero",
+      "family": "extension_dates_and_conditions",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/uber_delivery_hero.pdf",
+        "sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+        "document_layer": "transaction-agreement",
+        "section": "1.2(b)",
+        "physical_pages": [13],
+        "excerpts": [
+          {"physical_page": 13, "text": "at the latest by 10 November 2027, or such later date that may be authorized by BaFin, provided in no event shall such date extend beyond 10 May 2028 (the Long-Stop Date)"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "uber_long_stop_actor", "dimension": "actor", "expected": "BaFin_may_authorize_later_date"},
+        {"assertion_id": "uber_long_stop_obligation", "dimension": "obligation", "expected": "regulatory_approvals_and_relevant_conditions_satisfied_by_Long-Stop_Date"},
+        {"assertion_id": "uber_long_stop_trigger", "dimension": "trigger", "expected": "after_publication_of_Offer_Document"},
+        {"assertion_id": "uber_long_stop_exception", "dimension": "exception", "expected": {"absolute_cap": "2028-05-10", "offer_condition_waiver_rules_in_1.3_apply": true}},
+        {"assertion_id": "uber_long_stop_timing", "dimension": "timing", "expected": {"stated_date": "2027-11-10", "latest_possible": "2028-05-10", "extension_modality": "BaFin_authorized"}},
+        {"assertion_id": "uber_long_stop_scope", "dimension": "scope", "expected": {"transaction": "public_takeover_offer", "date_type": "Long-Stop Date", "condition_family": "regulatory_clearances"}}
+      ]
+    },
+    {
+      "case_id": "uber_regulatory_reverse_fee",
+      "transaction": "uber_delivery_hero",
+      "family": "fee_triggers_and_tails",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/uber_delivery_hero.pdf",
+        "sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+        "document_layer": "transaction-agreement",
+        "section": "13.4",
+        "physical_pages": [35],
+        "excerpts": [
+          {"physical_page": 35, "text": "then Uber shall promptly (and in any event within five (5) Business Days) following such termination pay, or cause to be paid, to Delivery Hero the Regulatory Reverse Fee"},
+          {"physical_page": 35, "text": "The Regulatory Reverse Fee shall amount to EUR 700,000,000."}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "uber_reverse_fee_actor", "dimension": "actor", "expected": "Uber"},
+        {"assertion_id": "uber_reverse_fee_obligation", "dimension": "obligation", "expected": {"action": "pay_Regulatory_Reverse_Fee", "payee": "Delivery_Hero", "amount": 700000000, "currency": "EUR"}},
+        {"assertion_id": "uber_reverse_fee_trigger", "dimension": "trigger", "expected": ["termination_under_13.1(a)(i)_with_regulatory_conditions_unsatisfied_and_other_conditions_satisfied_or_waived", "Delivery_Hero_termination_under_13.1(b)(iv)"]},
+        {"assertion_id": "uber_reverse_fee_exception", "dimension": "exception", "expected": "not_payable_under_13.4(a)_if_Company_fraudulently_or_willfully_materially_breached_Clause_4_covenants"},
+        {"assertion_id": "uber_reverse_fee_timing", "dimension": "timing", "expected": {"amount": 5, "unit": "Business_Days", "anchor": "termination"}},
+        {"assertion_id": "uber_reverse_fee_scope", "dimension": "scope", "expected": "Regulatory_Reverse_Fee_under_business_combination_agreement"}
+      ]
+    },
+    {
+      "case_id": "uber_remedy_limit",
+      "transaction": "uber_delivery_hero",
+      "family": "remedy_limitations",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/uber_delivery_hero.pdf",
+        "sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+        "document_layer": "transaction-agreement",
+        "section": "4.5",
+        "physical_pages": [27],
+        "excerpts": [
+          {"physical_page": 27, "text": "nothing in this Agreement shall require the Acquirors to offer or accept any remedy or condition that (x) would, taking into account all circumstances existing at the time, be adverse and material to the Delivery Business operations"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "uber_remedy_actor", "dimension": "actor", "expected": "Acquirors"},
+        {"assertion_id": "uber_remedy_obligation", "dimension": "obligation", "expected": "best_efforts_including_offering_and_accepting_remedies_up_to_contractual_limit"},
+        {"assertion_id": "uber_remedy_trigger", "dimension": "trigger", "expected": "competent_authority_prepared_to_grant_Clearance_only_subject_to_remedy_or_condition"},
+        {"assertion_id": "uber_remedy_exception", "dimension": "exception", "expected": ["adverse_and_material_to_Delivery_Business_operations_of_Post-Closing_Business_and_Uber_Group_taken_as_whole", "not_conditioned_on_Offer_Completion"]},
+        {"assertion_id": "uber_remedy_timing", "dimension": "timing", "expected": "as_soon_as_reasonably_possible_and_before_Long-Stop_Date"},
+        {"assertion_id": "uber_remedy_scope", "dimension": "scope", "expected": "Delivery_Hero_Group_or_Acquiror_and_Affiliate_businesses_and_assets_for_1.2(b)_and_1.2(d)_Clearances"}
+      ]
+    },
+    {
+      "case_id": "uber_award_settlement_efforts",
+      "transaction": "uber_delivery_hero",
+      "family": "award_cohorts",
+      "expected_outcome": "supported",
+      "source": {
+        "file": "data/sources/uber_delivery_hero.pdf",
+        "sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+        "document_layer": "transaction-agreement",
+        "section": "3.3",
+        "physical_pages": [24, 25],
+        "excerpts": [
+          {"physical_page": 24, "text": "With respect to all outstanding equity-based awards of the Delivery Hero Group (including options, RSUs, PSUs and other equity-based awards, the Equity Awards), Delivery Hero shall, to the extent legally permissible"},
+          {"physical_page": 25, "text": "use reasonable best efforts to procure that settlement of Equity Awards be consummated at actual performance in respect of performance-related elements or, where performance is related to the Delivery Hero share price and can thus not be reasonably measured (which shall only apply from 2027 onwards), target"}
+        ]
+      },
+      "assertions": [
+        {"assertion_id": "uber_award_actor", "dimension": "actor", "expected": "Delivery_Hero"},
+        {"assertion_id": "uber_award_obligation", "dimension": "obligation", "expected": ["exercise_available_cash_settlement_election", "use_reasonable_best_efforts_to_obtain_beneficiary_consent_or_amendment", "use_reasonable_best_efforts_for_specified_performance_settlement"]},
+        {"assertion_id": "uber_award_trigger", "dimension": "trigger", "expected": "outstanding_Equity_Awards_under_Clause_3.3"},
+        {"assertion_id": "uber_award_exception", "dimension": "exception", "expected": ["to_extent_legally_permissible", "beneficiary_consent_or_amendment_may_be_required", "in_accordance_with_award_terms"]},
+        {"assertion_id": "uber_award_timing", "dimension": "timing", "expected": {"share_price_unmeasurable_target_rule_applies_from": 2027}},
+        {"assertion_id": "uber_award_scope", "dimension": "scope", "expected": {"award_types": ["options", "RSUs", "PSUs", "other_equity_based_awards"], "preferred_settlement": "cash", "performance_measurement_default": "actual", "target_performance_only_if": "share_price_related_and_not_reasonably_measurable_from_2027_onwards"}}
+      ]
+    },
+    {
+      "case_id": "bio_required_approval_jurisdictions_omitted",
+      "transaction": "bio_techne",
+      "family": "remedy_limitations",
+      "expected_outcome": "unresolved",
+      "unresolved_reason": "The agreement delegates the jurisdiction list to the omitted Company Disclosure Letter; the supplied PDF does not establish the full list.",
+      "source": {
+        "file": "data/sources/bio_techne.pdf",
+        "sha256": "5d79337ab145d031a216bb644a335b1d2736fea7eaf4b107c884c0181b846e1e",
+        "document_layer": "transaction-agreement",
+        "section": "6.01(b)",
+        "physical_pages": [70],
+        "excerpts": [
+          {"physical_page": 70, "text": "in any of the jurisdictions set forth in Section 6.01(b) of the Company Disclosure Letter"}
+        ]
+      },
+      "assertions": []
+    },
+    {
+      "case_id": "organon_psu_schedule_exception_omitted",
+      "transaction": "organon",
+      "family": "award_cohorts",
+      "expected_outcome": "unresolved",
+      "unresolved_reason": "The pre-2026 PSU cancellation treatment is expressly subject to Section 4.3(c) of the omitted Company Disclosure Schedule.",
+      "source": {
+        "file": "data/sources/organon.pdf",
+        "sha256": "85b5bc6e0fc931e9ab9e85752762ad1eb5b2c1f547d51cbaff9857f44a9ace34",
+        "document_layer": "transaction-agreement",
+        "section": "4.3(c)",
+        "physical_pages": [36],
+        "excerpts": [
+          {"physical_page": 36, "text": "subject to Section 4.3(c) of the Company Disclosure Schedule, cancelled"}
+        ]
+      },
+      "assertions": []
+    },
+    {
+      "case_id": "uber_award_ultimate_outcome_ambiguous",
+      "transaction": "uber_delivery_hero",
+      "family": "award_cohorts",
+      "expected_outcome": "unresolved",
+      "unresolved_reason": "Clause 3.3 states elections and reasonable-best-efforts obligations, but beneficiary consent and underlying award terms can determine the ultimate outcome; the supplied agreement does not establish one uniform final treatment.",
+      "source": {
+        "file": "data/sources/uber_delivery_hero.pdf",
+        "sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+        "document_layer": "transaction-agreement",
+        "section": "3.3(b)-(c)",
+        "physical_pages": [25],
+        "excerpts": [
+          {"physical_page": 25, "text": "to the extent cash settlement of any Equity Award requires the consent of, or an amendment to the arrangements with, the relevant beneficiary, use reasonable best efforts to obtain such consent or amendment"}
+        ]
+      },
+      "assertions": []
+    },
+    {
+      "case_id": "uber_bridge_fee_amounts_redacted",
+      "transaction": "uber_delivery_hero",
+      "family": "fee_triggers_and_tails",
+      "expected_outcome": "unresolved",
+      "unresolved_reason": "The duration-fee and funding-fee amounts are visibly redacted as [****]; their triggers are disclosed but their amounts cannot be recovered from the supplied public PDF.",
+      "source": {
+        "file": "data/sources/uber_delivery_hero.pdf",
+        "sha256": "325c381e28840145c3b68091633db8d7166fa55edf57912e65f6a2960cae0bc9",
+        "document_layer": "bridge-credit-agreement",
+        "section": "2.09(c)-(d)",
+        "physical_pages": [77],
+        "excerpts": [
+          {"physical_page": 77, "text": "the 90th day after the Closing Date, a fully earned and non-refundable duration fee equal to [****] shall be due and payable"},
+          {"physical_page": 77, "text": "a non-refundable funding fee for the account of each Lender equal to [****]"}
+        ]
+      },
+      "assertions": []
+    }
+  ]
+}

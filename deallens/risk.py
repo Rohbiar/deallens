@@ -1,4 +1,5 @@
 """Analytical links to evidence; these are review prompts, not legal opinions."""
+from .term_comparison import SUPPORTED_STATUSES
 RISKS={
  "benchmark_rate":("funding_sources","A planned fixed-rate debt issue becomes more expensive when its benchmark rises. Size the hedge against the financing exposure, not acquisition headline value."),
  "swap_spread":("interest_basis","A payer swap follows swap rates. For a benchmark-quoted bond, changing swap-minus-benchmark spread leaves basis risk."),
@@ -12,9 +13,24 @@ RISKS={
  "award_cash_timing":("award_cohort_differences","Separate cash paid at closing from continuing service-based awards when estimating actual funding needs."),
 }
 
-def risk_map(records):
+def risk_map(records, structured_terms=()):
     records=[r for r in records if r.get("status") not in {"superseded","rejected"}]
-    return [{"risk":risk,"designation":"analysis","implication":text,"field":field,
-             "source_status":"supported" if any(r['status']=='supported' for r in records if r['field_name']==field) else "review_required",
-             "sources":[r for r in records if r['field_name']==field and r.get('evidence')][:6]}
-            for risk,(field,text) in RISKS.items()]
+    rows=[]
+    for risk,(field,text) in RISKS.items():
+        terms=[t for t in structured_terms or [] if t.get("schema_version")=="structured-terms/v1" and t.get("field_name")==field]
+        supported=[t for t in terms if t.get("status") in SUPPORTED_STATUSES]
+        unresolved=[]
+        for term in terms:
+            items=list(term.get("unresolved") or [])
+            for statement in term.get("statements") or []:items.extend(statement.get("unresolved") or [])
+            if term.get("status") not in SUPPORTED_STATUSES:
+                items.append({"reason":"interpretation_not_supported","expression":field})
+            unresolved.extend({"term_id":term.get("term_id"),**item} for item in items)
+        legacy_supported=any(r['status']=='supported' for r in records if r['field_name']==field)
+        status="supported" if (legacy_supported or supported) and not unresolved else ("partial" if supported else "review_required")
+        rows.append({"risk":risk,"designation":"analysis","implication":text,"field":field,
+             "source_status":status,
+             "sources":[r for r in records if r['field_name']==field and r.get('evidence')][:6],
+             "supported_components":[{"term_id":t.get("term_id"),"statements":t.get("statements",[])} for t in supported],
+             "unresolved_components":unresolved})
+    return rows

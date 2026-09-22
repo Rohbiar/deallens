@@ -45,7 +45,8 @@ def serve(root,port):
             elif len(parts)==2 and parts[0]=="api" and parts[1] in ids:
                 p=folder/parts[1]
                 b={k:json.loads((p/(k+".json")).read_text()) for k in ("document","extractions","comparisons","timeline","risk_map","analytics","metrics")}
-                for k in ("model_audit","review_events"):
+                for k in ("model_audit","review_events","structured_terms",
+                          "structured_comparisons","structured_timeline"):
                     if (p/(k+".json")).exists():b[k]=json.loads((p/(k+".json")).read_text())
                 b["stale_source"]=not source_is_current(root,manifest,parts[1])
                 b["run_manifest"]=manifest
@@ -57,7 +58,12 @@ def serve(root,port):
                     data=(root/"data/sources"/(parts[1]+".pdf")).read_bytes();ctype="application/pdf"
             elif len(parts)==2 and parts[0]=="ask" and parts[1] in ids:
                 p=folder/parts[1];q=parse_qs(url.query).get("q",[""])[0][:1000]
-                result=answer(q,json.loads((p/"extractions.json").read_text()),json.loads((p/"comparisons.json").read_text()),parse_qs(url.query).get("strict",["false"])[0]=="true")
+                structured=(json.loads((p/"structured_terms.json").read_text())
+                            if (p/"structured_terms.json").exists() else [])
+                result=answer(q,json.loads((p/"extractions.json").read_text()),
+                              json.loads((p/"comparisons.json").read_text()),
+                              parse_qs(url.query).get("strict",["false"])[0]=="true",
+                              structured_terms=structured)
                 if not source_is_current(root,manifest,parts[1]):
                     result={"question":q,"answer":UNSUPPORTED,"status":"stale_input","designation":"analysis","sources":[],"note":"Source bytes differ from this run; reingest before relying on this answer."}
                 result["run_id"]=manifest["run_id"]

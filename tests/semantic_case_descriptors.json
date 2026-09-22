@@ -1,0 +1,90 @@
+{
+  "schema_version": "semantic-case-descriptors/v1",
+  "description": "External mappings from structured-terms/v1 paths to the frozen evaluator contract. Contains selectors and assertion identifiers, never expected values.",
+  "dimension_mappings": {
+    "actor": {"source_path": "actor.name", "transform": "identity"},
+    "obligation": {"source_path": "action", "transform": "identity"},
+    "trigger": {"source_path": "trigger.event", "transform": "identity"},
+    "exception": {"source_path": "exceptions", "transform": "condition_texts"},
+    "timing": {"source_path": "timing", "transform": "identity"},
+    "scope": {"source_path": "business_scope", "transform": "identity"}
+  },
+  "cases": [
+    {
+      "case_id": "bio_outside_date_extension", "document_id": "bio_techne", "document_layer": "transaction-agreement", "field_name": "extension_dates_and_conditions", "statement_selector": {"kind": "extension"},
+      "assertions": [
+        {"assertion_id": "bio_extension_actor", "dimension": "actor"}, {"assertion_id": "bio_extension_obligation", "dimension": "obligation"}, {"assertion_id": "bio_extension_trigger", "dimension": "trigger"}, {"assertion_id": "bio_extension_exception", "dimension": "exception"}, {"assertion_id": "bio_extension_timing", "dimension": "timing"}, {"assertion_id": "bio_extension_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "bio_company_fee_tail", "document_id": "bio_techne", "document_layer": "transaction-agreement", "field_name": "fee_triggers_and_tails", "statement_selector": {"kind": "fee_tail"},
+      "assertions": [
+        {"assertion_id": "bio_fee_actor", "dimension": "actor"}, {"assertion_id": "bio_fee_obligation", "dimension": "obligation"}, {"assertion_id": "bio_fee_trigger", "dimension": "trigger"}, {"assertion_id": "bio_fee_exception", "dimension": "exception"}, {"assertion_id": "bio_fee_timing", "dimension": "timing"}, {"assertion_id": "bio_fee_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "bio_remedy_limit", "document_id": "bio_techne", "document_layer": "transaction-agreement", "field_name": "remedy_limitations", "statement_selector": {"kind": "remedy"},
+      "assertions": [
+        {"assertion_id": "bio_remedy_actor", "dimension": "actor"}, {"assertion_id": "bio_remedy_obligation", "dimension": "obligation"}, {"assertion_id": "bio_remedy_trigger", "dimension": "trigger"}, {"assertion_id": "bio_remedy_exception", "dimension": "exception"}, {"assertion_id": "bio_remedy_timing", "dimension": "timing"}, {"assertion_id": "bio_remedy_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "bio_psu_treatment", "document_id": "bio_techne", "document_layer": "transaction-agreement", "field_name": "award_cohort_differences", "statement_selector": {"kind": "award_treatment"},
+      "assertions": [
+        {"assertion_id": "bio_psu_actor", "dimension": "actor"}, {"assertion_id": "bio_psu_obligation", "dimension": "obligation"}, {"assertion_id": "bio_psu_trigger", "dimension": "trigger"}, {"assertion_id": "bio_psu_exception", "dimension": "exception"}, {"assertion_id": "bio_psu_timing", "dimension": "timing"}, {"assertion_id": "bio_psu_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "organon_outside_date_extension", "document_id": "organon", "document_layer": "transaction-agreement", "field_name": "extension_dates_and_conditions", "statement_selector": {"kind": "extension"},
+      "assertions": [
+        {"assertion_id": "organon_extension_actor", "dimension": "actor"}, {"assertion_id": "organon_extension_obligation", "dimension": "obligation"}, {"assertion_id": "organon_extension_trigger", "dimension": "trigger"}, {"assertion_id": "organon_extension_exception", "dimension": "exception"}, {"assertion_id": "organon_extension_timing", "dimension": "timing"}, {"assertion_id": "organon_extension_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "organon_company_fee_tail", "document_id": "organon", "document_layer": "transaction-agreement", "field_name": "fee_triggers_and_tails", "statement_selector": {"kind": "fee_tail"},
+      "assertions": [
+        {"assertion_id": "organon_fee_actor", "dimension": "actor"}, {"assertion_id": "organon_fee_obligation", "dimension": "obligation"}, {"assertion_id": "organon_fee_trigger", "dimension": "trigger"}, {"assertion_id": "organon_fee_exception", "dimension": "exception"}, {"assertion_id": "organon_fee_timing", "dimension": "timing"}, {"assertion_id": "organon_fee_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "organon_remedy_limit", "document_id": "organon", "document_layer": "transaction-agreement", "field_name": "remedy_limitations", "statement_selector": {"kind": "remedy"},
+      "assertions": [
+        {"assertion_id": "organon_remedy_actor", "dimension": "actor"}, {"assertion_id": "organon_remedy_obligation", "dimension": "obligation"}, {"assertion_id": "organon_remedy_trigger", "dimension": "trigger"}, {"assertion_id": "organon_remedy_exception", "dimension": "exception"}, {"assertion_id": "organon_remedy_timing", "dimension": "timing"}, {"assertion_id": "organon_remedy_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "organon_award_cohorts", "document_id": "organon", "document_layer": "transaction-agreement", "field_name": "award_cohort_differences", "statement_selector": {"kind": "award_treatment"},
+      "assertions": [
+        {"assertion_id": "organon_award_actor", "dimension": "actor"}, {"assertion_id": "organon_award_obligation", "dimension": "obligation"}, {"assertion_id": "organon_award_trigger", "dimension": "trigger"}, {"assertion_id": "organon_award_exception", "dimension": "exception"}, {"assertion_id": "organon_award_timing", "dimension": "timing"}, {"assertion_id": "organon_award_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "uber_long_stop_condition", "document_id": "uber_delivery_hero", "document_layer": "transaction-agreement", "field_name": "extension_dates_and_conditions", "statement_selector": {"kind": "extension"},
+      "assertions": [
+        {"assertion_id": "uber_long_stop_actor", "dimension": "actor"}, {"assertion_id": "uber_long_stop_obligation", "dimension": "obligation"}, {"assertion_id": "uber_long_stop_trigger", "dimension": "trigger"}, {"assertion_id": "uber_long_stop_exception", "dimension": "exception"}, {"assertion_id": "uber_long_stop_timing", "dimension": "timing"}, {"assertion_id": "uber_long_stop_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "uber_regulatory_reverse_fee", "document_id": "uber_delivery_hero", "document_layer": "transaction-agreement", "field_name": "fee_triggers_and_tails", "statement_selector": {"kind": "fee_trigger"},
+      "assertions": [
+        {"assertion_id": "uber_reverse_fee_actor", "dimension": "actor"}, {"assertion_id": "uber_reverse_fee_obligation", "dimension": "obligation"}, {"assertion_id": "uber_reverse_fee_trigger", "dimension": "trigger"}, {"assertion_id": "uber_reverse_fee_exception", "dimension": "exception"}, {"assertion_id": "uber_reverse_fee_timing", "dimension": "timing"}, {"assertion_id": "uber_reverse_fee_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "uber_remedy_limit", "document_id": "uber_delivery_hero", "document_layer": "transaction-agreement", "field_name": "remedy_limitations", "statement_selector": {"kind": "remedy"},
+      "assertions": [
+        {"assertion_id": "uber_remedy_actor", "dimension": "actor"}, {"assertion_id": "uber_remedy_obligation", "dimension": "obligation"}, {"assertion_id": "uber_remedy_trigger", "dimension": "trigger"}, {"assertion_id": "uber_remedy_exception", "dimension": "exception"}, {"assertion_id": "uber_remedy_timing", "dimension": "timing"}, {"assertion_id": "uber_remedy_scope", "dimension": "scope"}
+      ]
+    },
+    {
+      "case_id": "uber_award_settlement_efforts", "document_id": "uber_delivery_hero", "document_layer": "transaction-agreement", "field_name": "award_cohort_differences", "statement_selector": {"kind": "award_treatment"},
+      "assertions": [
+        {"assertion_id": "uber_award_actor", "dimension": "actor"}, {"assertion_id": "uber_award_obligation", "dimension": "obligation"}, {"assertion_id": "uber_award_trigger", "dimension": "trigger"}, {"assertion_id": "uber_award_exception", "dimension": "exception"}, {"assertion_id": "uber_award_timing", "dimension": "timing"}, {"assertion_id": "uber_award_scope", "dimension": "scope"}
+      ]
+    },
+    {"case_id": "bio_required_approval_jurisdictions_omitted", "document_id": "bio_techne", "document_layer": "transaction-agreement", "field_name": "remedy_limitations", "statement_selector": {"kind": "remedy"}, "assertions": []},
+    {"case_id": "organon_psu_schedule_exception_omitted", "document_id": "organon", "document_layer": "transaction-agreement", "field_name": "award_cohort_differences", "statement_selector": {"kind": "award_treatment"}, "assertions": []},
+    {"case_id": "uber_award_ultimate_outcome_ambiguous", "document_id": "uber_delivery_hero", "document_layer": "transaction-agreement", "field_name": "award_cohort_differences", "statement_selector": {"kind": "award_treatment"}, "assertions": []},
+    {"case_id": "uber_bridge_fee_amounts_redacted", "document_id": "uber_delivery_hero", "document_layer": "transaction-agreement", "field_name": "fee_triggers_and_tails", "statement_selector": {"kind": "fee_trigger"}, "assertions": []}
+  ]
+}

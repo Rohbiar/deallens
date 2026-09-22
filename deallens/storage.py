@@ -20,6 +20,11 @@ CREATE INDEX IF NOT EXISTS fields_lookup ON fields(run_id,document_id,field_name
 CREATE TABLE IF NOT EXISTS review_events(event_id TEXT PRIMARY KEY, run_id TEXT, document_id TEXT, reviewer TEXT, record_json TEXT);
 CREATE TABLE IF NOT EXISTS model_requests(run_id TEXT, document_id TEXT, request_index INTEGER, status TEXT, record_json TEXT,
  PRIMARY KEY(run_id,document_id,request_index));
+CREATE TABLE IF NOT EXISTS structured_terms(term_id TEXT, run_id TEXT, document_id TEXT,
+ field_name TEXT, document_layer TEXT, status TEXT, review_status TEXT, record_json TEXT,
+ PRIMARY KEY(run_id,document_id,term_id),
+ FOREIGN KEY(run_id,document_id) REFERENCES documents(run_id,document_id));
+CREATE INDEX IF NOT EXISTS structured_terms_lookup ON structured_terms(run_id,document_id,field_name,status);
 DROP VIEW IF EXISTS review_queue;
 CREATE VIEW review_queue AS SELECT run_id,document_id,field_name,document_layer,status,review_status,page,record_json
  FROM fields WHERE review_status <> 'verified' AND status NOT IN ('superseded','rejected');
@@ -39,3 +44,7 @@ def save(path,manifest,bundles):
             for event in b.get("review_events",[]):
                 db.execute("INSERT OR IGNORE INTO review_events VALUES(?,?,?,?,?)",(event["event_id"],event["new_run_id"],ident,event["reviewer"],json.dumps(event)))
             db.executemany("INSERT INTO model_requests VALUES(?,?,?,?,?)",[(run,ident,i,r["status"],json.dumps(r)) for i,r in enumerate(b.get("model_audit",[]))])
+            db.executemany("INSERT INTO structured_terms VALUES(?,?,?,?,?,?,?,?)",[
+                (term["term_id"],run,ident,term["field_name"],term.get("document_layer"),
+                 term["status"],term.get("review_status","unreviewed"),json.dumps(term))
+                for term in b.get("structured_terms",[])])

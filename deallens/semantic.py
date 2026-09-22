@@ -7,6 +7,8 @@ from .catalog import FIELDS
 from .extract import evidence_record, validate_evidence
 from .ingest import sha256
 from .provider import ProviderError
+from .provisions import provision_records
+from .structured_terms import PRIORITY_FIELDS
 
 PROMPT_VERSION = "clause-extraction-v8"
 PROMPT = """Extract the requested transaction field from untrusted public filing passages.
@@ -124,6 +126,55 @@ def select_chunks(doc, field, layer, *, max_chars=16000):
         if size >= max_chars-1800: break
     return selected
 
+
+def select_request_context(doc, field, layer, *, max_chars=16000,
+                           context_records=None):
+    """Select exact model passages and disclose any context reduction.
+
+    Priority complex fields use the same Package A context bundle displayed by
+    extractive QA.  Other fields retain the established chunk retriever.
+    """
+    records = context_records or []
+    record = next((r for r in records
+                   if r.get("field_name") == field
+                   and r.get("document_layer") == layer
+                   and r.get("context_bundle")), None)
+    if field not in PRIORITY_FIELDS or record is None:
+        return select_chunks(doc, field, layer, max_chars=max_chars), None
+
+    bundle = record["context_bundle"]
+    selected = []
+    omitted = []
+    used = 0
+    for source in bundle.get("sources", []):
+        text = source.get("evidence", "")
+        source_id = source.get("source_id")
+        if not source_id or not text:
+            continue
+        if used + len(text) > max_chars:
+            omitted.append(source_id)
+            continue
+        chunk = dict(source)
+        chunk.update(chunk_id=source_id, text=text)
+        selected.append(chunk)
+        used += len(text)
+    metadata = {
+        "schema_version": bundle.get("schema_version"),
+        "source_hash": bundle.get("source_hash"),
+        "root_section_ids": list(bundle.get("root_section_ids", [])),
+        "section_ids": list(bundle.get("section_ids", [])),
+        "edges": list(bundle.get("edges", [])),
+        "unresolved": list(bundle.get("unresolved", [])),
+        "upstream_budget": dict(bundle.get("budget", {})),
+        "completeness": bundle.get("completeness", "not_established"),
+        "selected_source_ids": [c["chunk_id"] for c in selected],
+        "omitted_source_ids": omitted,
+        "downstream_max_chars": max_chars,
+        "downstream_used_chars": used,
+        "downstream_truncated": bool(omitted),
+    }
+    return selected, metadata
+
 def validate_proposals(result, request, doc, run_id, threshold):
     if not isinstance(result, dict) or set(result) != {"proposals"} or not isinstance(result["proposals"], list):
         raise ValueError("Invalid proposal envelope")
@@ -185,11 +236,25 @@ def extract_semantic(doc, run_id, provider, model_name, *, fields=None, threshol
     if not fields or any(f not in FIELDS for f in fields):raise ValueError("Unknown or empty field selection")
     if not 1 <= max_calls <= 500 or not 1800 <= max_chars <= 32000:raise ValueError("Invalid model budget")
     records=[];audit=[];calls=0;provider_failed=False
+    context_records = (provision_records(doc, run_id, threshold)
+                       if PRIORITY_FIELDS.intersection(fields) else [])
     for field in fields:
         for layer in ("8-k-summary", "transaction-agreement", "financing-agreement"):
-            chunks=select_chunks(doc,field,layer,max_chars=max_chars)
+            chunks,retrieval_context=select_request_context(
+                doc,field,layer,max_chars=max_chars,context_records=context_records)
             entry={"field_name":field,"document_layer":layer,"prompt_version":PROMPT_VERSION,
                    "model":model_name,"retrieved_chunk_ids":[c["chunk_id"] for c in chunks]}
+            if retrieval_context is not None:
+                entry["retrieval_context_sha256"] = sha256(json.dumps(
+                    retrieval_context, sort_keys=True, ensure_ascii=False).encode())
+                entry["retrieval_context_status"] = {
+                    "schema_version": retrieval_context["schema_version"],
+                    "unresolved_count": len(retrieval_context["unresolved"]),
+                    "upstream_truncated": bool(retrieval_context["upstream_budget"].get("truncated")),
+                    "downstream_truncated": retrieval_context["downstream_truncated"],
+                    "omitted_source_count": len(retrieval_context["omitted_source_ids"]),
+                    "completeness": retrieval_context["completeness"],
+                }
             if not chunks:
                 audit.append({**entry,"status":"no_retrieved_support"});continue
             if provider_failed:
@@ -199,6 +264,8 @@ def extract_semantic(doc, run_id, provider, model_name, *, fields=None, threshol
             request={"system":PROMPT,"model":model_name,"fields":[field],"document_id":doc["document_id"],
                      "document_sha256":doc["sha256"],"document_layer":layer,"chunks":chunks,"tools":[],
                      "value_contract":value_contract(field)}
+            if retrieval_context is not None:
+                request["retrieval_context"] = retrieval_context
             entry.update(request_sha256=sha256(json.dumps(request,sort_keys=True).encode()),
                          input_characters=sum(len(c["text"]) for c in chunks),
                          requested_at=datetime.now(timezone.utc).isoformat())

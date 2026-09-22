@@ -41,7 +41,7 @@ FIELDS = {
     "psus": r'\bPSUs?\b|performance stock unit',
     "restricted_stock": r'Company Restricted Stock|restricted stock award',
     "employee_stock_purchase_plan": r'Stock Purchase Plan|ESPP',
-    "award_cohort_differences": r'granted prior to|granted in calendar|Pre-\d{4}|target performance|maximum performance',
+    "award_cohort_differences": r'granted prior to|granted in calendar|Pre-\d{4}|target performance|maximum performance|equity-based awards',
 }
 
 QUESTIONS = {
