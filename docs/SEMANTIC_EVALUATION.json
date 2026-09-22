@@ -1,0 +1,408 @@
+{
+  "case_results": [
+    {
+      "assertions": [
+        {
+          "assertion_id": "bio_extension_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_extension_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_extension_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_extension_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_extension_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_extension_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "bio_outside_date_extension",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "bio_fee_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_fee_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_fee_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_fee_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_fee_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_fee_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "bio_company_fee_tail",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "bio_remedy_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_remedy_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_remedy_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_remedy_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_remedy_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_remedy_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "bio_remedy_limit",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "bio_psu_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_psu_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_psu_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_psu_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_psu_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "bio_psu_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "bio_psu_treatment",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "organon_extension_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_extension_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_extension_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_extension_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_extension_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_extension_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "organon_outside_date_extension",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "organon_fee_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_fee_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_fee_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_fee_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_fee_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_fee_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "organon_company_fee_tail",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "organon_remedy_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_remedy_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_remedy_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_remedy_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_remedy_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_remedy_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "organon_remedy_limit",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "organon_award_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_award_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_award_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_award_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_award_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "organon_award_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "organon_award_cohorts",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "uber_long_stop_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_long_stop_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_long_stop_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_long_stop_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_long_stop_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_long_stop_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "uber_long_stop_condition",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "uber_reverse_fee_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_reverse_fee_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_reverse_fee_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_reverse_fee_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_reverse_fee_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_reverse_fee_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "uber_regulatory_reverse_fee",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "uber_remedy_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_remedy_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_remedy_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_remedy_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_remedy_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_remedy_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "uber_remedy_limit",
+      "reference_outcome": "supported"
+    },
+    {
+      "assertions": [
+        {
+          "assertion_id": "uber_award_actor",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_award_obligation",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_award_trigger",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_award_exception",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_award_timing",
+          "category": "unresolved"
+        },
+        {
+          "assertion_id": "uber_award_scope",
+          "category": "unresolved"
+        }
+      ],
+      "case_id": "uber_award_settlement_efforts",
+      "reference_outcome": "supported"
+    },
+    {
+      "case_id": "bio_required_approval_jurisdictions_omitted",
+      "category": "respected",
+      "reference_outcome": "unresolved"
+    },
+    {
+      "case_id": "organon_psu_schedule_exception_omitted",
+      "category": "respected",
+      "reference_outcome": "unresolved"
+    },
+    {
+      "case_id": "uber_award_ultimate_outcome_ambiguous",
+      "category": "respected",
+      "reference_outcome": "unresolved"
+    },
+    {
+      "case_id": "uber_bridge_fee_amounts_redacted",
+      "category": "respected",
+      "reference_outcome": "unresolved"
+    }
+  ],
+  "curation_status": "agent_curated_not_human_gold",
+  "metrics": {
+    "bounded_asserted_prediction_denominator": 0,
+    "bounded_atomic_precision": null,
+    "bounded_atomic_recall": 0.0,
+    "bounded_supported_assertion_denominator": 72,
+    "counts": {
+      "abstention": 0,
+      "correct": 0,
+      "incorrect": 0,
+      "omission": 0,
+      "unresolved": 72
+    },
+    "out_of_scope_prediction_case_ids": [],
+    "unresolved_reference_case_denominator": 4,
+    "unresolved_reference_counts": {
+      "abstention": 0,
+      "incorrectly_resolved": 0,
+      "omission": 0,
+      "respected": 4
+    }
+  },
+  "reference_set_id": "deallens-semantic-reference-2026-09-21-v1",
+  "scope": "Bounded, agent-curated semantic challenge set for four priority families across three supplied transactions; not contract-wide accuracy, legal advice, or human gold."
+}

@@ -2,7 +2,7 @@
 
 ## Ownership and actual participants
 
-The user delegated assignment review and project development to Codex. A single Codex assistant performed source reading, implementation, tests and documentation. No subagents or external coding agents were used. The exact underlying model identifier was not independently verified in the runtime. Initial implementation used an in-memory test provider. Subsequent user-executed live runs used GPT-4.1 mini; see the dated continuation entries and current broader batch report.
+The user delegated assignment review and project development to Codex. Early iterations were performed by one Codex assistant. The final structured-interpretation phase used coordinator-managed Codex work packages A through F for retrieval, structured interpretation, consumer integration, semantic challenge design, analytics reconciliation and final audit/documentation. The coordinator reviewed and integrated shared files. The exact underlying model identifiers for every agent were not independently recorded. Initial implementation used an in-memory test provider; later user-executed historical live runs used the models identified in their run manifests. The current final run is deterministic and made no provider calls.
 
 Rohit has not yet reviewed or approved this implementation. No human legal verification, manual correction or hedge approval is claimed. All retained code and accompanying documentation were agent-generated and then inspected/tested as described below. The source fixture set and source review are agent-curated, not human ground truth.
 
@@ -115,3 +115,34 @@ A proposed completeness shortcut—counting every newly retrieved section as a f
 Source review located a public six-level bridge pricing grid and redacted step-up, duration-fee and funding-fee amounts. The analysis now separates the disclosed grid from synthetic draw and EURIBOR assumptions, and does not fill redactions. All three publisher downloads matched the stored bytes; Organon and Uber filing dates were verified against SEC indexes. Bio-Techne's inaccessible index remains a limitation, with its PDF-metadata date explicitly labeled.
 
 Current measured checks and coverage are in docs/SUBMISSION_STATUS.md. No independent human semantic review, calibrated accuracy, or net time saving is claimed. The original ten substantive decision records above remain the representative workflow record; this continuation documents subsequent recovery and implementation.
+
+## Final structured implementation wave
+
+The user explicitly requested agent work packages for the remaining development. The work was divided as follows:
+
+| Package | Role | Retained result |
+|---|---|---|
+| A | Retrieval dependencies | Bounded recursive same-instrument context graph, stable source/section IDs, cycles, ambiguity and budget state |
+| B | Structured interpretation | Versioned atomic terms for extensions, fees, remedies, awards and financing conditions, with fail-closed validation |
+| C | Structured consumers | QA, comparisons, timelines, risk views and escaped browser rendering for supported and unresolved components |
+| D | Independent challenge | Frozen agent-curated set of 72 supported atomic assertions and four intentionally unresolved cases |
+| E | Analytics reconciliation | Facts-to-scenario boundary, funding-condition roles and a neutral transaction-failure scenario |
+| F | Requirement closure | Read-only gap audit followed by current status, workflow, reproducibility and packaging documentation |
+
+The coordinator owned shared CLI, server, storage, semantic-prediction and run-generation changes. Work-package reports disclose their bounded scope and test evidence. This was real multi-agent delegation; it is not a claim of independent human review.
+
+## Coordinator corrections during integration
+
+Three material integration defects were found and corrected before the final run:
+
+1. A generic named-party fee expression captured a stray preceding word under case-insensitive matching. The parser was made locally case-sensitive without adding transaction names to production logic.
+2. Statement-level unresolved dependencies were initially ignored by the analytics support gate. The gate now combines term- and statement-level unresolved items, preventing an incomplete statement from driving scenarios.
+3. The Uber award selector initially chose a generic treatment passage rather than the bounded settlement-efforts clause. The generic selector was corrected and protected with source-backed tests.
+
+The semantic adapter was intentionally kept status-aware. Because all 14 current structured terms remain candidates, it emits unresolved predictions instead of copying candidate content into supported assertions. On the frozen set, zero assertions were made, all 72 supported assertions were unresolved, bounded precision was null, bounded recall was zero, and all four source-unresolved cases were respected. This is a conservative control result, not successful semantic accuracy.
+
+## Final measured state
+
+The integrated code is commit `defe4a3`; deterministic run `20260922T024418Z-d989f939` contains 14 structured candidate terms and 34 statements. The suite passes 179 tests, 25/25 selected scalar/source fixtures and 18/18 provision fixtures. Across 36 required QA combinations there are 12 supported, 22 partial, one conflicted and one review-required result. Zero records or terms are human-verified, and the final wave made no paid provider calls.
+
+No reliable workstream timer was kept. The assignment's 8–12 hours remains a planning estimate, and no actual time saved or leverage percentage is invented. Rohit retains final ownership of the calculations, code, disclosures and submission decision.

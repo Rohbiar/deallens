@@ -1,15 +1,45 @@
 {
-  "run_id": "20260921T150631Z-5c182147",
+  "run_id": "20260922T024418Z-d989f939",
   "audit_type": "machine artifact/control checks plus disclosed coverage; not expert approval",
-  "all_machine_checks_pass": true,
+  "all_artifact_integrity_checks_pass": true,
   "all_required_bio_scenarios_present": true,
+  "required_bio_scenarios": [
+    "failure",
+    "final_extension",
+    "first_extension",
+    "rates_down_25",
+    "rates_up_25",
+    "rates_up_25_credit_wider_20",
+    "rates_up_50"
+  ],
+  "bounded_semantic_evaluation": {
+    "bounded_asserted_prediction_denominator": 0,
+    "bounded_atomic_precision": null,
+    "bounded_atomic_recall": 0.0,
+    "bounded_supported_assertion_denominator": 72,
+    "counts": {
+      "abstention": 0,
+      "correct": 0,
+      "incorrect": 0,
+      "omission": 0,
+      "unresolved": 72
+    },
+    "out_of_scope_prediction_case_ids": [],
+    "unresolved_reference_case_denominator": 4,
+    "unresolved_reference_counts": {
+      "abstention": 0,
+      "incorrectly_resolved": 0,
+      "omission": 0,
+      "respected": 4
+    }
+  },
   "complete_semantic_extraction": false,
   "expert_legal_review_performed": false,
   "remaining_requirements": [
-    "Complete normalized complex extraction and direct QA coverage; source sections are not semantic completion",
-    "Broader semantic evaluation beyond selected fixtures",
+    "Candidate structured interpretations remain unverified and do not complete direct QA coverage",
+    "Broader or human semantic evaluation beyond the bounded agent-curated reference set",
     "Bio-Techne filing-index date verification (PDF metadata reported); omitted schedules and redacted terms unavailable",
-    "Independent semantic gold set; precision and recall",
+    "Contract-wide precision and recall remain unmeasured",
     "Candidate technical ownership and final submission decision"
   ],
   "documents": [
@@ -22,7 +52,12 @@
         "all_twelve_question_categories": true,
         "every_retained_citation_matches_source": true,
         "model_candidates_never_promoted": true,
-        "strict_qa_abstains_without_human_approval": true
+        "strict_qa_abstains_without_human_approval": true,
+        "structured_artifacts_present": true,
+        "structured_terms_schema_and_provenance_valid": true,
+        "structured_candidates_not_human_verified": true,
+        "structured_timeline_never_asserts_occurrence": true,
+        "structured_qa_components_exposed": true
       },
       "machine_supported_fields": 12,
       "source_excerpt_fields": 21,
@@ -447,7 +482,6 @@
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
-              "low_confidence",
               "requires_review"
             ],
             "transaction-agreement": [
@@ -1036,6 +1070,7 @@
       ],
       "scenarios": [
         "base",
+        "failure",
         "failure_rates_down_25",
         "failure_rates_up_25",
         "final_extension",
@@ -1063,7 +1098,12 @@
         "all_twelve_question_categories": true,
         "every_retained_citation_matches_source": true,
         "model_candidates_never_promoted": true,
-        "strict_qa_abstains_without_human_approval": true
+        "strict_qa_abstains_without_human_approval": true,
+        "structured_artifacts_present": true,
+        "structured_terms_schema_and_provenance_valid": true,
+        "structured_candidates_not_human_verified": true,
+        "structured_timeline_never_asserts_occurrence": true,
+        "structured_qa_components_exposed": true
       },
       "machine_supported_fields": 11,
       "source_excerpt_fields": 18,
@@ -1497,11 +1537,9 @@
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
-              "low_confidence",
               "requires_review"
             ],
             "transaction-agreement": [
-              "low_confidence",
               "requires_review",
               "source_excerpt"
             ],
@@ -1513,7 +1551,6 @@
             3,
             28,
             69,
-            71,
             72,
             86,
             87
@@ -2097,6 +2134,7 @@
       ],
       "scenarios": [
         "base",
+        "failure",
         "failure_rates_down_25",
         "failure_rates_up_25",
         "final_extension",
@@ -2124,10 +2162,15 @@
         "all_twelve_question_categories": true,
         "every_retained_citation_matches_source": true,
         "model_candidates_never_promoted": true,
-        "strict_qa_abstains_without_human_approval": true
+        "strict_qa_abstains_without_human_approval": true,
+        "structured_artifacts_present": true,
+        "structured_terms_schema_and_provenance_valid": true,
+        "structured_candidates_not_human_verified": true,
+        "structured_timeline_never_asserts_occurrence": true,
+        "structured_qa_components_exposed": true
       },
       "machine_supported_fields": 15,
-      "source_excerpt_fields": 20,
+      "source_excerpt_fields": 21,
       "filing_date_status": "sec_index_verified",
       "qa_statuses": {
         "consideration": "conflict",
@@ -3157,25 +3200,29 @@
         {
           "field_name": "award_cohort_differences",
           "has_machine_supported_value": false,
-          "has_source_section_excerpt": false,
+          "has_source_section_excerpt": true,
           "comparison": "unresolved",
           "layers": {
             "8-k-summary": [
               "not_found"
             ],
             "transaction-agreement": [
-              "not_found"
+              "requires_review",
+              "source_excerpt"
             ],
             "financing-agreement": [
               "not_found"
             ]
           },
-          "source_pages": [],
+          "source_pages": [
+            24
+          ],
           "complete_legal_interpretation_verified": false
         }
       ],
       "scenarios": [
         "base",
+        "failure",
         "failure_rates_down_25",
         "failure_rates_up_25",
         "rates_down_25",

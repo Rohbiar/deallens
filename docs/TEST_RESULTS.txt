@@ -1,107 +1,14 @@
-test_annotation_cannot_promote_candidate_or_verify_human (test_agent_annotations.AnnotationTests.test_annotation_cannot_promote_candidate_or_verify_human) ... ok
-test_operative_borrowing_clause_precedes_repeated_definition_hits (test_batch_regressions.BatchRegressions.test_operative_borrowing_clause_precedes_repeated_definition_hits) ... ok
-test_rejection_reasons_are_distinct_and_do_not_echo_output (test_batch_regressions.BatchRegressions.test_rejection_reasons_are_distinct_and_do_not_echo_output) ... ok
-test_cap_survives_concurrent_attempts (test_budget.BudgetTests.test_cap_survives_concurrent_attempts) ... ok
-test_each_http_retry_reserves_before_transport (test_budget.BudgetTests.test_each_http_retry_reserves_before_transport) ... ok
-test_exhausted_budget_never_calls_transport (test_budget.BudgetTests.test_exhausted_budget_never_calls_transport) ... ok
-test_gpt55_price_bound_and_single_attempt (test_budget.BudgetTests.test_gpt55_price_bound_and_single_attempt) ... ok
-test_rejects_unpriced_models_tools_and_oversize_requests (test_budget.BudgetTests.test_rejects_unpriced_models_tools_and_oversize_requests) ... ok
-test_reservations_survive_restarts_and_usage_does_not_refund (test_budget.BudgetTests.test_reservations_survive_restarts_and_usage_does_not_refund) ... ok
-test_catalog_preserves_exact_unicode_text_and_offsets (test_citation_protocol.CitationProtocolTests.test_catalog_preserves_exact_unicode_text_and_offsets) ... ok
-test_transport_bounds_match_local_citation_validation (test_citation_protocol.CitationProtocolTests.test_transport_bounds_match_local_citation_validation) ... ok
-test_transport_enum_reconstructs_citation_but_not_verified_fact (test_citation_protocol.CitationProtocolTests.test_transport_enum_reconstructs_citation_but_not_verified_fact) ... ok
-test_typed_values_handle_quotes_without_a_second_model_json_parse (test_citation_protocol.CitationProtocolTests.test_typed_values_handle_quotes_without_a_second_model_json_parse) ... ok
-test_unknown_ids_and_model_supplied_quotes_rejected (test_citation_protocol.CitationProtocolTests.test_unknown_ids_and_model_supplied_quotes_rejected) ... ok
-test_certificate_failure_has_specific_safe_diagnostic (test_continuation.ContinuationControls.test_certificate_failure_has_specific_safe_diagnostic) ... ok
-test_financing_proposals_require_boolean (test_continuation.ContinuationControls.test_financing_proposals_require_boolean) ... ok
-test_invalid_json_audit_explains_rejection (test_continuation.ContinuationControls.test_invalid_json_audit_explains_rejection) ... ok
-test_iso_currency_consideration_retrieved (test_continuation.ContinuationControls.test_iso_currency_consideration_retrieved) ... ok
-test_malformed_citation_rejected (test_continuation.ContinuationControls.test_malformed_citation_rejected) ... ok
-test_malformed_provider_envelopes_fail_safely (test_continuation.ContinuationControls.test_malformed_provider_envelopes_fail_safely) ... ok
-test_nonfinite_financial_inputs_rejected (test_continuation.ContinuationControls.test_nonfinite_financial_inputs_rejected) ... ok
-test_nonfinite_nested_model_value_rejected (test_continuation.ContinuationControls.test_nonfinite_nested_model_value_rejected) ... ok
-test_provider_failure_is_not_budget_exhaustion (test_continuation.ContinuationControls.test_provider_failure_is_not_budget_exhaustion) ... ok
-test_provider_preserves_tls_verification (test_continuation.ContinuationControls.test_provider_preserves_tls_verification) ... ok
-test_retrieval_includes_preceding_page_context (test_continuation.ContinuationControls.test_retrieval_includes_preceding_page_context) ... ok
-test_basis_widening_has_correct_sign (test_core.AnalyticsTests.test_basis_widening_has_correct_sign) ... ok
-test_contingent_failure_only_fee (test_core.AnalyticsTests.test_contingent_failure_only_fee) ... ok
-test_delay_cost_not_added_twice (test_core.AnalyticsTests.test_delay_cost_not_added_twice) ... ok
-test_failure_down_rates_creates_unwind_loss (test_core.AnalyticsTests.test_failure_down_rates_creates_unwind_loss) ... ok
-test_forward_eliminates_benchmark_not_credit (test_core.AnalyticsTests.test_forward_eliminates_benchmark_not_credit) ... ok
-test_negative_notional_rejected (test_core.AnalyticsTests.test_negative_notional_rejected) ... ok
-test_option_and_contingent_not_equivalent (test_core.AnalyticsTests.test_option_and_contingent_not_equivalent) ... ok
-test_option_preserves_benefit_net_premium (test_core.AnalyticsTests.test_option_preserves_benefit_net_premium) ... ok
-test_probability_validation (test_core.AnalyticsTests.test_probability_validation) ... ok
-test_sensitivity_is_linear (test_core.AnalyticsTests.test_sensitivity_is_linear) ... ok
-test_up25_independent_dv01_and_coupon (test_core.AnalyticsTests.test_up25_independent_dv01_and_coupon) ... ok
-test_ancillary_agreement_date_rejected (test_core.ExtractionTests.test_ancillary_agreement_date_rejected) ... ok
-test_cash_price_not_par_value (test_core.ExtractionTests.test_cash_price_not_par_value) ... ok
-test_conflict_is_not_overwritten (test_core.ExtractionTests.test_conflict_is_not_overwritten) ... ok
-test_evidence_tampering_rejected (test_core.ExtractionTests.test_evidence_tampering_rejected) ... ok
-test_extension_not_initial_outside_date (test_core.ExtractionTests.test_extension_not_initial_outside_date) ... ok
-test_german_date (test_core.ExtractionTests.test_german_date) ... ok
-test_initial_outside_date_with_proviso (test_core.ExtractionTests.test_initial_outside_date_with_proviso) ... ok
-test_invalid_date_returns_null (test_core.ExtractionTests.test_invalid_date_returns_null) ... ok
-test_minimum_price_qualifier_preserved (test_core.ExtractionTests.test_minimum_price_qualifier_preserved) ... ok
-test_model_cannot_self_verify (test_core.ExtractionTests.test_model_cannot_self_verify) ... ok
-test_prompt_injection_abstains (test_core.ExtractionTests.test_prompt_injection_abstains) ... ok
-test_unknown_question_abstains (test_core.ExtractionTests.test_unknown_question_abstains) ... ok
-test_different_column_order_blocks_normalization (test_disclosed_financing.DisclosedFinancingTests.test_different_column_order_blocks_normalization) ... ok
-test_missing_pricing_level_blocks_partial_table (test_disclosed_financing.DisclosedFinancingTests.test_missing_pricing_level_blocks_partial_table) ... ok
-test_public_grid_and_redactions_remain_separate (test_disclosed_financing.DisclosedFinancingTests.test_public_grid_and_redactions_remain_separate) ... ok
-test_duplicate_and_sparse_pages_flagged (test_ingestion.IngestionTests.test_duplicate_and_sparse_pages_flagged) ... ok
-test_expected_page_count_detects_missing_page (test_ingestion.IngestionTests.test_expected_page_count_detects_missing_page) ... ok
-test_source_pin_detects_modified_document (test_ingestion.IngestionTests.test_source_pin_detects_modified_document) ... ok
-test_threshold_blocks_scalar_normalization (test_ingestion.IngestionTests.test_threshold_blocks_scalar_normalization) ... ok
-test_adjacent_definitions_and_commas_in_legal_names (test_parties.PartyTests.test_adjacent_definitions_and_commas_in_legal_names) ... ok
-test_alias_without_operative_intro_does_not_resolve_identity (test_parties.PartyTests.test_alias_without_operative_intro_does_not_resolve_identity) ... ok
-test_numbered_foreign_party_preserves_bidder_and_nested_parentheses (test_parties.PartyTests.test_numbered_foreign_party_preserves_bidder_and_nested_parentheses) ... ok
-test_certain_funds_exception_included_with_borrowing_conditions (test_provisions.ProvisionTests.test_certain_funds_exception_included_with_borrowing_conditions) ... ok
-test_cross_page_exception_and_citation_offsets_preserved (test_provisions.ProvisionTests.test_cross_page_exception_and_citation_offsets_preserved) ... ok
-test_decimal_heading_variants_and_reference_not_heading (test_provisions.ProvisionTests.test_decimal_heading_variants_and_reference_not_heading) ... ok
-test_definitions_keep_full_value_not_next_term (test_provisions.ProvisionTests.test_definitions_keep_full_value_not_next_term) ... ok
-test_estimate_preserves_conditions (test_provisions.ProvisionTests.test_estimate_preserves_conditions) ... ok
-test_extractive_answer_is_partial_and_strict_abstains (test_provisions.ProvisionTests.test_extractive_answer_is_partial_and_strict_abstains) ... ok
-test_reference_budget_is_explicit (test_provisions.ProvisionTests.test_reference_budget_is_explicit) ... ok
-test_reference_lookup_is_instrument_local (test_provisions.ProvisionTests.test_reference_lookup_is_instrument_local) ... ok
-test_relative_clock_anchor_and_unit_are_preserved (test_provisions.ProvisionTests.test_relative_clock_anchor_and_unit_are_preserved) ... ok
-test_substrings_do_not_match_awards_or_cures (test_provisions.ProvisionTests.test_substrings_do_not_match_awards_or_cures) ... ok
-test_threshold_blocks_source_excerpts (test_provisions.ProvisionTests.test_threshold_blocks_source_excerpts) ... ok
-test_toc_continuation_not_operative_section (test_provisions.ProvisionTests.test_toc_continuation_not_operative_section) ... ok
-test_flags_preserve_unverified_candidate (test_quality.QualityTests.test_flags_preserve_unverified_candidate) ... ok
-test_wrong_field_and_correct_no_duty_distinguished (test_quality.QualityTests.test_wrong_field_and_correct_no_duty_distinguished) ... ok
-test_consolidation_preserves_document_origins_and_rejects_assumption_mismatch (test_reprocess.ReprocessTests.test_consolidation_preserves_document_origins_and_rejects_assumption_mismatch) ... ok
-test_preserves_paid_proposals_without_human_promotion (test_reprocess.ReprocessTests.test_preserves_paid_proposals_without_human_promotion) ... ok
-test_modified_or_missing_original_is_stale (test_run_snapshot.SnapshotTests.test_modified_or_missing_original_is_stale) ... ok
-test_refresh_and_explicit_pin (test_run_snapshot.SnapshotTests.test_refresh_and_explicit_pin) ... ok
-test_review_run_rebuilds_exports_and_retains_original (test_semantic_review.PipelineIntegrationTests.test_review_run_rebuilds_exports_and_retains_original) ... ok
-test_auth_failure_does_not_leak_body_or_retry (test_semantic_review.ProviderTests.test_auth_failure_does_not_leak_body_or_retry) ... ok
-test_incomplete_output_not_accepted (test_semantic_review.ProviderTests.test_incomplete_output_not_accepted) ... ok
-test_rate_limit_has_bounded_retry (test_semantic_review.ProviderTests.test_rate_limit_has_bounded_retry) ... ok
-test_refusal_not_accepted (test_semantic_review.ProviderTests.test_refusal_not_accepted) ... ok
-test_transport_schema_and_no_storage (test_semantic_review.ProviderTests.test_transport_schema_and_no_storage) ... ok
-test_approval_preserves_original_and_enables_strict_answer (test_semantic_review.ReviewTests.test_approval_preserves_original_and_enables_strict_answer) ... ok
-test_export_has_no_preapproved_decisions (test_semantic_review.ReviewTests.test_export_has_no_preapproved_decisions) ... ok
-test_missing_attestation_rejected (test_semantic_review.ReviewTests.test_missing_attestation_rejected) ... ok
-test_missing_scope_attestation_rejected (test_semantic_review.ReviewTests.test_missing_scope_attestation_rejected) ... ok
-test_reject_keeps_history_but_cannot_answer (test_semantic_review.ReviewTests.test_reject_keeps_history_but_cannot_answer) ... ok
-test_stale_review_rejected (test_semantic_review.ReviewTests.test_stale_review_rejected) ... ok
-test_tampered_source_rejected (test_semantic_review.ReviewTests.test_tampered_source_rejected) ... ok
-test_unknown_record_rejected (test_semantic_review.ReviewTests.test_unknown_record_rejected) ... ok
-test_call_budget_and_audit (test_semantic_review.SemanticTests.test_call_budget_and_audit) ... ok
-test_fabricated_evidence_rejected (test_semantic_review.SemanticTests.test_fabricated_evidence_rejected) ... ok
-test_low_confidence_remains_null (test_semantic_review.SemanticTests.test_low_confidence_remains_null) ... ok
-test_nonfinite_json_rejected (test_semantic_review.SemanticTests.test_nonfinite_json_rejected) ... ok
-test_retrieval_budget (test_semantic_review.SemanticTests.test_retrieval_budget) ... ok
-test_unretrieved_chunk_rejected (test_semantic_review.SemanticTests.test_unretrieved_chunk_rejected) ... ok
-test_valid_model_proposal_cannot_approve_itself (test_semantic_review.SemanticTests.test_valid_model_proposal_cannot_approve_itself) ... ok
+Final integrated verification for code commit defe4a3
 
-----------------------------------------------------------------------
-Ran 97 tests in 0.319s
+Command: .venv/bin/python -m unittest discover -s tests -v
+Result: PASS
+Ran 179 tests
 
-OK
-Offline refreshed run: 20260921T143956Z-63f36998
-Offline refreshed run: 20260921T143956Z-67bcc9c0
-synthetic_test {"elapsed_seconds": 0.003, "page_count": 1, "catalog_fields": 42, "machine_supported_fields": 2, "source_excerpt_fields": 0, "candidate_only_fields": 1, "records": 127, "evidence_exact_match_count": 4, "human_verified_records": 0, "model_proposal_records": 0, "semantic_accuracy": null, "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."}
-Run: 20260921T143956Z-95814ade
-Reviewed run: 20260921T143956Z-dec7f810
+Additional measured checks:
+- Selected scalar/source fixtures: 25/25 passed.
+- Selected provision/qualifier fixtures: 18/18 passed.
+- Structured output: 14 candidate terms and 34 atomic statements; zero machine-supported or human-verified terms.
+- Required QA matrix: 12 supported, 22 partial, one conflict and one review-required across 36 answers.
+- Bounded semantic evaluation: zero asserted predictions; all 72 supported assertions unresolved; precision null; recall 0.0; 4/4 source-unresolved cases respected.
+
+These tests and bounded fixtures verify engineering controls and selected source behavior. They do not establish contract-wide semantic accuracy or human legal review.

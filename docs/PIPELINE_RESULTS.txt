@@ -1,45 +1,36 @@
-Offline refreshed run: 20260921T150631Z-5c182147
-bio_techne {
-  "elapsed_seconds": 3.394,
-  "page_count": 99,
-  "catalog_fields": 42,
-  "machine_supported_fields": 12,
-  "source_excerpt_fields": 21,
-  "candidate_only_fields": 23,
-  "records": 272,
-  "evidence_exact_match_count": 210,
-  "human_verified_records": 0,
-  "model_proposal_records": 2,
-  "semantic_accuracy": null,
-  "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."
-}
+Final deterministic run: 20260922T024418Z-d989f939
+Code commit: defe4a3d5c4cf40e89b72b67f35cc9b01a971df5
+Provider calls in this run: 0
 
-organon {
-  "elapsed_seconds": 3.757,
-  "page_count": 109,
-  "catalog_fields": 42,
-  "machine_supported_fields": 11,
-  "source_excerpt_fields": 18,
-  "candidate_only_fields": 23,
-  "records": 275,
-  "evidence_exact_match_count": 210,
-  "human_verified_records": 0,
-  "model_proposal_records": 2,
-  "semantic_accuracy": null,
-  "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."
-}
+bio_techne
+- elapsed_seconds: 2.333
+- pages: 99
+- supported field types: 12/42
+- section-excerpt fields: 21
+- structured candidates: 4
+- atomic statements: 14
 
-uber_delivery_hero {
-  "elapsed_seconds": 3.806,
-  "page_count": 149,
-  "catalog_fields": 42,
-  "machine_supported_fields": 15,
-  "source_excerpt_fields": 20,
-  "candidate_only_fields": 21,
-  "records": 266,
-  "evidence_exact_match_count": 222,
-  "human_verified_records": 0,
-  "model_proposal_records": 1,
-  "semantic_accuracy": null,
-  "accuracy_note": "Citation substring validation is not extraction accuracy. No exhaustive human gold set."
-}
+organon
+- elapsed_seconds: 2.690
+- pages: 109
+- supported field types: 11/42
+- section-excerpt fields: 18
+- structured candidates: 5
+- atomic statements: 12
+
+uber_delivery_hero
+- elapsed_seconds: 2.791
+- pages: 149
+- supported field types: 15/42
+- section-excerpt fields: 21
+- structured candidates: 5
+- atomic statements: 8
+
+Totals
+- structured candidates: 14
+- atomic statements: 34
+- human-verified records or terms: 0
+- QA: 12 supported, 22 partial, one conflict, one review-required
+- neutral transaction-failure scenario: present
+
+Execution time is machine/runtime dependent and is not a workstream effort measurement.

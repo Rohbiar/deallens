@@ -1,26 +1,27 @@
 # Known issues and production roadmap
 
-Current measurements are in [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md). Historical model reports describe their own runs; they are not current coverage claims.
+Current measurements are in [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md). Historical model reports describe their own runs and are not current coverage claims.
 
 ## Remaining assignment limitations
 
-1. Complete normalized interpretation of complex clauses is unfinished. Whole sections and selected references are now retained, but excerpts do not establish complete treatment of award cohorts, fee triggers, regulatory remedies or conditions. QA labels these responses partial and keeps normalized values null.
-2. Section lookup is based on numbered headings. Unnumbered provisions, incorporated documents, nested references and definitions outside recognized dictionaries may remain unresolved. Cross-reference lookup is one hop, same-instrument and bounded. Full source pages remain authoritative.
-3. The three PDFs match fresh publisher downloads. This establishes the downloaded snapshot, not completeness of omitted schedules or separate commitment/fee letters. Some bridge pricing components are visibly redacted and cannot be extracted from the supplied public record.
-4. Organon and Uber filing dates are SEC-index-verified. Bio-Techne's date is reported by publisher PDF metadata; an accessible independent filing index was not obtained.
-5. Comparisons resolve supported scalars but leave narrative equivalence unresolved. The Uber exact-price versus minimum-price difference remains visible and blocks its canonical answer.
-6. Timeline expressions preserve contractual anchors and units, but conditional and business-day deadlines are not executable schedules. Uber's regulatory clocks are not forced into US merger extension scenarios.
-7. All source fixtures and qualitative assessments are agent-curated. Contract-wide precision, recall and calibration are unmeasured. Validation documents informed shared improvements, so final results are adapted validation, not untouched holdouts.
-8. No human-verified records are shipped. This does not imply that a nonexpert should provide nominal legal approval. The candidate remains responsible for the submission and its disclosed limitations.
+1. The 14 structured terms and 34 statements are unreviewed candidates. Their actors, modalities, conditions, exceptions and evidence are useful for review, but none is machine-supported or human-verified. QA therefore remains partial for complex provisions.
+2. The bounded semantic challenge does not show semantic accuracy: the application asserted zero of 72 supported atomic assertions, so precision is null and recall is zero. All four cases expected to remain unresolved were safely respected. Contract-wide precision and recall remain unmeasured.
+3. Retrieval begins from numbered headings and recognized reference syntax. Recursive expansion is bounded, same-instrument and cycle-aware, but unnumbered clauses, unknown definitions, omitted schedules, annexes and incorporated documents may remain unresolved.
+4. The Bio-Techne regulatory-jurisdiction schedule and an Organon PSU schedule exception are omitted from the supplied record. Uber's ultimate award outcome depends on beneficiary consent and underlying award terms. These are source limitations, not values to infer.
+5. Uber bridge step-up, duration-fee and funding-fee amounts are visibly redacted. The disclosed pricing grid remains separate from synthetic draw, benchmark and utilization assumptions.
+6. Organon and Uber filing dates are SEC-index-verified. Bio-Techne's filing date is reported from PDF metadata; an independent filing index was not obtained.
+7. The Uber summary's exact EUR 41.50 price and agreement's at-least EUR 41.50 floor remain distinct and block a canonical comparison. Narrative similarity is not treated as legal equivalence.
+8. Conditional and business-day clocks are not executable schedules. Structured timelines never claim an election occurred. Uber's regulatory dates are not forced into US-merger extension scenarios.
+9. Agent-curated fixtures and source readings are not human gold. Zero shipped records are human-verified. Exact citation matching proves provenance only.
 
 ## Financial scope
 
-The scenario model uses constant DV01, synthetic forward reference levels, assumed premiums and linear roll/renewal costs. It has no yield/volatility curve valuation, convexity, early-unwind pricing or hedge-accounting model. These are disclosed prototype simplifications; live pricing is not necessary to demonstrate the assignment's scenarios.
+The scenario model uses constant DV01, synthetic reference levels, assumed premiums and linear timing costs. It does not value curves, volatility, convexity, early unwind, hedge accounting or negotiated deal-contingent terms. The neutral failure scenario satisfies the assignment's transaction-failure case; failure-up and failure-down rows are separate stresses. The expected-value illustration still uses its disclosed -25bp failure assumption and is not the neutral requirement case.
 
-The EUR bridge base pricing grid is extracted separately. Borrower rating, draw fraction and EURIBOR are not established by the agreement's grid. Public step-up sizes, funding fees and duration fees are redacted. Annualized interest by rating level is not a lifetime cashflow calculation. No termination fee is assumed available to offset hedge losses.
+Candidate structured dates do not drive analytics. Only `machine_supported` or `human_verified` terms without material statement- or term-level unresolved items may do so. Current Bio-Techne and Organon delay scenarios retain the pre-existing, explicitly labeled candidate-date path; Uber's unsafe extension scenarios remain blocked.
 
-## Production work for confidential information
+## Production work
 
-Use approved isolated infrastructure, authenticated deal-level permissions, encryption, private model endpoints, restricted egress, an approved retention contract and a secrets manager. Reapply document access controls at retrieval and output. Document text cannot authorize tools or external transmission. Add signed immutable audit records, attributed review and dual approval for material corrections or distribution. Trading remains outside this application.
+For confidential information, add approved isolated infrastructure, authenticated deal-level permissions, encryption, private model endpoints, restricted egress, approved retention, signed review events and dual approval for material corrections or distribution. Reapply source permissions at retrieval and output. Trading remains outside this application.
 
-Add reproducible environment locks, authenticated review, source-update monitoring, independent semantic benchmarks and exact financial valuation before operational use. These production features should not displace the remaining extraction and validation work for this case study.
+Before operational use, add reproducible environment locks, authenticated review, source-update monitoring, a broader independently governed semantic benchmark, approved market data and independent valuation reconciliation. These future controls do not erase the disclosed source and interpretation limits of this prototype.

@@ -21,8 +21,31 @@ def build():
     for name in ['REQUIREMENTS_AUDIT.json','SOURCE_EVALUATION.json','PROVISION_EVALUATION.json','MODEL_EVALUATION.json']:
         if json.loads((ROOT/'docs'/name).read_text()).get('run_id')!=run:
             raise ValueError('Regenerate stale validation report: '+name)
+    semantic=json.loads((ROOT/'docs/SEMANTIC_EVALUATION.json').read_text())
+    predictions=json.loads((ROOT/'docs/SEMANTIC_PREDICTIONS.json').read_text())
+    semantic_metrics=semantic.get('metrics',{})
+    if semantic_metrics.get('bounded_supported_assertion_denominator') != 72:
+        raise ValueError('Semantic evaluation does not match the frozen reference denominator')
+    if semantic_metrics.get('unresolved_reference_case_denominator') != 4:
+        raise ValueError('Semantic evaluation does not cover all unresolved reference cases')
+    if predictions.get('schema_version') != '1.0' or len(predictions.get('cases',[])) != 16:
+        raise ValueError('Regenerate semantic predictions for the frozen reference set')
+    if len({case.get('case_id') for case in predictions['cases']}) != 16:
+        raise ValueError('Semantic predictions contain missing or duplicate cases')
+    requirements=json.loads((ROOT/'docs/REQUIREMENTS_AUDIT.json').read_text())
+    if requirements.get('bounded_semantic_evaluation') != semantic_metrics:
+        raise ValueError('Requirement audit and semantic evaluation disagree')
     if run not in (ROOT/'docs/SUBMISSION_STATUS.md').read_text():
         raise ValueError('Regenerate submission status for the packaged run')
+    run_manifest=json.loads((ROOT/'outputs'/run/'manifest.json').read_text())
+    for item in run_manifest['documents']:
+        document_root=ROOT/'outputs'/run/item['document_id']
+        terms=json.loads((document_root/'structured_terms.json').read_text())
+        if not terms or not all(t.get('schema_version')=='structured-terms/v1' for t in terms):
+            raise ValueError('Missing or invalid structured terms: '+item['document_id'])
+        for name in ('structured_comparisons.json','structured_timeline.json','structured_exceptions.json'):
+            if not (document_root/name).exists():
+                raise ValueError('Missing structured artifact: '+item['document_id']+'/'+name)
     dest = ROOT/'outputs/deliverables'
     dest.mkdir(exist_ok=True)
     archive = dest/'DealLens_review_package.zip'
@@ -42,7 +65,6 @@ def build():
                 source.backup(target)
     files = [p for p in ROOT.iterdir() if p.is_file() and p.name in
              {'README.md','EXECUTION_PLAN.md','AGENT_WORKFLOW.md','requirements.txt','requirements-tested.txt','pyproject.toml','.gitignore'}]
-    run_manifest=json.loads((ROOT/'outputs'/run/'manifest.json').read_text())
     lineage=sorted(set(run_manifest.get('parent_run_ids',[])) |
                    set(run_manifest.get('source_runs',{}).values()) |
                    ({run_manifest['parent_run_id']} if run_manifest.get('parent_run_id') else set()))
@@ -64,7 +86,7 @@ def build():
     content['history.bundle'] = bundle.read_bytes()
     content['outputs/deallens.sqlite'] = (dest/'deallens.sqlite').read_bytes()
     content['RESTORE_HISTORY.txt'] = b'To restore the genuine repository history: git clone history.bundle deallens-history\nThe package contains latest run JSON plus SQLite history; older run JSON remains in the working repository.\n'
-    manifest = {'run_id':run,'status':'submission candidate with disclosed limitations; complete normalized complex semantics unresolved; section excerpts remain partial; no human verification',
+    manifest = {'run_id':run,'status':'submission candidate with disclosed limitations; structured interpretations remain unreviewed candidates; bounded semantic recall is zero; no human verification',
                 'working_tree_changes':subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).splitlines(),
                 'git_head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
                 'files':{name:hashlib.sha256(data).hexdigest() for name,data in sorted(content.items())}}

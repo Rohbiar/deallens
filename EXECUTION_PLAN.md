@@ -1,33 +1,45 @@
 # DealLens execution plan
 
-Build a reusable research prototype within the assignment's suggested 8–12 hours. Public sources only. Rohit owns the submission; Codex implementation does not substitute for his review.
+Build one reusable public-source research prototype within the assignment's suggested 8–12-hour planning budget. Rohit owns the submission; agent implementation and source inspection do not substitute for his technical review or qualified legal review.
 
-## Work and acceptance criteria
+## Workstreams and acceptance
 
-| Stage | Dependencies | Acceptance | Budget |
-|---|---|---|---|
-| Ingest and classify | Three original PDFs | SHA-256, page inventory, source/version identity, explicit OCR and integrity warnings, separate exhibits | 1 h |
-| Extract and compare | Page/chunk registry | Common field catalog, exact evidence locators, null on ambiguity, preserve both layers | 2 h |
-| Timeline and risk map | Evidence records | Distinguish absolute, relative, conditional, automatic and elective timing; no invented deadlines | 1 h |
-| Analytics | Versioned synthetic assumptions and supported dates | Reproducible rates, credit, basis, delay and failure scenarios; clear cost/P&L sign | 1.5 h |
-| Grounded QA | Extraction and comparisons | All required question categories; evidence or exact unsupported message | 1 h |
-| Validation and controls | Development baseline frozen | Run same code on two validation sources; targeted independent fixtures and failure tests | 1.5 h |
-| Deliver and review | Test outputs | Runnable package, memo <=3 pages, source/output manifests, honest agent log and Git history | 1 h |
+| Workstream | Implemented result | Final acceptance evidence |
+|---|---|---|
+| Ingest and classify | Three pinned PDFs, page inventories, document layers, transaction classification, OCR and integrity flags | Source hashes/page counts and metadata checks |
+| Extract and compare | Shared 42-field catalog, exact locators, conflict preservation, recursive provision dependency graph | 25/25 selected scalar fixtures; 18/18 provision fixtures |
+| Structured interpretation | Versioned candidate terms for extensions, fees, remedies, awards and financing conditions | 14 terms/34 statements; schema/provenance validation; no unsupported promotion |
+| Timeline and risk | Legacy and structured views retain actors, conditions, elections and unresolved components | Occurrence remains `not_established`; partial results stay partial |
+| Analytics | Seven required scenarios plus sensitivities and four distinct strategies | Neutral failure, two delay scenarios where safe, explicit signs and synthetic assumptions |
+| Grounded QA | Twelve question categories for each transaction in CLI/browser/server | 12 supported, 22 partial, one conflict and one review-required across 36 answers |
+| Validation and controls | Unit, source, provision, semantic, requirements and runtime checks | 179 tests; bounded semantic result separately disclosed |
+| Deliver and review | Current run, status, memo, archive, demo and Git history | Rebuild memo/archive after final docs; isolated archive smoke test |
 
-## Delegation and human control
+## Final development waves
 
-User delegated source review, implementation, test writing, documentation and packaging to Codex. Codex retains generated code only after inspection and test execution. The candidate retains ownership of calculations, assumptions, code and submission claims. Expert verification of material legal interpretations, complete award cohorts, fee triggers and actual hedge terms remains unavailable; agent inspection is disclosed separately and unresolved results fail closed. Do not request nominal legal approval from a nonexpert. No email, submission, trade execution or credential access is authorized.
+The final implementation used six bounded work packages coordinated in waves. Package A extended retrieval; B added structured interpretation; C added QA/comparison/timeline/risk consumers; D froze an independent agent-curated semantic challenge set; E reconciled structured facts with scenarios and added neutral failure; F audited requirements and prepares final documentation and packaging. The coordinator owned shared CLI, server, storage and evaluator wiring.
+
+Structured terms remain candidates unless validation establishes a complete independent semantic basis and no material dependency is unresolved. Candidate terms can explain evidence and uncertainty but cannot become supported QA or analytics facts. Historical runs, model proposals, review decisions and API reservations remain preserved.
 
 ## Testing strategy
 
-Test the financial identities against independently calculated expected results, not snapshots of implementation. Mutate evidence, dates, currency and source layers; ensure unsupported claims cannot become accepted values. Check document integrity and QA injection/unknown-question handling. Use small source-grounded evaluation fixtures, report their limited coverage separately from full extraction accuracy. Record development/validation stages honestly; subsequent general rules informed by validation are no longer pristine holdout results.
+Financial identities are tested against independently calculated values rather than snapshots. Retrieval tests mutate cycles, duplicate headings, instrument boundaries, multiple references, missing schedules and budget exhaustion. Structured tests mutate actors, modalities, exceptions, time units, award selectors and contradictory statements. Consumer tests cover strict abstention, conflicts, partial components and HTML escaping. The frozen semantic evaluation reports correctness, incorrectness, omission, abstention and unresolved outcomes separately.
+
+Passing tests do not imply complete legal extraction. The final semantic result is deliberately conservative: zero assertions from candidate-only terms, 72 supported reference assertions unresolved, null bounded precision, zero bounded recall and all four intentionally unresolved source cases respected.
 
 ## Risks and fallback
 
-Complex cross-references cannot safely be reduced to a keyword match. Keep candidates and original clauses, with unresolved normalized outputs. Page hashes detect duplicates but cannot prove no original pages were omitted; mark completeness unknown unless an external expected manifest exists. If OCR is required, block extraction pending OCR rather than inventing text. If a model endpoint is unavailable, use deterministic evidence retrieval and explicitly report its limited semantic coverage. Never claim calibrated confidence, live model evaluation, human verification, or execution time that was not measured.
+Cross-references and definitions are bounded and cannot prove contract-wide completeness. Missing schedules, incorporated documents, redacted bridge fees and ambiguous award outcomes remain open. Bio-Techne's filing date is PDF-metadata-reported rather than SEC-index-verified. If evidence is incomplete, the application returns a candidate, partial answer, conflict or the exact unsupported response; it does not infer a result.
 
-## Current continuation status
+The analytics are illustrative linear sensitivities, not live valuation. Production authentication, approved curves, volatility, FX pricing, hedge accounting, confidential-data controls and signed review are future work, not hidden completion claims.
 
-The 2026-09-21 continuation adds full numbered sections, explicit reference/definition context, improved source metadata, a disclosed bridge grid, partial extractive QA and browser risk-map access. Current acceptance results are generated in docs/SUBMISSION_STATUS.md from the latest run. Historical model proposals and budget ledger are preserved; no new provider calls were made.
+## Finalization sequence
 
-Remaining work is complete normalized complex-clause interpretation, independent semantic evaluation and candidate ownership of the final submission. Redacted public-source values cannot be supplied by inference. Production authentication and live derivative pricing remain outside the required prototype finish line.
+1. Freeze integrated code and run the full tests and all evaluators.
+2. Generate one deterministic three-document run with no provider calls.
+3. Rebuild status and the no-more-than-three-page memo; render and inspect every memo page.
+4. Exercise CLI, HTTP and browser flows for all three transactions, including structured views, source links, strict abstention, neutral failure and audit export.
+5. Build the review archive from committed code, verify every manifest hash, restore it in an isolated directory and repeat the documented smoke checks.
+6. Rohit reviews the implementation, calculations, disclosures and demo before deciding whether to submit.
+
+No reliable workstream timer was kept, so actual hours and net agent leverage are not retrospectively estimated.

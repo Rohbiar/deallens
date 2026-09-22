@@ -1,0 +1,85 @@
+{
+  "cases": [
+    {
+      "assertions": [],
+      "case_id": "bio_outside_date_extension",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "bio_company_fee_tail",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "bio_remedy_limit",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "bio_psu_treatment",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "organon_outside_date_extension",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "organon_company_fee_tail",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "organon_remedy_limit",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "organon_award_cohorts",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "uber_long_stop_condition",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "uber_regulatory_reverse_fee",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "uber_remedy_limit",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "uber_award_settlement_efforts",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "bio_required_approval_jurisdictions_omitted",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "organon_psu_schedule_exception_omitted",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "uber_award_ultimate_outcome_ambiguous",
+      "status": "unresolved"
+    },
+    {
+      "assertions": [],
+      "case_id": "uber_bridge_fee_amounts_redacted",
+      "status": "unresolved"
+    }
+  ],
+  "schema_version": "1.0"
+}
