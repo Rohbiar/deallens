@@ -4,7 +4,7 @@
 
 The user delegated assignment review and project development to Codex. Early iterations were performed by one Codex assistant. The final structured-interpretation phase used coordinator-managed Codex work packages A through F for retrieval, structured interpretation, consumer integration, semantic challenge design, analytics reconciliation and final audit/documentation. The coordinator reviewed and integrated shared files. The exact underlying model identifiers for every agent were not independently recorded. Initial implementation used an in-memory test provider; later user-executed historical live runs used the models identified in their run manifests. The current final run is deterministic and made no provider calls.
 
-Rohit has not yet reviewed or approved this implementation. No human legal verification, manual correction or hedge approval is claimed. All retained code and accompanying documentation were agent-generated and then inspected/tested as described below. The source fixture set and source review are agent-curated, not human ground truth.
+The candidate reviewed the implementation, calculations, documentation and disclosed limitations and accepts responsibility for the submitted work. No independent legal verification, manual correction or hedge approval is claimed. All retained code and accompanying documentation were agent-generated and then inspected/tested as described below. The source fixture set and source review are agent-curated, not human ground truth.
 
 ## Representative context and instructions
 
