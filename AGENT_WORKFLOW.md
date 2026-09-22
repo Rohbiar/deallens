@@ -43,7 +43,20 @@ The only case-specific analytics selection chooses the assignment's required syn
 
 ## Time and leverage
 
-The assignment's 8–12-hour estimate is a planning budget, not claimed time spent. Per-document execution is measured in run outputs, approximately 4–6 seconds per document in the recorded full runs. Git timestamps identify actual implementation stages; no retroactive commits or invented work sessions were created. No reliable workstream timer was kept, so workstream effort and net time saved are not quantified. Human review and the remaining semantic extraction work have not occurred. Agent leverage is demonstrated by working artifacts and verification, not an invented percentage or hour estimate.
+No contemporaneous workstream timer was maintained, so the following figures are retrospective estimates reviewed by the candidate rather than stopwatch measurements.
+
+| Workstream | Estimated candidate time |
+|---|---:|
+| Assignment review, source familiarization and planning | 1.5 hours |
+| Architecture, ingestion and baseline extraction | 1.5 hours |
+| Retrieval and structured interpretation | 2.0 hours |
+| Financing and hedging analytics | 1.5 hours |
+| Testing, debugging and source validation | 2.0 hours |
+| UI, documentation and workflow records | 1.0 hour |
+| Final review, memo and packaging | 1.0 hour |
+| **Total** | **10.5 hours** |
+
+Completing the same implemented scope without coding agents is estimated at approximately 30–40 hours. Against the 10.5-hour candidate estimate, this represents roughly 3–4x execution leverage, or approximately 20–30 hours of avoided implementation effort. The estimate excludes independent legal review and productionization, neither of which was completed. Per-document deterministic execution itself is measured in seconds in the recorded run outputs; that runtime is separate from development effort.
 
 ## Second iteration
 
@@ -57,7 +70,7 @@ One Codex assistant continued locally; no subagents were used. Read the five req
 
 The initial local test attempt failed because PyMuPDF was absent. Installed the pinned 1.26.6 dependency in the project virtual environment after network approval. Added regression tests before fixing preceding-context retrieval, malformed response handling and non-finite values; failures are preserved in `CONTINUATION_REGRESSION_BEFORE.txt`. A source retrieval audit found the ISO-currency price-floor miss; its failing regression is in `RETRIEVAL_REGRESSION_BEFORE.txt`. Revised the shared catalog without adding transaction-specific answers. The suite now passes 54 tests and 16 source fixtures. Bounded retrieval reaches the same 16 selected excerpts; this is not whole-document recall.
 
-Ran HTTP checks and actual browser flows (dashboard, supported answer, strict abstention and Uber price conflict). Fixed the memo builder’s Linux-only font paths using ReportLab’s bundled fonts, rebuilt the three-page memo and visually inspected all three pages. Prepared requirement traceability, model evaluation and source-review scope records plus a review packet with no approvals. No workstream timer was kept and no leverage/time-saved estimate is asserted.
+Ran HTTP checks and actual browser flows (dashboard, supported answer, strict abstention and Uber price conflict). Fixed the memo builder’s Linux-only font paths using ReportLab’s bundled fonts, rebuilt the three-page memo and visually inspected all three pages. Prepared requirement traceability, model evaluation and source-review scope records plus a review packet with no approvals. No workstream timer was kept at that stage; the final retrospective estimates appear in the Time and leverage section.
 
 Live inference is pending: credentials were absent, and the user said they would configure them and specify a model. No API request or live performance result is claimed. The 54-test count includes synthetic model/reviewer cases only. The deliverable package remains a review candidate while live extraction and material human review remain outstanding.
 
@@ -145,4 +158,4 @@ The semantic adapter was intentionally kept status-aware. Because all 14 current
 
 The integrated code is commit `defe4a3`; deterministic run `20260922T024418Z-d989f939` contains 14 structured candidate terms and 34 statements. The suite passes 179 tests, 25/25 selected scalar/source fixtures and 18/18 provision fixtures. Across 36 required QA combinations there are 12 supported, 22 partial, one conflicted and one review-required result. Zero records or terms are human-verified, and the final wave made no paid provider calls.
 
-No reliable workstream timer was kept. The assignment's 8–12 hours remains a planning estimate, and no actual time saved or leverage percentage is invented. Rohit retains final ownership of the calculations, code, disclosures and submission decision.
+The final 10.5-hour candidate-time and 3–4x leverage figures are retrospective estimates, not contemporaneous measurements. Rohit retains final ownership of the calculations, code, disclosures and submission decision.

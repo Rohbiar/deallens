@@ -42,4 +42,4 @@ The analytics are illustrative linear sensitivities, not live valuation. Product
 5. Build the review archive from committed code, verify every manifest hash, restore it in an isolated directory and repeat the documented smoke checks.
 6. Rohit reviews the implementation, calculations, disclosures and demo before deciding whether to submit.
 
-No reliable workstream timer was kept, so actual hours and net agent leverage are not retrospectively estimated.
+No contemporaneous workstream timer was kept. The candidate-reviewed retrospective estimate is 10.5 hours of candidate involvement and approximately 3–4x execution leverage; the workstream breakdown and basis appear in `AGENT_WORKFLOW.md`.
